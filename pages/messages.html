@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyTags Admin - Tin nhắn</title>
+    <link rel="stylesheet" href="../css/slidebar.css">
+    <link rel="stylesheet" href="../css/messages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar (Import từ file sidebar.html) -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="products.html" class="nav-link">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="customer.html" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="messages.html" class="nav-link active">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="invoices.html" class="nav-link">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="promotions.html" class="nav-link">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="marketing.html" class="nav-link">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="sales.html" class="nav-link">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Main Content -->
+    <main class="messages-page">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <h1>Tin nhắn</h1>
+                <p id="currentDateTime" class="page-date">Hôm nay: Chủ Nhật, 21 tháng 12, 2025 - 11:11:02</p>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar">LA</div>
+                <div class="user-info">
+                    <h3>Nguyễn Trần Lan Anh</h3>
+                    <p>Admin Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Messages Container -->
+        <div class="messages-container">
+            <!-- Conversations Sidebar -->
+            <div class="conversations-sidebar">
+                <div class="conversations-header">
+                    <h3>Tin nhắn</h3>
+                </div>
+                <div class="conversations-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm khách hàng...">
+                </div>
+                
+                <div class="conversations-list">
+                    <!-- Conversation Item 1 - Facebook -->
+                    <div class="conversation-item active" 
+                         data-user="phan-ho-gia-han" 
+                         data-source="facebook" 
+                         data-online="true" 
+                         data-avatar-color="#FF95A6">
+                        <div class="user-avatar-small">
+                            <div class="avatar-initials" style="background-color: #FF95A6;">PH</div>
+                            <span class="online-dot"></span>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="user-name">Phan Hồ Gia Hân</div>
+                            <div class="conversation-source">
+                                <span class="source-badge facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                    Facebook
+                                </span>
+                            </div>
+                            <div class="last-message">Chạm đẹp ghê, mình muốn...</div>
+                            <div class="message-time">18:04</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation Item 2 - TikTok -->
+                    <div class="conversation-item" 
+                         data-user="tran-bao-hieu" 
+                         data-source="tiktok" 
+                         data-online="false" 
+                         data-avatar-color="#FADE98">
+                        <div class="user-avatar-small">
+                            <div class="avatar-initials" style="background-color: #FADE98;">TB</div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="user-name">Trần Bảo Hiếu</div>
+                            <div class="conversation-source">
+                                <span class="source-badge tiktok">
+                                    <i class="fab fa-tiktok"></i>
+                                    TikTok
+                                </span>
+                            </div>
+                            <div class="last-message">Móc khóa đẹp quá! Mình muốn...</div>
+                            <div class="message-time">19:00</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation Item 3 - Website -->
+                    <div class="conversation-item" 
+                         data-user="mai-ngan-phuong-nghi" 
+                         data-source="website" 
+                         data-online="false" 
+                         data-avatar-color="#FAEED6">
+                        <div class="user-avatar-small">
+                            <div class="avatar-initials" style="background-color: #FAEED6;">MN</div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="user-name">Mai Ngân Phương Nghi</div>
+                            <div class="conversation-source">
+                                <span class="source-badge website">
+                                    <i class="fas fa-globe"></i>
+                                    Website
+                                </span>
+                            </div>
+                            <div class="last-message">Không biết hiện tại shop có...</div>
+                            <div class="message-time">18:20</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation Item 4 - Website -->
+                    <div class="conversation-item" 
+                         data-user="pham-kim-ngan" 
+                         data-source="website" 
+                         data-online="false" 
+                         data-avatar-color="#90324D">
+                        <div class="user-avatar-small">
+                            <div class="avatar-initials" style="background-color: #90324D;">PK</div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="user-name">Phạm Kim Ngân</div>
+                            <div class="conversation-source">
+                                <span class="source-badge website">
+                                    <i class="fas fa-globe"></i>
+                                    Website
+                                </span>
+                            </div>
+                            <div class="last-message">À vậy cho mình hỏi, charm có...</div>
+                            <div class="message-time">18:30</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation Item 5 - TikTok -->
+                    <div class="conversation-item" 
+                         data-user="nguyen-tran-lan-anh" 
+                         data-source="tiktok" 
+                         data-online="true" 
+                         data-avatar-color="#F3376D">
+                        <div class="user-avatar-small">
+                            <div class="avatar-initials" style="background-color: #F3376D;">NT</div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="user-name">Nguyễn Trần Lan Anh</div>
+                            <div class="conversation-source">
+                                <span class="source-badge tiktok">
+                                    <i class="fab fa-tiktok"></i>
+                                    TikTok
+                                </span>
+                            </div>
+                            <div class="last-message">Nếu được thì mình muốn mua...</div>
+                            <div class="message-time">18:41</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conversation Item 6 - Facebook -->
+                    <div class="conversation-item" 
+                         data-user="muoi-muoi" 
+                         data-source="facebook" 
+                         data-online="false" 
+                         data-avatar-color="#FCE4E5">
+                        <div class="user-avatar-small">
+                            <div class="avatar-initials" style="background-color: #FCE4E5;">MM</div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="user-name">Muối Muối</div>
+                            <div class="conversation-source">
+                                <span class="source-badge facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                    Facebook
+                                </span>
+                            </div>
+                            <div class="last-message">Hí shop, mình muốn mua sét...</div>
+                            <div class="message-time">17:59</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="chat-user-info">
+                        <div class="user-avatar-small">
+                            <div class="avatar-initials" style="background-color: #FF95A6;" id="chat-avatar">PH</div>
+                            <span class="online-dot" id="chat-online-dot"></span>
+                        </div>
+                        <div class="chat-user-details">
+                            <div class="user-name-and-source">
+                                <span class="user-name" id="chat-user-name">Phan Hồ Gia Hân</span>
+                                <span class="message-source facebook" id="chat-source">
+                                    <i class="fab fa-facebook-f"></i>
+                                    <span class="source-text">Facebook</span>
+                                </span>
+                            </div>
+                            <div class="user-status">
+                                <span class="status-online" id="chat-status">Online</span>
+                                <span class="status-time">- 6:40 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="chat-action-btn">
+                            <i class="fas fa-star"></i>
+                            <span>Đánh dấu quan trọng</span>
+                        </button>
+                        <button class="chat-action-btn delete-btn">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Xóa hội thoại</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages List -->
+                <div class="messages-list" id="messages-list">
+                    <!-- Nội dung chat sẽ được cập nhật bằng JavaScript -->
+                </div>
+
+                <!-- Message Input -->
+                <div class="message-input-container">
+    <!-- Quick replies ở trên cùng -->
+    <div class="quick-replies">
+        <button class="quick-reply-btn">Chào bạn</button>
+        <button class="quick-reply-btn">Không biết bạn quan tâm sản phẩm nào ạ</button>
+        <button class="quick-reply-btn">Cảm ơn bạn đã quan tâm</button>
+        <button class="quick-reply-btn">Hết hàng rồi ạ</button>
+        <button class="quick-reply-btn">Còn ít ạ, bạn đặt nhanh nhé</button>
+    </div>
+    
+    <!-- Input area -->
+    <div class="input-area">
+        <div class="input-actions">
+            <button class="input-action-btn">
+                <i class="fas fa-smile"></i>
+            </button>
+            <button class="input-action-btn">
+                <i class="fas fa-paperclip"></i>
+            </button>
+            <button class="input-action-btn">
+                <i class="fas fa-image"></i>
+            </button>
+        </div>
+        <input type="text" placeholder="Nhập tin nhắn..." class="message-input" id="message-input">
+        <button class="send-btn" id="send-btn">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/common.js"></script>
+    <script>
+        // Dữ liệu chat cho từng người
+        const chatData = {
+            'phan-ho-gia-han': {
+                name: 'Phan Hồ Gia Hân',
+                initials: 'PH',
+                avatarColor: '#FF95A6',
+                source: 'facebook',
+                sourceText: 'Facebook',
+                online: true,
+                lastActive: '6:40 PM',
+                messages: [
+                    {
+                        type: 'received',
+                        text: 'Xin chào shop. Mình muốn mua móc khóa charm có chữ cái và màu hồng, shop tư vấn cho mình vài loại charm với ạ',
+                        time: '6:50 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Hiện tại shop có các loại charm như này ạ, charm này là loại mới bán chạy shop (xem ảnh bán)',
+                        time: '6:54 PM'
+                    },
+                    {
+                        type: 'received',
+                        text: 'Charm đẹp ghê, mình muốn ghi thêm thông tin để tặng quà được không ạ?',
+                        time: '6:54 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Dạ được ạ. Shop có dịch vụ viết thiệp đi kèm, bạn muốn ghi nội dung gì ạ?',
+                        time: '6:55 PM'
+                    }
+                ]
+            },
+            'tran-bao-hieu': {
+                name: 'Trần Bảo Hiếu',
+                initials: 'TB',
+                avatarColor: '#FADE98',
+                source: 'tiktok',
+                sourceText: 'TikTok',
+                online: false,
+                lastActive: '7:30 PM',
+                messages: [
+                    {
+                        type: 'received',
+                        text: 'Shop ơi, mình thấy móc khóa của shop rất đẹp!',
+                        time: '7:00 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Cảm ơn bạn đã quan tâm ạ! Bạn thích mẫu nào vậy?',
+                        time: '7:05 PM'
+                    },
+                    {
+                        type: 'received',
+                        text: 'Mình thích mẫu charm chữ B màu vàng ạ',
+                        time: '7:10 PM'
+                    }
+                ]
+            },
+            'mai-ngan-phuong-nghi': {
+                name: 'Mai Ngân Phương Nghi',
+                initials: 'MN',
+                avatarColor: '#FAEED6',
+                source: 'website',
+                sourceText: 'Website',
+                online: false,
+                lastActive: '6:15 PM',
+                messages: [
+                    {
+                        type: 'received',
+                        text: 'Không biết hiện tại shop có ship nhanh không ạ?',
+                        time: '6:20 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Dạ có ạ, shop ship trong 2-3 ngày làm việc bạn nhé',
+                        time: '6:22 PM'
+                    }
+                ]
+            },
+            'pham-kim-ngan': {
+                name: 'Phạm Kim Ngân',
+                initials: 'PK',
+                avatarColor: '#90324D',
+                source: 'website',
+                sourceText: 'Website',
+                online: false,
+                lastActive: '6:25 PM',
+                messages: [
+                    {
+                        type: 'received',
+                        text: 'À vậy cho mình hỏi, charm có thể tùy chỉnh được không?',
+                        time: '6:30 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Dạ được ạ, bạn có thể chọn màu và chữ cái tùy thích',
+                        time: '6:32 PM'
+                    }
+                ]
+            },
+            'nguyen-tran-lan-anh': {
+                name: 'Nguyễn Trần Lan Anh',
+                initials: 'NT',
+                avatarColor: '#F3376D',
+                source: 'tiktok',
+                sourceText: 'TikTok',
+                online: true,
+                lastActive: '6:35 PM',
+                messages: [
+                    {
+                        type: 'received',
+                        text: 'Nếu được thì mình muốn mua 10 cái charm chữ L',
+                        time: '6:41 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Dạ được ạ, bạn muốn màu gì vậy?',
+                        time: '6:43 PM'
+                    },
+                    {
+                        type: 'received',
+                        text: 'Màu hồng nhạt ạ, có giảm giá cho mua số lượng không shop?',
+                        time: '6:45 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Dạ có ạ, mua từ 5 cái trở lên được giảm 10% bạn nhé',
+                        time: '6:48 PM'
+                    }
+                ]
+            },
+            'muoi-muoi': {
+                name: 'Muối Muối',
+                initials: 'MM',
+                avatarColor: '#FCE4E5',
+                source: 'facebook',
+                sourceText: 'Facebook',
+                online: false,
+                lastActive: '5:45 PM',
+                messages: [
+                    {
+                        type: 'received',
+                        text: 'Hí shop, mình muốn mua sét 5 charm khác nhau',
+                        time: '5:59 PM'
+                    },
+                    {
+                        type: 'sent',
+                        text: 'Dạ vâng, bạn chọn mẫu nào ạ?',
+                        time: '6:05 PM'
+                    }
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update current date and time
+            function updateDateTime() {
+                const now = new Date();
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+                const dateTimeStr = now.toLocaleDateString('vi-VN', options);
+                document.getElementById('currentDateTime').textContent = `Hôm nay: ${dateTimeStr}`;
+            }
+            
+            // Update immediately and then every second
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // DOM elements
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            const messagesList = document.getElementById('messages-list');
+            const chatUserName = document.getElementById('chat-user-name');
+            const chatAvatar = document.getElementById('chat-avatar');
+            const chatOnlineDot = document.getElementById('chat-online-dot');
+            const chatSource = document.getElementById('chat-source');
+            const chatStatus = document.getElementById('chat-status');
+            const messageInput = document.getElementById('message-input');
+            const sendBtn = document.getElementById('send-btn');
+            
+            // Load chat for a specific user
+            function loadChat(userId) {
+                const userData = chatData[userId];
+                
+                if (!userData) return;
+                
+                // Update header
+                chatUserName.textContent = userData.name;
+                chatAvatar.textContent = userData.initials;
+                chatAvatar.style.backgroundColor = userData.avatarColor;
+                
+                // Update online status
+                if (userData.online) {
+                    chatOnlineDot.style.display = 'block';
+                    chatStatus.textContent = 'Online';
+                    chatStatus.style.color = 'var(--success-color)';
+                } else {
+                    chatOnlineDot.style.display = 'none';
+                    chatStatus.textContent = 'Offline';
+                    chatStatus.style.color = 'var(--text-gray)';
+                }
+                
+                // Update message source
+                chatSource.className = 'message-source ' + userData.source;
+                chatSource.querySelector('i').className = userData.source === 'facebook' ? 
+                    'fab fa-facebook-f' : userData.source === 'tiktok' ? 
+                    'fab fa-tiktok' : 'fas fa-globe';
+                chatSource.querySelector('.source-text').textContent = userData.sourceText;
+                
+                // Clear current messages
+                messagesList.innerHTML = '';
+                
+                // Load messages
+                userData.messages.forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${msg.type}`;
+                    messageDiv.innerHTML = `
+                        <div class="message-content">
+                            <div class="message-text">${msg.text}</div>
+                            <div class="message-time">${msg.time}</div>
+                        </div>
+                    `;
+                    messagesList.appendChild(messageDiv);
+                });
+                
+                // Scroll to bottom
+                messagesList.scrollTop = messagesList.scrollHeight;
+            }
+            
+            // Load initial chat (Phan Hồ Gia Hân)
+            loadChat('phan-ho-gia-han');
+            
+            // Conversation selection
+            conversationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    conversationItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Get user ID from data attribute
+                    const userId = this.getAttribute('data-user');
+                    
+                    // Load chat for this user
+                    loadChat(userId);
+                    
+                    // Mark as read (remove unread badge)
+                    const unreadBadge = this.querySelector('.unread-badge');
+                    if (unreadBadge) {
+                        unreadBadge.remove();
+                    }
+                });
+            });
+            
+            // Send message functionality
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message) {
+                    // Get current active user
+                    const activeItem = document.querySelector('.conversation-item.active');
+                    if (!activeItem) return;
+                    
+                    const userId = activeItem.getAttribute('data-user');
+                    const userData = chatData[userId];
+                    
+                    // Create new message
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('vi-VN', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    const newMessage = {
+                        type: 'sent',
+                        text: message,
+                        time: timeString
+                    };
+                    
+                    // Add to chat data
+                    userData.messages.push(newMessage);
+                    
+                    // Update UI
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message sent';
+                    messageDiv.innerHTML = `
+                        <div class="message-content">
+                            <div class="message-text">${message}</div>
+                            <div class="message-time">${timeString}</div>
+                        </div>
+                    `;
+                    messagesList.appendChild(messageDiv);
+                    
+                    // Update last message in conversation list
+                    const lastMessageElement = activeItem.querySelector('.last-message');
+                    if (lastMessageElement) {
+                        lastMessageElement.textContent = message.length > 30 ? 
+                            message.substring(0, 30) + '...' : message;
+                    }
+                    
+                    // Update message time
+                    const messageTimeElement = activeItem.querySelector('.message-time');
+                    if (messageTimeElement) {
+                        messageTimeElement.textContent = timeString;
+                    }
+                    
+                    // Clear input
+                    messageInput.value = '';
+                    
+                    // Scroll to bottom
+                    messagesList.scrollTop = messagesList.scrollHeight;
+                    
+                    // In a real app, send to server here
+                    console.log(`Message sent to ${userData.name}:`, message);
+                }
+            }
+            
+            // Send message on button click
+            sendBtn.addEventListener('click', sendMessage);
+            
+            // Send message on Enter key
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Quick reply buttons
+            const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
+            quickReplyBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    messageInput.value = this.textContent;
+                    messageInput.focus();
+                });
+            });
+            
+            // Chat action buttons
+            const chatActionBtns = document.querySelectorAll('.chat-action-btn');
+            chatActionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.textContent.trim();
+                    
+                    if (action.includes('Đánh dấu quan trọng')) {
+                        this.classList.toggle('active');
+                        const starIcon = this.querySelector('i');
+                        if (this.classList.contains('active')) {
+                            starIcon.style.color = 'var(--warning-color)';
+                            alert('Đã đánh dấu cuộc trò chuyện quan trọng');
+                        } else {
+                            starIcon.style.color = '';
+                        }
+                    } else if (action.includes('Xóa hội thoại')) {
+                        const activeItem = document.querySelector('.conversation-item.active');
+                        if (activeItem && confirm('Bạn có chắc chắn muốn xóa hội thoại này?')) {
+                            // In a real app, delete from server here
+                            activeItem.remove();
+                            alert('Đã xóa hội thoại');
+                        }
+                    }
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.conversations-search input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const allConversations = document.querySelectorAll('.conversation-item');
+                    
+                    allConversations.forEach(conv => {
+                        const userName = conv.querySelector('.user-name').textContent.toLowerCase();
+                        const lastMessage = conv.querySelector('.last-message').textContent.toLowerCase();
+                        const sourceText = conv.querySelector('.source-badge').textContent.toLowerCase();
+                        
+                        if (userName.includes(searchTerm) || lastMessage.includes(searchTerm) || sourceText.includes(searchTerm)) {
+                            conv.style.display = 'flex';
+                        } else {
+                            conv.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Input action buttons
+            const inputActionBtns = document.querySelectorAll('.input-action-btn');
+            inputActionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    const action = icon.className;
+                    
+                    if (action.includes('fa-smile')) {
+                        alert('Emoji picker would open here');
+                    } else if (action.includes('fa-paperclip')) {
+                        alert('File upload dialog would open here');
+                    } else if (action.includes('fa-image')) {
+                        alert('Image upload dialog would open here');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

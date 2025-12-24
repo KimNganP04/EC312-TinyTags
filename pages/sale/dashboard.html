@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Tổng quan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/sale/styles.css">
+    <link rel="stylesheet" href="../../css/sale/dashboard.css">
+    <link rel="stylesheet" href="../../css/slidebar.css">
+    <style>
+        /* Thêm CSS cho submenu */
+        .nav-item.has-submenu {
+            position: relative;
+        }
+        
+        .submenu-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+        
+        .nav-item.has-submenu.active .submenu-icon {
+            transform: rotate(180deg);
+        }
+        
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(255, 245, 247, 0.5);
+            margin-left: 20px;
+            border-radius: 8px;
+        }
+        
+        .nav-item.has-submenu.active .submenu {
+            max-height: 500px;
+            padding: 10px 0;
+        }
+        
+        .submenu li {
+            margin: 5px 0;
+        }
+        
+        .submenu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+        }
+        
+        .submenu a:hover {
+            color: var(--primary-color);
+            background-color: rgba(243, 55, 109, 0.05);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .submenu a.active {
+            color: var(--primary-color);
+            background-color: rgba(243, 55, 109, 0.1);
+            border-left: 3px solid var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .submenu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .submenu {
+                display: none;
+            }
+            
+            .nav-item.has-submenu.active .submenu {
+                display: none;
+            }
+        }
+        
+        /* Main content margin adjustment */
+        .sale-main {
+            margin-left: 260px;
+            padding: 20px;
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @media (max-width: 1200px) {
+            .sale-main {
+                margin-left: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sale-main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a href="../index.html" class="nav-link" data-tooltip="Dashboard">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Sản phẩm -->
+            <li class="nav-item">
+                <a href="../products.html" class="nav-link" data-tooltip="Sản phẩm">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <!-- Khách hàng -->
+            <li class="nav-item">
+                <a href="../customer.html" class="nav-link" data-tooltip="Khách hàng">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <!-- Tin nhắn -->
+            <li class="nav-item">
+                <a href="../messages.html" class="nav-link" data-tooltip="Tin nhắn">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                    <span class="nav-badge">50</span>
+                </a>
+            </li>
+
+            <!-- Đơn đặt hàng -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Đơn hàng">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                    <span class="nav-badge">100</span>
+                </a>
+            </li>
+
+            <!-- Hóa đơn -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Hóa đơn">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <!-- Khuyến mãi -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Khuyến mãi">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <!-- Marketing -->
+            <li class="nav-item">
+                <a href="../../index.html" class="nav-link" data-tooltip="Marketing">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <!-- Sale Module - Main Menu with Submenus (CUỐI CÙNG NHƯ INDEX) -->
+            <li class="nav-item has-submenu active">
+                <a href="index.html" class="nav-link" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                    <i class="fas fa-chevron-down submenu-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="dashboard.html" class="active"><i class="fas fa-th-large"></i> Tổng quan</a></li>
+                    <li><a href="orders.html"><i class="fas fa-plus-circle"></i> Thêm đơn hàng</a></li>
+                    <li><a href="report.html"><i class="fas fa-file-invoice-dollar"></i> Báo cáo doanh thu</a></li>
+                    <li><a href="compare.html"><i class="fas fa-balance-scale"></i> So sánh doanh thu</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="../../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="sale-main">
+        <!-- Header -->
+        <header class="sale-header">
+            <div class="sale-header-left">
+                <h1>Tổng quan doanh thu</h1>
+                <p class="sale-subtitle" id="currentDateTime">Hôm nay: Thứ Ba, 23 tháng 12, 2025 - 14:30:15</p>
+            </div>
+            
+            <div class="sale-user-profile">
+                <div class="sale-user-avatar">KN</div>
+                <div class="sale-user-info">
+                    <h3>Phạm Kim Ngân Hmok</h3>
+                    <p>Sale Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Time Period Selector -->
+        <div class="order-section">
+            <div class="time-period-selector">
+                <button class="time-period-btn active" onclick="changeTimePeriod('today')">Hôm nay</button>
+                <button class="time-period-btn" onclick="changeTimePeriod('week')">Tuần này</button>
+                <button class="time-period-btn" onclick="changeTimePeriod('month')">Tháng này</button>
+                <button class="time-period-btn" onclick="changeTimePeriod('quarter')">Quý này</button>
+                <button class="time-period-btn" onclick="changeTimePeriod('year')">Năm nay</button>
+                <div style="flex: 1;"></div>
+                <button class="btn-sale-secondary" onclick="refreshData()">
+                    <i class="fas fa-sync-alt"></i> Làm mới
+                </button>
+                <button class="btn-sale" onclick="exportOverview()">
+                    <i class="fas fa-download"></i> Xuất báo cáo
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="sale-cards-grid">
+            <div class="sale-card">
+                <div class="sale-card-header">
+                    <div class="sale-card-title">Doanh thu hôm nay</div>
+                    <div class="sale-card-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                </div>
+                <div class="sale-card-value">15.250.000đ</div>
+                <div class="sale-card-change positive">
+                    <i class="fas fa-arrow-up"></i> 12.5% so với hôm qua
+                </div>
+            </div>
+
+            <div class="sale-card">
+                <div class="sale-card-header">
+                    <div class="sale-card-title">Đơn hàng hôm nay</div>
+                    <div class="sale-card-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                </div>
+                <div class="sale-card-value">45</div>
+                <div class="sale-card-change positive">
+                    <i class="fas fa-arrow-up"></i> 8.2% so với hôm qua
+                </div>
+            </div>
+
+            <div class="sale-card">
+                <div class="sale-card-header">
+                    <div class="sale-card-title">Khách hàng mới</div>
+                    <div class="sale-card-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                </div>
+                <div class="sale-card-value">12</div>
+                <div class="sale-card-change positive">
+                    <i class="fas fa-arrow-up"></i> 15.3% so với hôm qua
+                </div>
+            </div>
+
+            <div class="sale-card">
+                <div class="sale-card-header">
+                    <div class="sale-card-title">Tỉ lệ chốt đơn</div>
+                    <div class="sale-card-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                </div>
+                <div class="sale-card-value">68%</div>
+                <div class="sale-card-change negative">
+                    <i class="fas fa-arrow-down"></i> 2.1% so với hôm qua
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="overview-grid">
+            <!-- Left Column: Charts -->
+            <div>
+                <!-- Revenue Chart - Đường trên, Cột dưới -->
+                <div class="revenue-chart-container">
+                    <div class="chart-header">
+                        <h2 class="sale-chart-title">Doanh thu 30 ngày gần nhất</h2>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #F3376D;"></div>
+                                <span>Doanh thu</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #FF95A6;"></div>
+                                <span>Đơn hàng</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Biểu đồ đường - Doanh thu theo tuần -->
+                    <div class="chart-wrapper">
+                        <div class="chart-title-small">Doanh thu theo tuần (triệu đồng)</div>
+                        <div class="line-chart-container">
+                            <div id="revenueLineChart" class="chart-svg-container"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Biểu đồ cột - Doanh thu 7 ngày gần nhất -->
+                    <div class="chart-wrapper">
+                        <div class="chart-title-small">Doanh thu 7 ngày gần nhất</div>
+                        <div class="bar-chart-container">
+                            <div id="weeklyBarChart" class="chart-svg-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="sale-chart-container">
+                    <h2 class="sale-chart-title">Chỉ số hiệu suất</h2>
+                    <div class="performance-metrics">
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="metric-value">146.5K</div>
+                            <div class="metric-label">Giá trị đơn TB</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="metric-value">2.4</div>
+                            <div class="metric-label">Số SP/đơn</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <i class="fas fa-redo"></i>
+                            </div>
+                            <div class="metric-value">35%</div>
+                            <div class="metric-label">KH quay lại</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Trends -->
+                <div class="sale-chart-container">
+                    <h2 class="sale-chart-title">Xu hướng doanh thu</h2>
+                    <div class="revenue-trends">
+                        <div class="trend-item">
+                            <div class="trend-value">125.4M</div>
+                            <div class="trend-label">Doanh thu tháng này</div>
+                            <div class="trend-change positive">
+                                <i class="fas fa-arrow-up"></i> 18.2% so với tháng trước
+                            </div>
+                        </div>
+                        <div class="trend-item">
+                            <div class="trend-value">856</div>
+                            <div class="trend-label">Tổng đơn hàng</div>
+                            <div class="trend-change positive">
+                                <i class="fas fa-arrow-up"></i> 8.7% so với tháng trước
+                            </div>
+                        </div>
+                        <div class="trend-item">
+                            <div class="trend-value">42.5%</div>
+                            <div class="trend-label">Lợi nhuận trung bình</div>
+                            <div class="trend-change negative">
+                                <i class="fas fa-arrow-down"></i> 1.2% so với tháng trước
+                            </div>
+                        </div>
+                        <div class="trend-item">
+                            <div class="trend-value">68%</div>
+                            <div class="trend-label">Tỉ lệ chốt đơn</div>
+                            <div class="trend-change positive">
+                                <i class="fas fa-arrow-up"></i> 3.5% so với tháng trước
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Top Products and Categories -->
+            <div>
+                <!-- Top Products -->
+                <div class="sale-chart-container">
+                    <h2 class="sale-chart-title">Top 5 sản phẩm bán chạy</h2>
+                    <ul class="top-products-list">
+                        <li class="top-product-item">
+                            <div class="product-rank">1</div>
+                            <div class="product-info">
+                                <div class="product-name">Charm mèo thần tài</div>
+                                <div class="product-stats">
+                                    <span>167 đã bán</span>
+                                    <span style="color: #F3376D; font-weight: 600;">25.05M</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="top-product-item">
+                            <div class="product-rank">2</div>
+                            <div class="product-info">
+                                <div class="product-name">Sét DIY Hoa Hồng</div>
+                                <div class="product-stats">
+                                    <span>98 đã bán</span>
+                                    <span style="color: #F3376D; font-weight: 600;">24.50M</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="top-product-item">
+                            <div class="product-rank">3</div>
+                            <div class="product-info">
+                                <div class="product-name">Charm móc khóa Hồ Ly</div>
+                                <div class="product-stats">
+                                    <span>145 đã bán</span>
+                                    <span style="color: #F3376D; font-weight: 600;">17.40M</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="top-product-item">
+                            <div class="product-rank">4</div>
+                            <div class="product-info">
+                                <div class="product-name">Móc khóa da bò</div>
+                                <div class="product-stats">
+                                    <span>67 đã bán</span>
+                                    <span style="color: #F3376D; font-weight: 600;">23.45M</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="top-product-item">
+                            <div class="product-rank">5</div>
+                            <div class="product-info">
+                                <div class="product-name">Charm dây đeo điện thoại</div>
+                                <div class="product-stats">
+                                    <span>128 đã bán</span>
+                                    <span style="color: #F3376D; font-weight: 600;">23.04M</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="btn-sale-secondary" onclick="viewAllProducts()" style="font-size: 13px;">
+                            <i class="fas fa-list"></i> Xem tất cả sản phẩm
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Revenue by Category -->
+                <div class="sale-chart-container">
+                    <h2 class="sale-chart-title">Doanh thu theo danh mục</h2>
+                    
+                    <!-- Phần biểu đồ tròn với phần trăm hiển thị trên biểu đồ -->
+                    <div class="chart-visualization">
+                        <div class="pie-chart-container">
+                            <div class="pie-chart">
+                                <!-- Phần trăm hiển thị trên từng phần biểu đồ -->
+                                <div class="pie-percentage pie-percentage-1">34%</div>
+                                <div class="pie-percentage pie-percentage-2">39%</div>
+                                <div class="pie-percentage pie-percentage-3">18%</div>
+                                <div class="pie-percentage pie-percentage-4">9%</div>
+                                
+                                <!-- Ô trung tâm hiển thị tổng doanh thu -->
+                                <div class="pie-center">
+                                    <span class="total-label">Tổng doanh thu</span>
+                                    <span class="total-value">125.4M</span>
+                                </div>
+                            </div>
+                            <div class="pie-legend">
+                                <!-- Chú thích chỉ hiển thị tên danh mục -->
+                                <div class="pie-legend-item">
+                                    <div class="pie-color" style="background: #F3376D;"></div>
+                                    <span>Charm móc khóa</span>
+                                </div>
+                                <div class="pie-legend-item">
+                                    <div class="pie-color" style="background: #FF95A6;"></div>
+                                    <span>Sét DIY</span>
+                                </div>
+                                <div class="pie-legend-item">
+                                    <div class="pie-color" style="background: #FADE98;"></div>
+                                    <span>Charm dây đeo</span>
+                                </div>
+                                <div class="pie-legend-item">
+                                    <div class="pie-color" style="background: #0984e3;"></div>
+                                    <span>Móc khóa da</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phần progress bars với thông tin chi tiết -->
+                    <div class="category-progress">
+                        <div class="category-item">
+                            <div class="category-header">
+                                <span class="category-name">Charm móc khóa</span>
+                                <span class="category-value">42.45M (34%)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 34%; background: #F3376D;"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-header">
+                                <span class="category-name">Sét DIY</span>
+                                <span class="category-value">48.95M (39%)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 39%; background: #FF95A6;"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-header">
+                                <span class="category-name">Charm dây đeo</span>
+                                <span class="category-value">23.04M (18%)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 18%; background: #FADE98;"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-header">
+                                <span class="category-name">Móc khóa da</span>
+                                <span class="category-value">10.96M (9%)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 9%; background: #0984e3;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="sale-chart-container">
+                    <h2 class="sale-chart-title">Đơn hàng gần đây</h2>
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        <table class="product-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>KH</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>TT-2025-0012</td>
+                                    <td>Nguyễn Văn Nam</td>
+                                    <td>240.000đ</td>
+                                    <td><span class="status-badge badge-success">Hoàn thành</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TT-2025-0011</td>
+                                    <td>Phạm Thanh Hà</td>
+                                    <td>250.000đ</td>
+                                    <td><span class="status-badge badge-success">Hoàn thành</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TT-2025-0010</td>
+                                    <td>Huỳnh Yến Nhi</td>
+                                    <td>540.000đ</td>
+                                    <td><span class="status-badge badge-warning">Đang xử lý</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TT-2025-0009</td>
+                                    <td>Đỗ Trần Hà</td>
+                                    <td>350.000đ</td>
+                                    <td><span class="status-badge badge-success">Hoàn thành</span></td>
+                                </tr>
+                                <tr>
+                                    <td>TT-2025-0008</td>
+                                    <td>Vũ Thanh Thúy</td>
+                                    <td>300.000đ</td>
+                                    <td><span class="status-badge badge-info">Đang giao</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="btn-sale-secondary" onclick="viewAllOrders()" style="font-size: 13px;">
+                            <i class="fas fa-clipboard-list"></i> Xem tất cả đơn hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== MODALS ===== -->
+    
+    <!-- All Products Modal -->
+    <div class="modal-overlay" id="allProductsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tất cả sản phẩm</h3>
+                <button class="modal-close" onclick="closeModal('allProductsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 15px;">
+                    <div class="customer-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="productSearchModal" placeholder="Tìm kiếm sản phẩm...">
+                    </div>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Danh mục</th>
+                                <th>Đã bán</th>
+                                <th>Doanh thu</th>
+                                <th>Tồn kho</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productListModal">
+                            <!-- Product data sẽ được load bằng JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal cancel" onclick="closeModal('allProductsModal')">Đóng</button>
+                <button class="btn-modal confirm" onclick="exportProductList()">
+                    <i class="fas fa-download"></i> Xuất danh sách
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Orders Modal -->
+    <div class="modal-overlay" id="allOrdersModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tất cả đơn hàng</h3>
+                <button class="modal-close" onclick="closeModal('allOrdersModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <div class="customer-search-box" style="flex: 1;">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="orderSearchModal" placeholder="Tìm kiếm đơn hàng...">
+                    </div>
+                    <select class="form-input" id="orderStatusFilter" style="width: 150px;">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option value="processing">Đang xử lý</option>
+                        <option value="shipping">Đang giao</option>
+                        <option value="pending">Chờ xác nhận</option>
+                    </select>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn</th>
+                                <th>Khách hàng</th>
+                                <th>Ngày đặt</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderListModal">
+                            <!-- Order data sẽ được load bằng JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal cancel" onclick="closeModal('allOrdersModal')">Đóng</button>
+                <button class="btn-modal confirm" onclick="exportOrderList()">
+                    <i class="fas fa-download"></i> Xuất danh sách
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/sale.js"></script>
+    <script>
+        // Chart data
+        const weeklyData = [
+            { week: 'Tuần 1', revenue: 45.2, orders: 320 },
+            { week: 'Tuần 2', revenue: 52.8, orders: 375 },
+            { week: 'Tuần 3', revenue: 48.5, orders: 345 },
+            { week: 'Tuần 4', revenue: 51.3, orders: 365 }
+        ];
+
+        const dailyData = [
+            { day: 'T2', revenue: 2.1, orders: 15 },
+            { day: 'T3', revenue: 2.8, orders: 20 },
+            { day: 'T4', revenue: 2.4, orders: 17 },
+            { day: 'T5', revenue: 3.2, orders: 23 },
+            { day: 'T6', revenue: 2.9, orders: 21 },
+            { day: 'T7', revenue: 3.5, orders: 25 },
+            { day: 'CN', revenue: 1.8, orders: 13 }
+        ];
+
+        // Initialize charts on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            loadModalData();
+            
+            // Kiểm tra và mở submenu nếu cần
+            checkActiveSubmenu();
+        });
+
+        // Toggle submenu function
+        function toggleSubmenu(link) {
+            const navItem = link.closest('.nav-item.has-submenu');
+            const isActive = navItem.classList.contains('active');
+            
+            // Đóng tất cả submenu khác
+            document.querySelectorAll('.nav-item.has-submenu').forEach(item => {
+                if (item !== navItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle submenu hiện tại
+            navItem.classList.toggle('active');
+            
+            // Chỉ ngăn chặn chuyển hướng nếu không phải là trang chính của Sale
+            // Cho phép chuyển đến trang index.html khi click vào "Sale"
+            return false;
+        }
+        
+        // Kiểm tra và mở submenu nếu trang hiện tại thuộc submenu
+        function checkActiveSubmenu() {
+            // Luôn mở submenu Sale vì đang ở trang dashboard của Sale
+            const saleItem = document.querySelector('.nav-item.has-submenu');
+            if (saleItem) {
+                saleItem.classList.add('active');
+            }
+        }
+
+        // Initialize charts function - Riêng cho trang tongquan
+        function initializeCharts() {
+            createLineChart();
+            createBarChart();
+        }
+
+        // Make it globally accessible for refresh
+        window.initializeCharts = initializeCharts;
+
+        function createLineChart() {
+            const container = document.getElementById('revenueLineChart');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("class", "chart-svg");
+            svg.setAttribute("viewBox", "0 0 600 250");
+            
+            // Add gradient
+            const defs = document.createElementNS(svgNS, "defs");
+            const gradient = document.createElementNS(svgNS, "linearGradient");
+            gradient.setAttribute("id", "lineGradient");
+            gradient.setAttribute("x1", "0%");
+            gradient.setAttribute("y1", "0%");
+            gradient.setAttribute("x2", "100%");
+            gradient.setAttribute("y2", "0%");
+            
+            const stop1 = document.createElementNS(svgNS, "stop");
+            stop1.setAttribute("offset", "0%");
+            stop1.setAttribute("stop-color", "#F3376D");
+            const stop2 = document.createElementNS(svgNS, "stop");
+            stop2.setAttribute("offset", "100%");
+            stop2.setAttribute("stop-color", "#FF95A6");
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            defs.appendChild(gradient);
+            svg.appendChild(defs);
+            
+            // Chart dimensions
+            const width = 600;
+            const height = 250;
+            const padding = { top: 40, right: 60, bottom: 60, left: 60 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+            
+            // Find max value for scaling
+            const maxRevenue = Math.max(...weeklyData.map(item => item.revenue));
+            const pointSpacing = chartWidth / (weeklyData.length - 1);
+            
+            // Create grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = padding.top + (chartHeight / 5) * i;
+                const line = document.createElementNS(svgNS, "line");
+                line.setAttribute("x1", padding.left);
+                line.setAttribute("y1", y);
+                line.setAttribute("x2", padding.left + chartWidth);
+                line.setAttribute("y2", y);
+                line.setAttribute("class", "grid-line");
+                svg.appendChild(line);
+                
+                // Y-axis labels
+                const value = (maxRevenue / 5) * (5 - i);
+                const text = document.createElementNS(svgNS, "text");
+                text.setAttribute("x", padding.left - 10);
+                text.setAttribute("y", y + 4);
+                text.setAttribute("text-anchor", "end");
+                text.setAttribute("class", "y-axis-label");
+                text.textContent = `${value.toFixed(1)}M`;
+                svg.appendChild(text);
+            }
+            
+            // Create line path
+            let pathData = "";
+            weeklyData.forEach((item, index) => {
+                const x = padding.left + (pointSpacing * index);
+                const y = padding.top + chartHeight - (item.revenue / maxRevenue) * chartHeight;
+                
+                if (index === 0) {
+                    pathData = `M ${x} ${y}`;
+                } else {
+                    pathData += ` L ${x} ${y}`;
+                }
+            });
+            
+            const path = document.createElementNS(svgNS, "path");
+            path.setAttribute("d", pathData);
+            path.setAttribute("class", "line-path");
+            path.setAttribute("stroke", "url(#lineGradient)");
+            svg.appendChild(path);
+            
+            // Create points and labels
+            weeklyData.forEach((item, index) => {
+                const x = padding.left + (pointSpacing * index);
+                const y = padding.top + chartHeight - (item.revenue / maxRevenue) * chartHeight;
+                
+                // Create circle point
+                const circle = document.createElementNS(svgNS, "circle");
+                circle.setAttribute("cx", x);
+                circle.setAttribute("cy", y);
+                circle.setAttribute("r", "6");
+                circle.setAttribute("class", "line-point");
+                svg.appendChild(circle);
+                
+                // Create value label
+                const valueText = document.createElementNS(svgNS, "text");
+                valueText.setAttribute("x", x);
+                valueText.setAttribute("y", y - 15);
+                valueText.setAttribute("text-anchor", "middle");
+                valueText.setAttribute("class", "chart-value");
+                valueText.textContent = `${item.revenue}M`;
+                svg.appendChild(valueText);
+                
+                // Create week label
+                const weekText = document.createElementNS(svgNS, "text");
+                weekText.setAttribute("x", x);
+                weekText.setAttribute("y", padding.top + chartHeight + 25);
+                weekText.setAttribute("text-anchor", "middle");
+                weekText.setAttribute("class", "chart-text");
+                weekText.textContent = item.week;
+                svg.appendChild(weekText);
+            });
+            
+            container.appendChild(svg);
+        }
+
+        function createBarChart() {
+            const container = document.getElementById('weeklyBarChart');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("class", "chart-svg");
+            svg.setAttribute("viewBox", "0 0 600 250");
+            
+            // Add gradient
+            const defs = document.createElementNS(svgNS, "defs");
+            const gradient = document.createElementNS(svgNS, "linearGradient");
+            gradient.setAttribute("id", "barGradient");
+            gradient.setAttribute("x1", "0%");
+            gradient.setAttribute("y1", "100%");
+            gradient.setAttribute("x2", "0%");
+            gradient.setAttribute("y2", "0%");
+            
+            const stop1 = document.createElementNS(svgNS, "stop");
+            stop1.setAttribute("offset", "0%");
+            stop1.setAttribute("stop-color", "#F3376D");
+            const stop2 = document.createElementNS(svgNS, "stop");
+            stop2.setAttribute("offset", "100%");
+            stop2.setAttribute("stop-color", "#FF95A6");
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            defs.appendChild(gradient);
+            svg.appendChild(defs);
+            
+            // Chart dimensions
+            const width = 600;
+            const height = 250;
+            const padding = { top: 40, right: 60, bottom: 60, left: 60 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+            
+            // Find max value for scaling
+            const maxRevenue = Math.max(...dailyData.map(item => item.revenue));
+            const barWidth = (chartWidth / dailyData.length) * 0.7;
+            
+            // Create grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = padding.top + (chartHeight / 5) * i;
+                const line = document.createElementNS(svgNS, "line");
+                line.setAttribute("x1", padding.left);
+                line.setAttribute("y1", y);
+                line.setAttribute("x2", padding.left + chartWidth);
+                line.setAttribute("y2", y);
+                line.setAttribute("class", "grid-line");
+                svg.appendChild(line);
+                
+                // Y-axis labels
+                const value = (maxRevenue / 5) * (5 - i);
+                const text = document.createElementNS(svgNS, "text");
+                text.setAttribute("x", padding.left - 10);
+                text.setAttribute("y", y + 4);
+                text.setAttribute("text-anchor", "end");
+                text.setAttribute("class", "y-axis-label");
+                text.textContent = `${value.toFixed(1)}M`;
+                svg.appendChild(text);
+            }
+            
+            // Create bars
+            dailyData.forEach((item, index) => {
+                const barHeight = (item.revenue / maxRevenue) * chartHeight;
+                const x = padding.left + index * (chartWidth / dailyData.length) + (chartWidth / dailyData.length - barWidth) / 2;
+                const y = padding.top + chartHeight - barHeight;
+                
+                // Create bar
+                const bar = document.createElementNS(svgNS, "rect");
+                bar.setAttribute("x", x);
+                bar.setAttribute("y", y);
+                bar.setAttribute("width", barWidth);
+                bar.setAttribute("height", barHeight);
+                bar.setAttribute("rx", "4");
+                bar.setAttribute("ry", "4");
+                bar.setAttribute("class", "bar");
+                svg.appendChild(bar);
+                
+                // Create value label
+                const valueText = document.createElementNS(svgNS, "text");
+                valueText.setAttribute("x", x + barWidth / 2);
+                valueText.setAttribute("y", y - 10);
+                valueText.setAttribute("text-anchor", "middle");
+                valueText.setAttribute("class", "chart-value");
+                valueText.textContent = `${item.revenue}M`;
+                svg.appendChild(valueText);
+                
+                // Create day label
+                const dayText = document.createElementNS(svgNS, "text");
+                dayText.setAttribute("x", x + barWidth / 2);
+                dayText.setAttribute("y", padding.top + chartHeight + 20);
+                dayText.setAttribute("text-anchor", "middle");
+                dayText.setAttribute("class", "chart-text");
+                dayText.textContent = item.day;
+                svg.appendChild(dayText);
+            });
+            
+            container.appendChild(svg);
+        }
+
+        // Load modal data - Riêng cho trang tongquan
+        function loadModalData() {
+            // Product data
+            const products = [
+                { name: 'Charm mèo thần tài', category: 'Charm móc khóa', sold: 167, revenue: '25.05M', stock: 45 },
+                { name: 'Sét DIY Hoa Hồng', category: 'Sét DIY', sold: 98, revenue: '24.50M', stock: 32 },
+                { name: 'Charm móc khóa Hồ Ly', category: 'Charm móc khóa', sold: 145, revenue: '17.40M', stock: 28 },
+                { name: 'Móc khóa da bò', category: 'Móc khóa da', sold: 67, revenue: '23.45M', stock: 22 },
+                { name: 'Charm dây đeo điện thoại', category: 'Charm dây đeo', sold: 128, revenue: '23.04M', stock: 50 }
+            ];
+            
+            const productList = document.getElementById('productListModal');
+            if (productList) {
+                productList.innerHTML = products.map(product => `
+                    <tr>
+                        <td>${product.name}</td>
+                        <td>${product.category}</td>
+                        <td>${product.sold}</td>
+                        <td>${product.revenue}</td>
+                        <td>${product.stock}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            // Order data
+            const orders = [
+                { code: 'TT-2025-0012', customer: 'Nguyễn Văn Nam', date: '23/12/2025', amount: '240.000đ', status: 'completed' },
+                { code: 'TT-2025-0011', customer: 'Phạm Thanh Hà', date: '23/12/2025', amount: '250.000đ', status: 'completed' },
+                { code: 'TT-2025-0010', customer: 'Huỳnh Yến Nhi', date: '22/12/2025', amount: '540.000đ', status: 'processing' },
+                { code: 'TT-2025-0009', customer: 'Đỗ Trần Hà', date: '22/12/2025', amount: '350.000đ', status: 'completed' },
+                { code: 'TT-2025-0008', customer: 'Vũ Thanh Thúy', date: '21/12/2025', amount: '300.000đ', status: 'shipping' }
+            ];
+            
+            const orderList = document.getElementById('orderListModal');
+            if (orderList) {
+                orderList.innerHTML = orders.map(order => {
+                    const statusBadge = order.status === 'completed' ? 
+                        '<span class="status-badge badge-success">Hoàn thành</span>' :
+                        order.status === 'processing' ? 
+                        '<span class="status-badge badge-warning">Đang xử lý</span>' :
+                        '<span class="status-badge badge-info">Đang giao</span>';
+                    
+                    return `
+                        <tr>
+                            <td>${order.code}</td>
+                            <td>${order.customer}</td>
+                            <td>${order.date}</td>
+                            <td>${order.amount}</td>
+                            <td>${statusBadge}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+        
+        // Functions riêng cho trang tongquan
+        function exportProductList() {
+            saleModule.showToast('Đang xuất danh sách sản phẩm...');
+            setTimeout(() => {
+                saleModule.showToast('Đã xuất danh sách sản phẩm thành công!');
+                saleModule.closeModal('allProductsModal');
+            }, 1500);
+        }
+        
+        function exportOrderList() {
+            saleModule.showToast('Đang xuất danh sách đơn hàng...');
+            setTimeout(() => {
+                saleModule.showToast('Đã xuất danh sách đơn hàng thành công!');
+                saleModule.closeModal('allOrdersModal');
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* src/css/styles.css */
+/* Biến toàn cục - Dùng cho tất cả trang */
+:root {
+    --color-primary: #F3376D;
+    --color-primary-light: #FF95A6;
+    --color-secondary: #90324D;
+    --color-background: #FAEED6;
+    --color-accent: #FADE98;
+    --color-light-pink: #FCE4E5;
+    --color-text: #333;
+    --color-text-light: #666;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: var(--color-text);
+    display: flex;
+}
+
+/* Các lớp tiện ích có thể dùng chung */
+.card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+
+.section-title {
+    font-size: 20px;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--color-light-pink);
+}
+
+/* Nút chung */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #d62e5f;
+}
+/* src/css/styles.css */
+.main-content {
+    margin-left: 260px;
+    padding: 30px;
+    transition: margin-left 0.3s;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+        padding-top: 80px;
+    }
+}
+

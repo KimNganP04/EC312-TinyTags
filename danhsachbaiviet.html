@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Bài Viết - Tiny Tags</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="marketing.css">
+</head>
+<body>
+    <!-- Sidebar will be loaded here -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Danh Sách Bài Viết</h1>
+                <p class="page-subtitle">Quản lý tất cả bài viết cho cửa hàng phụ kiện charm</p>
+            </div>
+            <a href="taobaiviet.html" class="btn-primary">
+                <i class="fas fa-plus"></i>
+                <span>Tạo bài viết mới</span>
+            </a>
+        </div>
+        
+        <!-- Stats Overview - THÊM TRẠNG THÁI "TỪ CHỐI/CẦN SỬA" -->
+        <div class="stats-overview">
+            <div class="stat-card active" id="stat-all" data-status="all">
+                <div class="stat-icon status-all">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="total-posts">0</h3>
+                    <p>Tổng bài viết</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" id="stat-draft" data-status="draft">
+                <div class="stat-icon status-draft-badge">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="draft-posts">0</h3>
+                    <p>Bản nháp</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" id="stat-pending" data-status="pending">
+                <div class="stat-icon status-pending-badge">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="pending-posts">0</h3>
+                    <p>Đang chờ duyệt</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" id="stat-approved" data-status="approved">
+                <div class="stat-icon status-approved-badge">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="approved-posts">0</h3>
+                    <p>Đã duyệt</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" id="stat-published" data-status="published">
+                <div class="stat-icon status-published-badge">
+                    <i class="fas fa-share-square"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="published-posts">0</h3>
+                    <p>Đã đăng</p>
+                </div>
+            </div>
+            
+            <!-- THÊM TRẠNG THÁI MỚI: TỪ CHỐI/CẦN SỬA -->
+            <div class="stat-card" id="stat-rejected" data-status="rejected">
+                <div class="stat-icon status-rejected-badge">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="rejected-posts">0</h3>
+                    <p>Cần sửa</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <select class="filter-select" id="category-filter">
+                    <option value="all">Tất cả danh mục</option>
+                    <option value="moc-khoa">Móc khóa charm</option>
+                    <option value="day-deo">Dây đeo điện thoại charm</option>
+                    <option value="set-diy">Set DIY charm</option>
+                    <option value="vong-tay">Vòng tay charm</option>
+                </select>
+                
+                <input type="text" class="search-box" id="search-box" placeholder="Tìm kiếm bài viết theo tiêu đề...">
+            </div>
+            
+            <div class="filter-group">
+                <button class="btn-secondary" id="reset-filters">
+                    <i class="fas fa-redo"></i>
+                    <span>Đặt lại</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Posts Table -->
+        <div class="posts-table">
+            <!-- Table Header - THÊM CỘT "NGƯỜI GỬI" -->
+            <div class="table-header">
+                <div>Tiêu đề bài viết</div>
+                <div>Người gửi</div>
+                <div>Ngày viết</div>
+                <div>Ngày đăng</div>
+                <div>Danh mục</div>
+                <div>Trạng thái</div>
+                <div>Thao tác</div>
+            </div>
+            
+            <!-- Table Rows will be populated by JavaScript -->
+            <div id="posts-container"></div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="page-btn" id="prev-page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn" id="next-page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Xác nhận xóa</h3>
+            <p class="modal-text">Bạn có chắc chắn muốn xóa bài viết "<span id="post-title-to-delete"></span>"? Hành động này không thể hoàn tác.</p>
+            <div class="modal-buttons">
+                <button class="btn-secondary" id="cancel-delete">Hủy bỏ</button>
+                <button class="btn-primary" id="confirm-delete">Xóa bài viết</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== HỆ THỐNG CẬP NHẬT REAL-TIME =====
+        let isInitialized = false;
+        let refreshInterval;
+        
+        // Hàm khởi tạo trang
+        function initializePage() {
+            console.log('🚀 Khởi tạo trang danhsachbaiviet.html');
+            
+            // Khởi tạo sidebar
+            if (typeof initSidebar === 'function') {
+                setTimeout(initSidebar, 100);
+            }
+            
+            // Khởi tạo danh sách bài viết
+            if (typeof initPostsPage === 'function') {
+                initPostsPage();
+            } else {
+                // Fallback nếu hàm không tồn tại
+                console.log('⚠️ initPostsPage không tồn tại, load marketing.js...');
+                loadMarketingScript();
+            }
+            
+            // Thiết lập event listeners
+            setupPageEventListeners();
+            
+            // Bắt đầu auto-refresh
+            startAutoRefresh();
+            
+            isInitialized = true;
+        }
+        
+        // Load marketing.js nếu chưa có
+        function loadMarketingScript() {
+            const script = document.createElement('script');
+            script.src = 'marketing.js';
+            script.onload = function() {
+                console.log('✅ Đã load marketing.js');
+                setTimeout(() => {
+                    if (typeof initPostsPage === 'function') {
+                        initPostsPage();
+                    }
+                }, 500);
+            };
+            document.head.appendChild(script);
+        }
+        
+        // Hàm refresh dữ liệu
+        function refreshPostsData() {
+            console.log('🔄 Đang refresh dữ liệu...');
+            
+            // Cập nhật thống kê
+            if (typeof updateStats === 'function') {
+                updateStats();
+            }
+            
+            // Render lại danh sách
+            if (typeof renderPosts === 'function') {
+                renderPosts();
+            }
+        }
+        
+        // Hàm refresh với hiệu ứng
+        function refreshWithAnimation() {
+            const container = document.getElementById('posts-container');
+            if (container) {
+                // Thêm hiệu ứng loading
+                container.style.opacity = '0.5';
+                container.style.transition = 'opacity 0.3s';
+                
+                setTimeout(() => {
+                    refreshPostsData();
+                    
+                    // Khôi phục opacity
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                    }, 300);
+                }, 300);
+            } else {
+                refreshPostsData();
+            }
+        }
+        
+        // Bắt đầu auto-refresh
+        function startAutoRefresh() {
+            // Dừng interval cũ nếu có
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+            
+            // Tạo interval mới (10 giây)
+            refreshInterval = setInterval(() => {
+                console.log('⏰ Tự động refresh dữ liệu');
+                refreshPostsData();
+            }, 10000);
+        }
+        
+        // Thiết lập event listeners cho trang
+        function setupPageEventListeners() {
+            // Lắng nghe storage events
+            window.addEventListener('storage', handleStorageEvent);
+            
+            // Lắng nghe custom events
+            window.addEventListener('storageUpdated', handleStorageUpdated);
+            window.addEventListener('postStatusChanged', handlePostStatusChanged);
+            
+            // Lắng nghe khi trang được hiển thị lại
+            window.addEventListener('pageshow', handlePageShow);
+            
+            // Lắng nghe khi tab được focus
+            window.addEventListener('focus', handleTabFocus);
+            
+            // Thêm nút refresh manual
+            addRefreshButton();
+        }
+        
+        // Xử lý storage event
+        function handleStorageEvent(e) {
+            if (e.key === 'tiny_tags_posts' || e.key === null) {
+                console.log('📦 Storage changed, refreshing...');
+                setTimeout(refreshWithAnimation, 300);
+            }
+        }
+        
+        // Xử lý custom event
+        function handleStorageUpdated() {
+            console.log('📡 Nhận storageUpdated event');
+            setTimeout(refreshWithAnimation, 200);
+        }
+        
+        // Xử lý post status changed event
+        function handlePostStatusChanged(e) {
+            console.log('📝 Bài viết thay đổi trạng thái:', e.detail);
+            setTimeout(refreshWithAnimation, 300);
+        }
+        
+        // Xử lý khi trang được hiển thị lại
+        function handlePageShow(e) {
+            if (e.persisted) {
+                console.log('🔙 Trang được restore từ cache');
+                setTimeout(refreshWithAnimation, 500);
+            }
+        }
+        
+        // Xử lý khi tab được focus
+        function handleTabFocus() {
+            console.log('🎯 Tab được focus, refreshing...');
+            setTimeout(refreshPostsData, 300);
+        }
+        
+        // Thêm nút refresh manual
+        function addRefreshButton() {
+            const pageHeader = document.querySelector('.page-header');
+            if (pageHeader) {
+                const refreshBtn = document.createElement('button');
+                refreshBtn.className = 'btn-secondary';
+                refreshBtn.style.marginLeft = '10px';
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i><span>Refresh</span>';
+                refreshBtn.onclick = function(e) {
+                    e.preventDefault();
+                    refreshWithAnimation();
+                    // Hiển thị thông báo
+                    showToast('Đang làm mới dữ liệu...', 'info');
+                };
+                
+                pageHeader.querySelector('.btn-primary').parentNode.appendChild(refreshBtn);
+            }
+        }
+        
+        // Hiển thị toast message
+        function showToast(message, type = 'info') {
+            // Xóa toast cũ
+            const oldToast = document.querySelector('.toast-message');
+            if (oldToast) oldToast.remove();
+            
+            // Tạo toast mới
+            const toast = document.createElement('div');
+            toast.className = `toast-message toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            // Style cho toast
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#3B82F6'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Tự động xóa sau 3 giây
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+            
+            // Thêm CSS animation
+            if (!document.querySelector('#toast-styles')) {
+                const style = document.createElement('style');
+                style.id = 'toast-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // Đánh dấu khi đi đến trang chi tiết
+        window.navigateToDetail = function(postId) {
+            sessionStorage.setItem('lastViewedPost', postId);
+            sessionStorage.setItem('fromListPage', 'true');
+            return true;
+        };
+        
+        // Khởi tạo khi DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 DOM ready, đang khởi tạo...');
+            
+            // Kiểm tra nếu vừa quay lại từ trang chi tiết
+            const fromDetail = sessionStorage.getItem('fromDetailPage');
+            if (fromDetail) {
+                console.log('🔙 Vừa quay lại từ trang chi tiết');
+                sessionStorage.removeItem('fromDetailPage');
+                setTimeout(initializePage, 300);
+            } else {
+                initializePage();
+            }
+            
+            // Kiểm tra URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('refreshed') === 'true') {
+                console.log('🔄 Phát hiện tham số refreshed');
+                setTimeout(refreshWithAnimation, 500);
+                // Xóa tham số
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+        
+        // Cleanup khi trang unload
+        window.addEventListener('beforeunload', function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
+        
+        // Gọi global functions
+        window.refreshPostsData = refreshPostsData;
+        window.refreshWithAnimation = refreshWithAnimation;
+        window.showToast = showToast;
+    </script>
+    
+    <script src="marketing.js"></script>
+</body>
+</html>

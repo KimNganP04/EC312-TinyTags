@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - So sánh doanh thu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/sale/styles.css">
+    <link rel="stylesheet" href="../../css/sale/compare.css">
+    <link rel="stylesheet" href="../../css/slidebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Thêm CSS cho submenu tương tự index.html */
+        .nav-item.has-submenu {
+            position: relative;
+        }
+        
+        .submenu-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+        
+        .nav-item.has-submenu.active .submenu-icon {
+            transform: rotate(180deg);
+        }
+        
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(255, 245, 247, 0.5);
+            margin-left: 20px;
+            border-radius: 8px;
+        }
+        
+        .nav-item.has-submenu.active .submenu {
+            max-height: 500px;
+            padding: 10px 0;
+        }
+        
+        .submenu li {
+            margin: 5px 0;
+        }
+        
+        .submenu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+        }
+        
+        .submenu a:hover {
+            color: var(--primary-color);
+            background-color: rgba(243, 55, 109, 0.05);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .submenu a.active {
+            color: var(--primary-color);
+            background-color: rgba(243, 55, 109, 0.1);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .submenu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .submenu {
+                display: none;
+            }
+            
+            .nav-item.has-submenu.active .submenu {
+                display: none;
+            }
+        }
+        
+        /* Main content margin adjustment */
+        .sale-main {
+            margin-left: 260px;
+            padding: 20px;
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @media (max-width: 1200px) {
+            .sale-main {
+                margin-left: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sale-main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a href="../index.html" class="nav-link" data-tooltip="Dashboard">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Sản phẩm -->
+            <li class="nav-item">
+                <a href="../products.html" class="nav-link" data-tooltip="Sản phẩm">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <!-- Khách hàng -->
+            <li class="nav-item">
+                <a href="../customer.html" class="nav-link" data-tooltip="Khách hàng">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <!-- Tin nhắn -->
+            <li class="nav-item">
+                <a href="../messages.html" class="nav-link" data-tooltip="Tin nhắn">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                    <span class="nav-badge">50</span>
+                </a>
+            </li>
+
+            <!-- Đơn đặt hàng -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Đơn hàng">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                    <span class="nav-badge">100</span>
+                </a>
+            </li>
+
+            <!-- Hóa đơn -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Hóa đơn">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <!-- Khuyến mãi -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Khuyến mãi">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <!-- Marketing -->
+            <li class="nav-item">
+                <a href="../../index.html" class="nav-link" data-tooltip="Marketing">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <!-- Sale Module - Main Menu with Submenus -->
+            <li class="nav-item has-submenu active">
+                <a href="index.html" class="nav-link" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                    <i class="fas fa-chevron-down submenu-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="dashboard.html"><i class="fas fa-th-large"></i> Tổng quan</a></li>
+                    <li><a href="orders.html"><i class="fas fa-plus-circle"></i> Thêm đơn hàng</a></li>
+                    <li><a href="report.html"><i class="fas fa-file-invoice-dollar"></i> Báo cáo doanh thu</a></li>
+                    <li><a href="compare.html" class="active"><i class="fas fa-balance-scale"></i> So sánh doanh thu</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="../../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="sale-main">
+        <!-- Comparison Header -->
+        <header class="comparison-header">
+            <div class="comparison-title-section">
+                <h1>So sánh doanh thu</h1>
+                <p class="comparison-subtitle" id="currentDateTime">Hôm nay: Thứ Ba, 23 tháng 12, 2025 - 14:30:15</p>
+            </div>
+            
+            <div class="sale-user-profile">
+                <div class="sale-user-avatar">KN</div>
+                <div class="sale-user-info">
+                    <h3>Phạm Kim Ngân Hmok</h3>
+                    <p>Sale Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Report Filters -->
+        <div class="order-section">
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label class="form-label">Loại so sánh</label>
+                    <select class="form-input" id="reportType">
+                        <option value="monthly" selected>So sánh theo tháng</option>
+                        <option value="quarterly">So sánh theo quý</option>
+                        <option value="yearly">So sánh theo năm</option>
+                        <option value="custom">Tùy chỉnh</option>
+                    </select>
+                </div>
+                
+                <!-- Kỳ 1 -->
+                <div class="form-group">
+                    <label class="form-label">Kỳ 1 - Thời gian</label>
+                    <input type="month" class="form-input" id="period1Date" value="2025-12">
+                </div>
+                
+                <!-- Kỳ 2 -->
+                <div class="form-group">
+                    <label class="form-label">Kỳ 2 - Thời gian</label>
+                    <input type="month" class="form-input" id="period2Date" value="2025-11">
+                </div>
+                
+                <div class="form-group" style="display: flex; align-items: flex-end;">
+                    <button class="btn-sale" id="generateComparisonBtn" style="width: 60%; height: 45px;">
+                        <i class="fas fa-sync-alt"></i> So sánh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Actions -->
+            <div class="report-actions">
+                <button class="btn-sale-secondary" id="exportPdfBtn">
+                    <i class="fas fa-file-pdf"></i> Xuất PDF
+                </button>
+                <button class="btn-sale-secondary" id="exportExcelBtn">
+                    <i class="fas fa-file-excel"></i> Xuất Excel
+                </button>
+                <button class="btn-sale-secondary" id="printReportBtn">
+                    <i class="fas fa-print"></i> In báo cáo
+                </button>
+                <button class="btn-sale" id="shareReportBtn">
+                    <i class="fas fa-share-alt"></i> Chia sẻ
+                </button>
+            </div>
+        </div>
+
+        <!-- Summary Statistics - So sánh -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Chênh lệch doanh thu</div>
+                <div class="stat-value" id="revenueDiff">+20.250.000đ</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> Tăng 19.2%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Chênh lệch đơn hàng</div>
+                <div class="stat-value" id="ordersDiff">+111 đơn</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> Tăng 14.9%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Chênh lệch lợi nhuận</div>
+                <div class="stat-value" id="profitDiff">+11.200.000đ</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> Tăng 26.6%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Chênh lệch KH mới</div>
+                <div class="stat-value" id="customersDiff">+27 KH</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> Tăng 27.6%
+                </div>
+            </div>
+        </div>
+
+        <!-- Biểu đồ so sánh -->
+        <div class="charts-container">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">DOANH THU THEO THỜI GIAN</h3>
+                    <div class="chart-period">
+                        <span id="chartPeriodDisplay">Tháng 12 vs Tháng 11/2025</span>
+                    </div>
+                </div>
+                
+                <!-- Chart Canvas -->
+                <div class="chart-wrapper">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+                
+                <div class="chart-text-wrapper">
+                    <div class="chart-text">So sánh xu hướng doanh thu giữa 2 kỳ được chọn</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">SO SÁNH CHỈ SỐ CHÍNH</h3>
+                </div>
+                
+                <!-- Chart Canvas -->
+                <div class="chart-wrapper">
+                    <canvas id="barChart"></canvas>
+                </div>
+                
+                <div class="chart-text-wrapper">
+                    <div class="chart-text">Phân tích chi tiết các chỉ số kinh doanh giữa 2 kỳ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phân tích chi tiết -->
+        <div class="detailed-analysis">
+            <h2 class="analysis-title">PHÂN TÍCH CHI TIẾT</h2>
+            
+            <div class="analysis-section">
+                <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 15px;">SO SÁNH CHỈ SỐ KINH DOANH</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>CHỈ SỐ</th>
+                                <th>KỲ 1</th>
+                                <th>KỲ 2</th>
+                                <th>CHÊNH LỆCH</th>
+                                <th>TĂNG TRƯỞNG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Doanh thu</strong></td>
+                                <td><strong>125.450.000đ</strong></td>
+                                <td><strong>105.200.000đ</strong></td>
+                                <td style="color: #00b894; font-weight: 600;">+20.250.000đ</td>
+                                <td style="color: #00b894; font-weight: 600;">+19.2%</td>
+                            </tr>
+                            <tr>
+                                <td>Số đơn hàng</td>
+                                <td>856 đơn</td>
+                                <td>745 đơn</td>
+                                <td style="color: #00b894;">+111 đơn</td>
+                                <td style="color: #00b894;">+14.9%</td>
+                            </tr>
+                            <tr>
+                                <td>Khách hàng mới</td>
+                                <td>125 KH</td>
+                                <td>98 KH</td>
+                                <td style="color: #00b894;">+27 KH</td>
+                                <td style="color: #00b894;">+27.6%</td>
+                            </tr>
+                            <tr>
+                                <td>Giá trị đơn TB</td>
+                                <td>146.500đ</td>
+                                <td>141.200đ</td>
+                                <td style="color: #00b894;">+5.300đ</td>
+                                <td style="color: #00b894;">+3.8%</td>
+                            </tr>
+                            <tr>
+                                <td>Tỷ lệ chốt đơn</td>
+                                <td>68%</td>
+                                <td>65%</td>
+                                <td style="color: #00b894;">+3%</td>
+                                <td style="color: #00b894;">+4.6%</td>
+                            </tr>
+                            <tr>
+                                <td>Lợi nhuận</td>
+                                <td>53.300.000đ</td>
+                                <td>42.100.000đ</td>
+                                <td style="color: #00b894; font-weight: 600;">+11.200.000đ</td>
+                                <td style="color: #00b894; font-weight: 600;">+26.6%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="insight-cards">
+                <div class="insight-card strength">
+                    <div class="insight-header">
+                        <div class="insight-icon">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <div class="insight-title">Điểm mạnh</div>
+                    </div>
+                    <div class="insight-content">
+                        <ul>
+                            <li>Doanh thu tăng 19.2% so với kỳ trước</li>
+                            <li>Số lượng khách hàng mới tăng 27.6%</li>
+                            <li>Lợi nhuận tăng mạnh 26.6%</li>
+                            <li>Tỷ lệ chốt đơn cải thiện đáng kể</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="insight-card improvement">
+                    <div class="insight-header">
+                        <div class="insight-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="insight-title">Cần cải thiện</div>
+                    </div>
+                    <div class="insight-content">
+                        <ul>
+                            <li>Giá trị đơn trung bình tăng chậm (3.8%)</li>
+                            <li>Cần tăng số lượng sản phẩm/đơn hàng</li>
+                            <li>Tỷ lệ quay lại của KH cần cải thiện</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="insight-card recommendation">
+                    <div class="insight-header">
+                        <div class="insight-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="insight-title">Khuyến nghị</div>
+                    </div>
+                    <div class="insight-content">
+                        <ul>
+                            <li>Tập trung quảng bá sản phẩm bán chạy</li>
+                            <li>Chạy chiến dịch cho sản phẩm giảm doanh số</li>
+                            <li>Tăng giá trị đơn bằng combo sản phẩm</li>
+                            <li>Đẩy mạnh marketing cho khách hàng mới</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top sản phẩm so sánh -->
+        <div class="table-section">
+            <h3 class="section-title">TOP 5 SẢN PHẨM SO SÁNH</h3>
+            
+            <div class="table-responsive">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">Hạng</th>
+                            <th>Sản phẩm</th>
+                            <th style="width: 100px; text-align: center;">Kỳ 1</th>
+                            <th style="width: 100px; text-align: center;">Kỳ 2</th>
+                            <th style="width: 150px; text-align: center;">Chênh lệch</th>
+                            <th style="width: 100px; text-align: center;">Tăng trưởng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="product-rank">1</span></td>
+                            <td><strong>Charm mèo thần tài</strong></td>
+                            <td style="text-align: center;">167</td>
+                            <td style="text-align: center;">132</td>
+                            <td style="text-align: center; color: #00b894;">+35</td>
+                            <td style="text-align: center; color: #00b894;">+26.5%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">2</span></td>
+                            <td><strong>Sét DIY Hoa Hồng</strong></td>
+                            <td style="text-align: center;">98</td>
+                            <td style="text-align: center;">85</td>
+                            <td style="text-align: center; color: #00b894;">+13</td>
+                            <td style="text-align: center; color: #00b894;">+15.3%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">3</span></td>
+                            <td><strong>Charm móc khóa Hồ Ly</strong></td>
+                            <td style="text-align: center;">145</td>
+                            <td style="text-align: center;">128</td>
+                            <td style="text-align: center; color: #00b894;">+17</td>
+                            <td style="text-align: center; color: #00b894;">+13.3%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">4</span></td>
+                            <td><strong>Charm dây đeo điện thoại</strong></td>
+                            <td style="text-align: center;">128</td>
+                            <td style="text-align: center;">105</td>
+                            <td style="text-align: center; color: #00b894;">+23</td>
+                            <td style="text-align: center; color: #00b894;">+21.9%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">5</span></td>
+                            <td><strong>Móc khóa da bò</strong></td>
+                            <td style="text-align: center;">67</td>
+                            <td style="text-align: center;">72</td>
+                            <td style="text-align: center; color: #d63031;">-5</td>
+                            <td style="text-align: center; color: #d63031;">-6.9%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== MODALS ===== -->
+    
+    <!-- Share Report Modal -->
+    <div class="modal-overlay" id="shareReportModal">
+        <div class="modal-content share-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-share-alt" style="margin-right: 10px;"></i> Chia sẻ báo cáo so sánh</h3>
+                <button class="modal-close" onclick="closeModal('shareReportModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Chọn đối tượng nhận báo cáo</label>
+                    <div class="share-options">
+                        <div class="share-option" onclick="toggleShareOption(this)">
+                            <input type="checkbox" id="shareManager" value="manager">
+                            <label for="shareManager">
+                                Quản lý
+                                <div class="option-desc">Gửi cho quản lý cấp cao để xem xét và phê duyệt</div>
+                            </label>
+                        </div>
+                        <div class="share-option" onclick="toggleShareOption(this)">
+                            <input type="checkbox" id="shareMarketing" value="marketing">
+                            <label for="shareMarketing">
+                                Marketing
+                                <div class="option-desc">Gửi cho đội ngũ Marketing để lên kế hoạch quảng cáo</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Định dạng file</label>
+                    <div class="format-options" style="display: flex; gap: 20px; margin-top: 10px;">
+                        <label class="format-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="formatPdf" checked style="width: 18px; height: 18px;">
+                            <span>PDF <small>(Tốt cho in ấn)</small></span>
+                        </label>
+                        <label class="format-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="formatExcel" style="width: 18px; height: 18px;">
+                            <span>Excel <small>(Tốt cho phân tích)</small></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Additional Email Recipients -->
+                <div class="additional-recipient">
+                    <label class="form-label">Thêm người nhận khác (email)</label>
+                    <div class="email-input-group" style="display: flex; gap: 10px; margin-top: 10px;">
+                        <input type="email" class="form-input" id="additionalEmail" placeholder="Nhập email...">
+                        <button class="btn-sale-secondary" onclick="addAdditionalEmail()" style="white-space: nowrap;">
+                            <i class="fas fa-plus"></i> Thêm
+                        </button>
+                    </div>
+                    <div class="email-tags" id="emailTags"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Ghi chú (tùy chọn)</label>
+                    <textarea class="form-input" id="shareNotes" rows="3" 
+                              placeholder="Thêm ghi chú hoặc hướng dẫn cho người nhận..."></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal cancel" onclick="closeModal('shareReportModal')">Hủy</button>
+                <button class="btn-modal confirm" onclick="shareReport()">
+                    <i class="fas fa-paper-plane"></i> Gửi báo cáo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="../../js/common.js"></script>
+    <script>
+        // Tạo đối tượng compareModule để quản lý riêng biệt
+        const compareModule = {
+            // Biến toàn cục
+            comparisonChart: null,
+            barChart: null,
+            additionalEmails: [],
+            
+            // Khởi tạo module
+            init: function() {
+                this.initSidebar();
+                this.initDateTime();
+                this.initEventListeners();
+                this.initCharts();
+                this.updateChartPeriodDisplay();
+                
+                // Tự động mở submenu Sale
+                const saleItem = document.querySelector('.nav-item.has-submenu');
+                if (saleItem) {
+                    saleItem.classList.add('active');
+                }
+                
+                // Set default dates
+                const today = new Date();
+                const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+                const prevMonth = `${today.getFullYear()}-${String(today.getMonth()).padStart(2, '0')}`;
+                
+                document.getElementById('period1Date').value = currentMonth;
+                document.getElementById('period2Date').value = prevMonth;
+            },
+            
+            // Khởi tạo sidebar và submenu
+            initSidebar: function() {
+                // Mobile toggle
+                const mobileToggle = document.getElementById('mobileToggle');
+                const sidebar = document.getElementById('sidebar');
+                
+                if (mobileToggle && sidebar) {
+                    mobileToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('active');
+                    });
+                }
+                
+                // Xử lý click ra ngoài để đóng sidebar trên mobile
+                document.addEventListener('click', function(event) {
+                    if (window.innerWidth <= 768 && !event.target.closest('.sidebar') && 
+                        !event.target.closest('.mobile-toggle') && sidebar.classList.contains('active')) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+            },
+            
+            // Khởi tạo hiển thị thời gian
+            initDateTime: function() {
+                function updateDateTime() {
+                    const now = new Date();
+                    const options = { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    };
+                    const dateStr = now.toLocaleDateString('vi-VN', options);
+                    const timeStr = now.toLocaleTimeString('vi-VN');
+                    
+                    const dateTimeElement = document.getElementById('currentDateTime');
+                    if (dateTimeElement) {
+                        dateTimeElement.textContent = `Hôm nay: ${dateStr} - ${timeStr}`;
+                    }
+                }
+                
+                updateDateTime();
+                setInterval(updateDateTime, 1000);
+            },
+            
+            // Khởi tạo event listeners
+            initEventListeners: function() {
+                // Report type change
+                const reportTypeSelect = document.getElementById('reportType');
+                if (reportTypeSelect) {
+                    reportTypeSelect.addEventListener('change', this.handleReportTypeChange.bind(this));
+                }
+                
+                // Generate comparison button
+                const generateBtn = document.getElementById('generateComparisonBtn');
+                if (generateBtn) {
+                    generateBtn.addEventListener('click', this.generateComparison.bind(this));
+                }
+                
+                // Export buttons
+                document.getElementById('exportPdfBtn')?.addEventListener('click', this.exportToPDF.bind(this));
+                document.getElementById('exportExcelBtn')?.addEventListener('click', this.exportToExcel.bind(this));
+                document.getElementById('printReportBtn')?.addEventListener('click', this.printReport.bind(this));
+                document.getElementById('shareReportBtn')?.addEventListener('click', () => this.openModal('shareReportModal'));
+                
+                // Email input
+                const emailInput = document.getElementById('additionalEmail');
+                if (emailInput) {
+                    emailInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.addAdditionalEmail();
+                        }
+                    });
+                }
+            },
+            
+            // Xử lý thay đổi loại báo cáo
+            handleReportTypeChange: function() {
+                const reportType = document.getElementById('reportType').value;
+                const today = new Date();
+                let period1Value, period2Value;
+                
+                switch(reportType) {
+                    case 'monthly':
+                        period1Value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+                        period2Value = `${today.getFullYear()}-${String(today.getMonth()).padStart(2, '0')}`;
+                        break;
+                    case 'quarterly':
+                        const quarter = Math.floor(today.getMonth() / 3);
+                        period1Value = `${today.getFullYear()}-Q${quarter + 1}`;
+                        period2Value = `${today.getFullYear()}-Q${quarter}`;
+                        document.getElementById('period1Date').type = 'text';
+                        document.getElementById('period2Date').type = 'text';
+                        document.getElementById('period1Date').value = period1Value;
+                        document.getElementById('period2Date').value = period2Value;
+                        document.getElementById('period1Date').placeholder = 'Ví dụ: 2025-Q1';
+                        document.getElementById('period2Date').placeholder = 'Ví dụ: 2025-Q1';
+                        return;
+                    case 'yearly':
+                        period1Value = `${today.getFullYear()}`;
+                        period2Value = `${today.getFullYear() - 1}`;
+                        document.getElementById('period1Date').type = 'text';
+                        document.getElementById('period2Date').type = 'text';
+                        document.getElementById('period1Date').value = period1Value;
+                        document.getElementById('period2Date').value = period2Value;
+                        document.getElementById('period1Date').placeholder = 'Ví dụ: 2025';
+                        document.getElementById('period2Date').placeholder = 'Ví dụ: 2025';
+                        return;
+                    case 'custom':
+                        document.getElementById('period1Date').type = 'month';
+                        document.getElementById('period2Date').type = 'month';
+                        document.getElementById('period1Date').placeholder = '';
+                        document.getElementById('period2Date').placeholder = '';
+                        return;
+                }
+                
+                if (period1Value && period2Value) {
+                    document.getElementById('period1Date').type = 'month';
+                    document.getElementById('period2Date').type = 'month';
+                    document.getElementById('period1Date').value = period1Value;
+                    document.getElementById('period2Date').value = period2Value;
+                    document.getElementById('period1Date').placeholder = '';
+                    document.getElementById('period2Date').placeholder = '';
+                    this.updateChartPeriodDisplay();
+                }
+            },
+            
+            // Tạo so sánh
+            generateComparison: function() {
+                const period1 = document.getElementById('period1Date').value;
+                const period2 = document.getElementById('period2Date').value;
+                
+                if (!period1 || !period2) {
+                    this.showToast('Vui lòng chọn đầy đủ thời gian cho cả 2 kỳ', 'error');
+                    return;
+                }
+                
+                if (period1 === period2) {
+                    this.showToast('Vui lòng chọn 2 kỳ khác nhau để so sánh', 'error');
+                    return;
+                }
+                
+                // Show loading
+                const generateBtn = document.getElementById('generateComparisonBtn');
+                const originalText = generateBtn.innerHTML;
+                generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang phân tích...';
+                generateBtn.disabled = true;
+
+                // Simulate API call
+                setTimeout(() => {
+                    this.updateComparisonData();
+                    this.updateChartPeriodDisplay();
+                    this.updateComparisonChartsData();
+                    this.showToast('Đã hoàn thành phân tích so sánh!');
+                    
+                    // Reset button
+                    generateBtn.innerHTML = originalText;
+                    generateBtn.disabled = false;
+                }, 1500);
+            },
+            
+            // Cập nhật dữ liệu so sánh
+            updateComparisonData: function() {
+                // Generate random variations for demonstration
+                const revenueDiff = Math.floor(Math.random() * 30) + 5;
+                const ordersDiff = Math.floor(Math.random() * 25) + 5;
+                const profitDiff = Math.floor(Math.random() * 35) + 5;
+                const customersDiff = Math.floor(Math.random() * 40) + 5;
+                
+                document.getElementById('revenueDiff').textContent = `+${(revenueDiff * 1000000).toLocaleString()}đ`;
+                document.getElementById('ordersDiff').textContent = `+${Math.floor(ordersDiff * 5)} đơn`;
+                document.getElementById('profitDiff').textContent = `+${(profitDiff * 500000).toLocaleString()}đ`;
+                document.getElementById('customersDiff').textContent = `+${Math.floor(customersDiff * 2)} KH`;
+            },
+            
+            // Khởi tạo biểu đồ
+            initCharts: function() {
+                // Comparison Chart (Line)
+                const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+                this.comparisonChart = new Chart(comparisonCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4'],
+                        datasets: [
+                            {
+                                label: 'Kỳ 1 - Doanh thu',
+                                data: [45200000, 52800000, 48500000, 51300000],
+                                borderColor: '#F3376D',
+                                backgroundColor: 'rgba(243, 55, 109, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.3
+                            },
+                            {
+                                label: 'Kỳ 2 - Doanh thu',
+                                data: [38200000, 42800000, 39500000, 41300000],
+                                borderColor: '#0984e3',
+                                backgroundColor: 'rgba(9, 132, 227, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (context.parsed.y !== null) {
+                                            label += ': ' + compareModule.formatCurrency(context.parsed.y);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Doanh thu (VND)',
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return compareModule.formatCurrency(value);
+                                    }
+                                }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'nearest'
+                        }
+                    }
+                });
+                
+                // Bar Chart for comparison
+                const barCtx = document.getElementById('barChart').getContext('2d');
+                this.barChart = new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Doanh thu', 'Đơn hàng', 'Lợi nhuận', 'KH mới'],
+                        datasets: [
+                            {
+                                label: 'Kỳ 1',
+                                data: [125.45, 856, 53.3, 125],
+                                backgroundColor: 'rgba(243, 55, 109, 0.7)',
+                                borderColor: '#F3376D',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Kỳ 2',
+                                data: [105.20, 745, 42.1, 98],
+                                backgroundColor: 'rgba(9, 132, 227, 0.7)',
+                                borderColor: '#0984e3',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let value = context.raw;
+                                        let unit = '';
+                                        
+                                        switch(context.dataIndex) {
+                                            case 0: unit = ' triệu VND'; break;
+                                            case 1: unit = ' đơn'; break;
+                                            case 2: unit = ' triệu VND'; break;
+                                            case 3: unit = ' KH'; break;
+                                        }
+                                        
+                                        return `${context.dataset.label}: ${value}${unit}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    drawBorder: false
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            
+            // Cập nhật dữ liệu biểu đồ
+            updateComparisonChartsData: function() {
+                if (!this.comparisonChart || !this.barChart) return;
+                
+                // Generate random data for demonstration
+                const period1Data = Array.from({length: 4}, () => Math.floor(Math.random() * 30000000) + 30000000);
+                const period2Data = Array.from({length: 4}, () => Math.floor(Math.random() * 25000000) + 25000000);
+                
+                this.comparisonChart.data.datasets[0].data = period1Data;
+                this.comparisonChart.data.datasets[1].data = period2Data;
+                this.comparisonChart.update();
+                
+                // Update bar chart with new comparison data
+                const revenue1 = 100 + Math.floor(Math.random() * 30);
+                const revenue2 = 100;
+                const orders1 = 500 + Math.floor(Math.random() * 100);
+                const orders2 = 500;
+                const profit1 = 100 + Math.floor(Math.random() * 40);
+                const profit2 = 100;
+                const customers1 = 100 + Math.floor(Math.random() * 50);
+                const customers2 = 100;
+                
+                this.barChart.data.datasets[0].data = [revenue1, orders1, profit1, customers1];
+                this.barChart.data.datasets[1].data = [revenue2, orders2, profit2, customers2];
+                this.barChart.update();
+            },
+            
+            // Định dạng tiền tệ
+            formatCurrency: function(value) {
+                if (value >= 1000000000) {
+                    return (value / 1000000000).toFixed(1) + ' tỷ';
+                } else if (value >= 1000000) {
+                    return (value / 1000000).toFixed(1) + ' triệu';
+                } else if (value >= 1000) {
+                    return (value / 1000).toFixed(1) + ' nghìn';
+                }
+                return value.toString();
+            },
+            
+            // Cập nhật hiển thị thời gian biểu đồ
+            updateChartPeriodDisplay: function() {
+                const period1 = document.getElementById('period1Date').value;
+                const period2 = document.getElementById('period2Date').value;
+                const reportType = document.getElementById('reportType').value;
+                
+                if (!period1 || !period2) return;
+                
+                let displayText = '';
+                
+                switch(reportType) {
+                    case 'monthly':
+                        const [year1, month1] = period1.split('-');
+                        const [year2, month2] = period2.split('-');
+                        displayText = `Tháng ${month1}/${year1} vs Tháng ${month2}/${year2}`;
+                        break;
+                    case 'quarterly':
+                        displayText = `${period1} vs ${period2}`;
+                        break;
+                    case 'yearly':
+                        displayText = `Năm ${period1} vs Năm ${period2}`;
+                        break;
+                    case 'custom':
+                        displayText = `${period1} vs ${period2}`;
+                        break;
+                }
+                
+                document.getElementById('chartPeriodDisplay').textContent = displayText;
+            },
+            
+            // Xuất PDF
+            exportToPDF: function() {
+                this.showToast('Đang xuất báo cáo PDF...', 'warning');
+                
+                setTimeout(() => {
+                    this.showToast('Đã xuất báo cáo PDF thành công!');
+                    
+                    // Giả lập tải file
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.download = `SoSanhDoanhThu_${new Date().toISOString().split('T')[0]}.pdf`;
+                    link.click();
+                }, 2000);
+            },
+            
+            // Xuất Excel
+            exportToExcel: function() {
+                this.showToast('Đang xuất báo cáo Excel...', 'warning');
+                
+                setTimeout(() => {
+                    this.showToast('Đã xuất báo cáo Excel thành công!');
+                    
+                    // Giả lập tải file
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.download = `SoSanhDoanhThu_${new Date().toISOString().split('T')[0]}.xlsx`;
+                    link.click();
+                }, 2000);
+            },
+            
+            // In báo cáo
+            printReport: function() {
+                this.showToast('Đang chuẩn bị báo cáo để in...', 'warning');
+                
+                setTimeout(() => {
+                    window.print();
+                    this.showToast('Báo cáo đã sẵn sàng để in.');
+                }, 1000);
+            },
+            
+            // Modal functions
+            openModal: function(modalId) {
+                document.getElementById(modalId).style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById(modalId).style.opacity = '1';
+                }, 10);
+            },
+            
+            closeModal: function(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            },
+            
+            // Share report functions
+            toggleShareOption: function(element) {
+                element.classList.toggle('selected');
+                const checkbox = element.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+            },
+            
+            addAdditionalEmail: function() {
+                const emailInput = document.getElementById('additionalEmail');
+                const email = emailInput.value.trim();
+                
+                if (!email) {
+                    this.showToast('Vui lòng nhập địa chỉ email', 'error');
+                    return;
+                }
+                
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    this.showToast('Địa chỉ email không hợp lệ', 'error');
+                    return;
+                }
+                
+                if (this.additionalEmails.includes(email)) {
+                    this.showToast('Email đã được thêm vào danh sách', 'warning');
+                    return;
+                }
+                
+                this.additionalEmails.push(email);
+                this.updateEmailTags();
+                emailInput.value = '';
+                emailInput.focus();
+            },
+            
+            removeAdditionalEmail: function(email) {
+                this.additionalEmails = this.additionalEmails.filter(e => e !== email);
+                this.updateEmailTags();
+            },
+            
+            updateEmailTags: function() {
+                const emailTagsContainer = document.getElementById('emailTags');
+                if (!emailTagsContainer) return;
+                
+                if (this.additionalEmails.length === 0) {
+                    emailTagsContainer.innerHTML = '<div style="font-size: 12px; color: #666; font-style: italic;">Chưa có email nào được thêm</div>';
+                    return;
+                }
+                
+                emailTagsContainer.innerHTML = this.additionalEmails.map(email => `
+                    <div class="email-tag" style="background: var(--sale-bg); color: var(--sale-primary); padding: 5px 10px; border-radius: 15px; font-size: 12px; display: flex; align-items: center; gap: 5px;">
+                        ${email}
+                        <span class="remove-email" onclick="compareModule.removeAdditionalEmail('${email}')" style="cursor: pointer; font-size: 14px; color: #666;">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </div>
+                `).join('');
+            },
+            
+            shareReport: function() {
+                const selectedOptions = [];
+                const checkboxes = document.querySelectorAll('.share-option input[type="checkbox"]:checked');
+                
+                if (checkboxes.length === 0 && this.additionalEmails.length === 0) {
+                    this.showToast('Vui lòng chọn ít nhất một đối tượng để chia sẻ', 'error');
+                    return;
+                }
+                
+                checkboxes.forEach(checkbox => {
+                    selectedOptions.push(checkbox.value);
+                });
+                
+                const formatPdf = document.getElementById('formatPdf').checked;
+                const formatExcel = document.getElementById('formatExcel').checked;
+                const notes = document.getElementById('shareNotes').value;
+                
+                if (!formatPdf && !formatExcel) {
+                    this.showToast('Vui lòng chọn ít nhất một định dạng file', 'error');
+                    return;
+                }
+                
+                const formats = [];
+                if (formatPdf) formats.push('PDF');
+                if (formatExcel) formats.push('Excel');
+                
+                // Show loading
+                const shareBtn = document.querySelector('#shareReportModal .btn-modal.confirm');
+                const originalText = shareBtn.innerHTML;
+                shareBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+                shareBtn.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    const recipients = selectedOptions.map(opt => {
+                        switch(opt) {
+                            case 'manager': return 'Quản lý';
+                            case 'marketing': return 'Marketing';
+                            default: return opt;
+                        }
+                    });
+                    
+                    const allRecipients = [...recipients, ...this.additionalEmails];
+                    
+                    this.showToast(`Đã gửi báo cáo (${formats.join(', ')}) đến ${allRecipients.length} người nhận`);
+                    
+                    // Reset form
+                    document.querySelectorAll('.share-option input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    document.querySelectorAll('.share-option').forEach(el => el.classList.remove('selected'));
+                    document.getElementById('shareNotes').value = '';
+                    document.getElementById('formatPdf').checked = true;
+                    document.getElementById('formatExcel').checked = false;
+                    
+                    // Clear additional emails
+                    this.additionalEmails = [];
+                    this.updateEmailTags();
+                    
+                    shareBtn.innerHTML = originalText;
+                    shareBtn.disabled = false;
+                    this.closeModal('shareReportModal');
+                }, 1500);
+            },
+            
+            // Toast notification
+            showToast: function(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                if (!toast) return;
+                
+                const iconClass = type === 'success' ? 'fa-check-circle' : 
+                                 type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+                const titleText = type === 'success' ? 'Thành công!' : 
+                                type === 'error' ? 'Lỗi!' : 'Thông báo';
+                
+                toast.innerHTML = `
+                    <div class="toast-icon">
+                        <i class="fas ${iconClass}"></i>
+                    </div>
+                    <div class="toast-content">
+                        <h4>${titleText}</h4>
+                        <p>${message}</p>
+                    </div>
+                `;
+                
+                toast.className = `toast ${type} show`;
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+        };
+
+        // Toggle submenu function (to be used globally)
+        function toggleSubmenu(link) {
+            const navItem = link.closest('.nav-item.has-submenu');
+            const isActive = navItem.classList.contains('active');
+            
+            // Đóng tất cả submenu khác
+            document.querySelectorAll('.nav-item.has-submenu').forEach(item => {
+                if (item !== navItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle submenu hiện tại
+            navItem.classList.toggle('active');
+            
+            return false;
+        }
+
+        // Khởi tạo khi DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            compareModule.init();
+            
+            // Gán hàm toggleShareOption ra global
+            window.toggleShareOption = function(element) {
+                compareModule.toggleShareOption(element);
+            };
+            
+            // Gán hàm addAdditionalEmail ra global
+            window.addAdditionalEmail = function() {
+                compareModule.addAdditionalEmail();
+            };
+            
+            // Gán hàm shareReport ra global
+            window.shareReport = function() {
+                compareModule.shareReport();
+            };
+            
+            // Gán hàm closeModal ra global
+            window.closeModal = function(modalId) {
+                compareModule.closeModal(modalId);
+            };
+            
+            // Gán hàm toggleSubmenu ra global
+            window.toggleSubmenu = toggleSubmenu;
+        });
+    </script>
+</body>
+</html>

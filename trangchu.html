@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags - Marketing Staff</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="marketing.css">
+</head>
+
+<body class="bg-gray-50">
+    <!-- Main Container -->
+    <div class="min-h-screen flex">
+        
+        <!-- Sidebar Container (will be loaded by JS) -->
+        <div id="sidebar-container">
+            <!-- Sidebar will be loaded here -->
+        </div>
+        
+        <!-- MAIN CONTENT -->
+        <div class="flex-1">
+            <!-- Header -->
+            <header class="bg-white border-b px-8 py-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-dark">Chào mừng, Marketing Staff!</h2>
+                        <p class="text-gray-600">Quản lý nội dung đa kênh - Hệ thống MKT-01</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200">
+                                <i class="fas fa-bell text-gray-600"></i>
+                            </button>
+                            <span class="absolute -top-1 -right-1 w-5 h-5 bg-red text-white text-xs rounded-full flex items-center justify-center">3</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-r from-red to-pink rounded-full flex items-center justify-center text-white font-bold">
+                                MS
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium">Phương Nghi</p>
+                                <p class="text-xs text-gray-500">Staff ID: S0001</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Main Content -->
+            <main class="p-8">
+                <!-- Welcome Hero -->
+                <div class="hero-section p-8 mb-8">
+                    <div class="flex justify-between items-center">
+                        <div class="text-white">
+                            <h1 class="text-3xl font-bold mb-4">Hệ thống Quản lý Nội dung Đa kênh</h1>
+                            <p class="text-beige/90 mb-6">Tạo, chỉnh sửa và gửi duyệt bài viết cho chiến dịch marketing</p>
+                            <div class="flex space-x-4">
+                                <a href="taobaiviet.html" class="btn-primary pulse-animation">
+                                    <i class="fas fa-plus mr-2"></i>Tạo bài viết mới
+                                </a>
+                                <a href="danhsachbaiviet.html" class="btn-secondary text-white border-white hover:bg-white hover:text-dark">
+                                    <i class="fas fa-list mr-2"></i>Xem danh sách
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="w-48 h-48 bg-white/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-bullhorn text-white/30 text-8xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="stats-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Bài viết nháp</p>
+                                <p class="text-3xl font-bold text-dark">12</p>
+                            </div>
+                            <div class="w-12 h-12 bg-beige rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-alt text-dark text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">+2 bài hôm nay</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Chờ duyệt</p>
+                                <p class="text-3xl font-bold text-dark">5</p>
+                            </div>
+                            <div class="w-12 h-12 bg-yellow rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-dark text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">Đang chờ Manager</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Cần sửa</p>
+                                <p class="text-3xl font-bold text-dark">3</p>
+                            </div>
+                            <div class="w-12 h-12 bg-pink-light rounded-lg flex items-center justify-center">
+                                <i class="fas fa-edit text-red text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">Có phản hồi từ Manager</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Đã duyệt</p>
+                                <p class="text-3xl font-bold text-dark">8</p>
+                            </div>
+                            <div class="w-12 h-12 bg-pink rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">Sẵn sàng đăng</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <!-- Create Post Card -->
+                    <div class="dashboard-card">
+                        <div class="flex items-start mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-plus text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-dark mb-2">Tạo bài viết mới</h3>
+                                <p class="text-gray-600">Bắt đầu tạo nội dung cho chiến dịch marketing mới</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Chọn đa nền tảng: Facebook, TikTok, Hội nhóm</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Tích hợp editor mạnh mẽ với preview</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Lưu nháp hoặc gửi duyệt ngay</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <a href="taobaiviet.html" class="btn-primary w-full justify-center">
+                                <i class="fas fa-rocket mr-2"></i>Bắt đầu tạo bài
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Manage Posts Card -->
+                    <div class="dashboard-card">
+                        <div class="flex items-start mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-tasks text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-dark mb-2">Quản lý bài viết</h3>
+                                <p class="text-gray-600">Xem, chỉnh sửa và theo dõi tất cả bài viết của bạn</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-list-ul text-blue-500 mr-2"></i>
+                                <span>Xem theo trạng thái: Nháp, Chờ duyệt, Đã duyệt</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-edit text-yellow-500 mr-2"></i>
+                                <span>Chỉnh sửa bài viết dễ dàng</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-paper-plane text-green-500 mr-2"></i>
+                                <span>Theo dõi tiến trình phê duyệt</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <a href="danhsachbaiviet.html" class="btn-secondary w-full justify-center">
+                                <i class="fas fa-chart-line mr-2"></i>Xem danh sách bài viết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity & Quick Links -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Recent Activity -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-xl shadow-sm p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-bold text-dark">Hoạt động gần đây</h3>
+                                <a href="#" class="text-sm text-red hover:underline">Xem tất cả</a>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="activity-item">
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-check text-green-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-medium">Bài viết "Black Friday Sale" đã được duyệt</p>
+                                            <p class="text-sm text-gray-600">Bài viết của bạn đã được Manager phê duyệt và sẵn sàng đăng</p>
+                                            <div class="flex items-center mt-2">
+                                                <span class="status-approved px-2 py-1 rounded text-xs mr-3">Đã duyệt</span>
+                                                <span class="text-xs text-gray-500">10 phút trước</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-comment text-red-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-medium">Bài viết "Product Launch" cần chỉnh sửa</p>
+                                            <p class="text-sm text-gray-600">Manager đã gửi phản hồi yêu cầu chỉnh sửa nội dung</p>
+                                            <div class="flex items-center mt-2">
+                                                <span class="status-rejected px-2 py-1 rounded text-xs mr-3">Cần sửa</span>
+                                                <span class="text-xs text-gray-500">1 giờ trước</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-paper-plane text-blue-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-medium">Bạn đã gửi "Tết 2025 Campaign" để duyệt</p>
+                                            <p class="text-sm text-gray-600">Bài viết đã được chuyển đến Marketing Manager để phê duyệt</p>
+                                            <div class="flex items-center mt-2">
+                                                <span class="status-pending px-2 py-1 rounded text-xs mr-3">Chờ duyệt</span>
+                                                <span class="text-xs text-gray-500">2 giờ trước</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-save text-gray-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="font-medium">Bạn đã lưu nháp "Flash Sale Cuối Tuần"</p>
+                                            <p class="text-sm text-gray-600">Bài viết đã được lưu và có thể tiếp tục chỉnh sửa sau</p>
+                                            <div class="flex items-center mt-2">
+                                                <span class="status-draft px-2 py-1 rounded text-xs mr-3">Nháp</span>
+                                                <span class="text-xs text-gray-500">Hôm nay, 14:30</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Links & Stats -->
+                    <div>
+                        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                            <h3 class="text-xl font-bold text-dark mb-6">Nền tảng tích hợp</h3>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="platform-icon facebook-icon mr-3">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium">Facebook Page</p>
+                                            <p class="text-xs text-gray-600">Đang hoạt động</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-green-600 text-sm font-medium">✔</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="platform-icon group-icon mr-3">
+                                            <i class="fab fa-facebook-square"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium">Hội nhóm Facebook</p>
+                                            <p class="text-xs text-gray-600">Đang hoạt động</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-green-600 text-sm font-medium">✔</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="platform-icon tiktok-icon mr-3">
+                                            <i class="fab fa-tiktok"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium">TikTok</p>
+                                            <p class="text-xs text-gray-600">Sẵn sàng kết nối</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-yellow-600 text-sm font-medium">⚡</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 pt-6 border-t">
+                                <p class="text-sm text-gray-600">Tổng cộng: <span class="font-medium">2 nền tảng</span> đang hoạt động</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-beige rounded-xl shadow-sm p-6">
+                            <h3 class="text-xl font-bold mb-4 text-dark">Tiến độ tuần này</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1 text-dark">
+                                        <span>Bài viết đã tạo</span>
+                                        <span class="font-semibold">5/8 bài</span>
+                                    </div>
+                                    <div class="w-full bg-white rounded-full h-2">
+                                        <div class="bg-red rounded-full h-2" style="width: 62%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1 text-dark">
+                                        <span>Bài đã duyệt</span>
+                                        <span class="font-semibold">3/5 bài</span>
+                                    </div>
+                                    <div class="w-full bg-white rounded-full h-2">
+                                        <div class="bg-green-400 rounded-full h-2" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1 text-dark">
+                                        <span>Tỷ lệ duyệt</span>
+                                        <span class="font-semibold">85%</span>
+                                    </div>
+                                    <div class="w-full bg-white rounded-full h-2">
+                                        <div class="bg-yellow rounded-full h-2" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 pt-6 border-t border-gray-300">
+                                <p class="text-sm text-dark">Mục tiêu tuần: 8 bài viết chất lượng</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Posts -->
+                <div class="mt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-dark">Bài viết gần đây</h3>
+                        <a href="danhsachbaiviet.html" class="text-red hover:underline flex items-center">
+                            Xem tất cả <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Post 1 -->
+                        <div class="bg-white rounded-xl shadow-sm p-5 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-bold text-dark">Black Friday Sale</h4>
+                                <span class="status-approved px-2 py-1 rounded text-xs">Đã duyệt</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4 line-clamp-2">Chiến dịch Black Friday với ưu đãi lên đến 50% cho toàn bộ sản phẩm...</p>
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <div class="flex items-center">
+                                    <i class="fab fa-facebook text-blue-600 mr-1"></i>
+                                    <span>Facebook</span>
+                                </div>
+                                <span>Hôm nay</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Post 2 -->
+                        <div class="bg-white rounded-xl shadow-sm p-5 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-bold text-dark">Product Launch</h4>
+                                <span class="status-rejected px-2 py-1 rounded text-xs">Cần sửa</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4 line-clamp-2">Giới thiệu sản phẩm mới với các tính năng đột phá cho năm 2025...</p>
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <div class="flex items-center">
+                                    <i class="fab fa-facebook text-blue-600 mr-1"></i>
+                                    <i class="fab fa-tiktok ml-2"></i>
+                                </div>
+                                <span>1 giờ trước</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Post 3 -->
+                        <div class="bg-white rounded-xl shadow-sm p-5 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-bold text-dark">Tết 2025 Campaign</h4>
+                                <span class="status-pending px-2 py-1 rounded text-xs">Chờ duyệt</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4 line-clamp-2">Chương trình khuyến mãi Tết Ất Tỵ với quà tặng giá trị...</p>
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <div class="flex items-center">
+                                    <i class="fab fa-facebook-square text-blue-700 mr-1"></i>
+                                    <span>Hội nhóm</span>
+                                </div>
+                                <span>2 giờ trước</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Footer -->
+            <footer class="border-t px-8 py-6">
+                <div class="flex justify-between items-center text-sm text-gray-600">
+                    <div>
+                        <p>© 2024 Tiny Tags Marketing System. Phiên bản 2.1</p>
+                    </div>
+                    <div>
+                        <p>Hệ thống MKT-01: Quản lý nội dung đa kênh</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+     <script>
+    // Đợi sidebar load xong rồi thêm active class
+    setTimeout(() => {
+        const sidebarLinks = document.querySelectorAll('#sidebar-container a');
+        sidebarLinks.forEach(link => {
+            if (link.getAttribute('href') === 'trangchu.html') {
+                link.classList.add('active');
+                link.style.color = 'var(--primary-red)';
+                link.style.fontWeight = '600';
+            }
+        });
+    }, 500); // Đợi 0.5s cho sidebar load
+</script>
+    <script src="marketing.js"></script>
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Sản phẩm</title>
+    <!-- LOAD CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/slidebar.css">
+    <link rel="stylesheet" href="../css/products.css">
+    <style>
+        .products-page {
+        margin-left: 260px;
+        padding: 30px;
+        min-height: 100vh;
+        background: #f8f9fa;
+        transition: margin-left 0.3s;
+        width: calc(100% - 260px); /* QUAN TRỌNG: Tính toán chiều rộng */
+        box-sizing: border-box; /* QUAN TRỌNG: Bao gồm padding trong width */
+        overflow-x: hidden; /* Ngăn scroll ngang không cần thiết */
+    }
+
+    /* Đảm bảo tất cả container chiếm đúng chiều rộng */
+    .products-page > * {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    @media (max-width: 1200px) {
+        .products-page {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+            padding: 25px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .products-page {
+            margin-left: 0;
+            width: 100%;
+            padding: 20px;
+            padding-top: 90px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="products.html" class="nav-link active">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="customer.html" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="sale/index.html" class="nav-link">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="products-page">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <h1>Sản phẩm</h1>
+                <p id="currentDateTime" class="page-date">Hôm nay: Chủ Nhật, 21 tháng 12, 2025 - 11:11:02</p>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar">LA</div>
+                <div class="user-info">
+                    <h3>Nguyễn Trần Lan Anh</h3>
+                    <p>Admin Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Action Bar -->
+        <div class="action-bar card">
+            <div class="action-left">
+                <button class="btn btn-primary btn-add-product">
+                    <i class="fas fa-plus"></i> Thêm sản phẩm mới
+                </button>
+                
+                <div class="filter-group">
+                    <select class="filter-select">
+                        <option value="all">Tất cả danh mục</option>
+                        <option value="charm">Charm móc khóa</option>
+                        <option value="diy">Sét DIY</option>
+                        <option value="strap">Charm dây đeo</option>
+                        <option value="leather">Móc khóa da</option>
+                    </select>
+                    
+                    <select class="filter-select">
+                        <option value="all">Tất cả trạng thái</option>
+                        <option value="active">Đang bán</option>
+                        <option value="out">Hết hàng</option>
+                        <option value="draft">Bản nháp</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="action-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                </div>
+                
+                <button class="btn btn-icon">
+                    <i class="fas fa-filter"></i>
+                </button>
+                
+                <button class="btn btn-icon">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="products-stats">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-box" style="color: #F3376D;"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Tổng sản phẩm</h3>
+                        <p class="stat-value">45</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle" style="color: #00b894;"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Đang bán</h3>
+                        <p class="stat-value">38</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle" style="color: #d63031;"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Hết hàng</h3>
+                        <p class="stat-value">7</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave" style="color: #0984e3;"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Tổng giá trị</h3>
+                        <p class="stat-value">125M VND</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="products-table-container card">
+            <div class="table-header">
+                <h3>Danh sách sản phẩm</h3>
+                <div class="table-actions">
+                    <span class="products-count">45 sản phẩm</span>
+                    <button class="btn btn-sm btn-refresh">
+                        <i class="fas fa-sync-alt"></i> Làm mới
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th class="check-col">
+                                <input type="checkbox" id="select-all">
+                            </th>
+                            <th class="image-col">Hình ảnh</th>
+                            <th class="name-col">Tên sản phẩm</th>
+                            <th class="category-col">Danh mục</th>
+                            <th class="price-col">Giá</th>
+                            <th class="stock-col">Tồn kho</th>
+                            <th class="status-col">Trạng thái</th>
+                            <th class="actions-col">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Product 1 -->
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td class="product-image">
+                                <img src="https://via.placeholder.com/50" alt="Charm móc khóa Hồ Ly">
+                            </td>
+                            <td class="product-name">
+                                <strong>Charm móc khóa Hồ Ly</strong>
+                                <small>SKU: TT-CHARM-001</small>
+                            </td>
+                            <td class="product-category">
+                                <span class="category-badge charm">Charm móc khóa</span>
+                            </td>
+                            <td class="product-price">
+                                <strong>120.000đ</strong>
+                            </td>
+                            <td class="product-stock">
+                                <span class="stock-badge in-stock">45</span>
+                            </td>
+                            <td class="product-status">
+                                <span class="status-badge active">Đang bán</span>
+                            </td>
+                            <td class="product-actions">
+                                <button class="btn-icon small" title="Xem">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon small" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon small danger" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Product 2 -->
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td class="product-image">
+                                <img src="https://via.placeholder.com/50" alt="Sét DIY Hoa Hồng">
+                            </td>
+                            <td class="product-name">
+                                <strong>Sét DIY Hoa Hồng</strong>
+                                <small>SKU: TT-DIY-001</small>
+                            </td>
+                            <td class="product-category">
+                                <span class="category-badge diy">Sét DIY</span>
+                            </td>
+                            <td class="product-price">
+                                <strong>250.000đ</strong>
+                            </td>
+                            <td class="product-stock">
+                                <span class="stock-badge in-stock">23</span>
+                            </td>
+                            <td class="product-status">
+                                <span class="status-badge active">Đang bán</span>
+                            </td>
+                            <td class="product-actions">
+                                <button class="btn-icon small" title="Xem">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon small" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon small danger" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Product 3 -->
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td class="product-image">
+                                <img src="https://via.placeholder.com/50" alt="Charm dây đeo điện thoại">
+                            </td>
+                            <td class="product-name">
+                                <strong>Charm dây đeo điện thoại</strong>
+                                <small>SKU: TT-STRAP-001</small>
+                            </td>
+                            <td class="product-category">
+                                <span class="category-badge strap">Charm dây đeo</span>
+                            </td>
+                            <td class="product-price">
+                                <strong>180.000đ</strong>
+                            </td>
+                            <td class="product-stock">
+                                <span class="stock-badge low-stock">3</span>
+                            </td>
+                            <td class="product-status">
+                                <span class="status-badge active">Đang bán</span>
+                            </td>
+                            <td class="product-actions">
+                                <button class="btn-icon small" title="Xem">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon small" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon small danger" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Product 4 -->
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td class="product-image">
+                                <img src="https://via.placeholder.com/50" alt="Móc khóa da bò">
+                            </td>
+                            <td class="product-name">
+                                <strong>Móc khóa da bò</strong>
+                                <small>SKU: TT-LEATHER-001</small>
+                            </td>
+                            <td class="product-category">
+                                <span class="category-badge leather">Móc khóa da</span>
+                            </td>
+                            <td class="product-price">
+                                <strong>350.000đ</strong>
+                            </td>
+                            <td class="product-stock">
+                                <span class="stock-badge out-stock">0</span>
+                            </td>
+                            <td class="product-status">
+                                <span class="status-badge out">Hết hàng</span>
+                            </td>
+                            <td class="product-actions">
+                                <button class="btn-icon small" title="Xem">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon small" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon small danger" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Product 5 -->
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td class="product-image">
+                                <img src="https://via.placeholder.com/50" alt="Charm mèo thần tài">
+                            </td>
+                            <td class="product-name">
+                                <strong>Charm mèo thần tài</strong>
+                                <small>SKU: TT-CHARM-002</small>
+                            </td>
+                            <td class="product-category">
+                                <span class="category-badge charm">Charm móc khóa</span>
+                            </td>
+                            <td class="product-price">
+                                <strong>150.000đ</strong>
+                            </td>
+                            <td class="product-stock">
+                                <span class="stock-badge in-stock">67</span>
+                            </td>
+                            <td class="product-status">
+                                <span class="status-badge active">Đang bán</span>
+                            </td>
+                            <td class="product-actions">
+                                <button class="btn-icon small" title="Xem">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon small" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon small danger" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Table Footer -->
+            <div class="table-footer">
+                <div class="footer-left">
+                    <span>Hiển thị 1-10 của 45 sản phẩm</span>
+                </div>
+                <div class="footer-right">
+                    <div class="pagination">
+                        <button class="btn-pagination" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="btn-pagination active">1</button>
+                        <button class="btn-pagination">2</button>
+                        <button class="btn-pagination">3</button>
+                        <button class="btn-pagination">4</button>
+                        <button class="btn-pagination">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="quick-stats card">
+            <h3>Thống kê nhanh</h3>
+            <div class="stats-content">
+                <div class="stat-item">
+                    <span class="stat-label">Tổng doanh thu từ sản phẩm:</span>
+                    <span class="stat-value">125.000.000đ</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Sản phẩm bán chạy nhất:</span>
+                    <span class="stat-value">Charm mèo thần tài (67 đã bán)</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Cần nhập hàng:</span>
+                    <span class="stat-value danger">7 sản phẩm</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="../js/common.js"></script>
+    <script>
+        // Products page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all checkbox
+            const selectAllCheckbox = document.getElementById('select-all');
+            const productCheckboxes = document.querySelectorAll('.products-table tbody input[type="checkbox"]');
+            
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function() {
+                    const isChecked = this.checked;
+                    productCheckboxes.forEach(checkbox => {
+                        checkbox.checked = isChecked;
+                    });
+                });
+            }
+            
+            // Update checkboxes when individual ones are changed
+            productCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const allChecked = Array.from(productCheckboxes).every(cb => cb.checked);
+                    selectAllCheckbox.checked = allChecked;
+                    selectAllCheckbox.indeterminate = !allChecked && 
+                        Array.from(productCheckboxes).some(cb => cb.checked);
+                });
+            });
+            
+            // Add product button
+            const addProductBtn = document.querySelector('.btn-add-product');
+            if (addProductBtn) {
+                addProductBtn.addEventListener('click', function() {
+                    window.location.href = 'add_product.html';
+                });
+            }
+            // Trong products.html, thêm sự kiện cho nút sửa
+            document.querySelectorAll('.btn-icon[title="Sửa"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Lấy ID sản phẩm từ hàng hiện tại
+                    const productId = this.closest('tr').querySelector('.product-name small').textContent.replace('SKU: ', '');
+                    window.location.href = `edit_product.html?id=${productId}`;
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.search-box input');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        const searchTerm = this.value.toLowerCase();
+                        const rows = document.querySelectorAll('.products-table tbody tr');
+                        
+                        rows.forEach(row => {
+                            const productName = row.querySelector('.product-name strong').textContent.toLowerCase();
+                            if (productName.includes(searchTerm) || searchTerm === '') {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Filter select
+            const categoryFilter = document.querySelector('.filter-group select:first-child');
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', function() {
+                    const category = this.value;
+                    const rows = document.querySelectorAll('.products-table tbody tr');
+                    
+                    rows.forEach(row => {
+                        const rowCategory = row.querySelector('.category-badge').classList[1];
+                        if (category === 'all' || rowCategory === category) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

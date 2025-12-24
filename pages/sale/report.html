@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Báo cáo doanh thu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/sale/styles.css">
+    <link rel="stylesheet" href="../../css/sale/report.css">
+    <link rel="stylesheet" href="../../css/slidebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Thêm CSS cho submenu tương tự index.html */
+        .nav-item.has-submenu {
+            position: relative;
+        }
+        
+        .submenu-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+        
+        .nav-item.has-submenu.active .submenu-icon {
+            transform: rotate(180deg);
+        }
+        
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(255, 245, 247, 0.5);
+            margin-left: 20px;
+            border-radius: 8px;
+        }
+        
+        .nav-item.has-submenu.active .submenu {
+            max-height: 500px;
+            padding: 10px 0;
+        }
+        
+        .submenu li {
+            margin: 5px 0;
+        }
+        
+        .submenu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+        }
+        
+        .submenu a:hover {
+            color: var(--primary-color);
+            background-color: rgba(243, 55, 109, 0.05);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .submenu a.active {
+            color: var(--primary-color);
+            background-color: rgba(243, 55, 109, 0.1);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .submenu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .submenu {
+                display: none;
+            }
+            
+            .nav-item.has-submenu.active .submenu {
+                display: none;
+            }
+        }
+        
+        /* Main content margin adjustment */
+        .sale-main {
+            margin-left: 260px;
+            padding: 20px;
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @media (max-width: 1200px) {
+            .sale-main {
+                margin-left: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sale-main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a href="../index.html" class="nav-link" data-tooltip="Dashboard">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Sản phẩm -->
+            <li class="nav-item">
+                <a href="../products.html" class="nav-link" data-tooltip="Sản phẩm">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <!-- Khách hàng -->
+            <li class="nav-item">
+                <a href="../customer.html" class="nav-link" data-tooltip="Khách hàng">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <!-- Tin nhắn -->
+            <li class="nav-item">
+                <a href="../messages.html" class="nav-link" data-tooltip="Tin nhắn">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                    <span class="nav-badge">50</span>
+                </a>
+            </li>
+
+            <!-- Đơn đặt hàng -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Đơn hàng">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                    <span class="nav-badge">100</span>
+                </a>
+            </li>
+
+            <!-- Hóa đơn -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Hóa đơn">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <!-- Khuyến mãi -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Khuyến mãi">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <!-- Marketing -->
+            <li class="nav-item">
+                <a href="../../index.html" class="nav-link" data-tooltip="Marketing">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <!-- Sale Module - Main Menu with Submenus -->
+            <li class="nav-item has-submenu active">
+                <a href="index.html" class="nav-link" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                    <i class="fas fa-chevron-down submenu-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="dashboard.html"><i class="fas fa-th-large"></i> Tổng quan</a></li>
+                    <li><a href="orders.html"><i class="fas fa-plus-circle"></i> Thêm đơn hàng</a></li>
+                    <li><a href="report.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Báo cáo doanh thu</a></li>
+                    <li><a href="compare.html"><i class="fas fa-balance-scale"></i> So sánh doanh thu</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="../../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="sale-main">
+        <!-- Report Header -->
+        <header class="report-header">
+            <div class="report-title-section">
+                <h1>Báo cáo doanh thu</h1>
+                <p class="report-subtitle" id="currentDateTime">Hôm nay: Thứ Ba, 23 tháng 12, 2025 - 14:30:15</p>
+            </div>
+            
+            <div class="sale-user-profile">
+                <div class="sale-user-avatar">KN</div>
+                <div class="sale-user-info">
+                    <h3>Phạm Kim Ngân Hmok</h3>
+                    <p>Sale Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Report Filters -->
+        <div class="order-section">
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label class="form-label">Loại báo cáo</label>
+                    <select class="form-input" id="reportType">
+                        <option value="daily">Báo cáo ngày</option>
+                        <option value="weekly">Báo cáo tuần</option>
+                        <option value="monthly" selected>Báo cáo tháng</option>
+                        <option value="quarterly">Báo cáo quý</option>
+                        <option value="yearly">Báo cáo năm</option>
+                        <option value="custom">Tùy chỉnh</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Từ ngày</label>
+                    <input type="date" class="form-input" id="fromDate">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Đến ngày</label>
+                    <input type="date" class="form-input" id="toDate">
+                </div>
+                
+                <div class="form-group" style="display: flex; align-items: flex-end;">
+                    <button class="btn-sale" id="generateReportBtn" style="width: 70%; height: 45px;">
+                        <i class="fas fa-sync-alt"></i> Lấy dữ liệu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Actions -->
+            <div class="report-actions">
+                <button class="btn-sale-secondary" id="exportPdfBtn">
+                    <i class="fas fa-file-pdf"></i> Xuất PDF
+                </button>
+                <button class="btn-sale-secondary" id="exportExcelBtn">
+                    <i class="fas fa-file-excel"></i> Xuất Excel
+                </button>
+                <button class="btn-sale-secondary" id="printReportBtn">
+                    <i class="fas fa-print"></i> In báo cáo
+                </button>
+                <button class="btn-sale" id="shareReportBtn">
+                    <i class="fas fa-share-alt"></i> Chia sẻ
+                </button>
+            </div>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Tổng doanh thu</div>
+                <div class="stat-value" id="totalRevenue">125.450.000đ</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> 15.2% so với kỳ trước
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Tổng đơn hàng</div>
+                <div class="stat-value" id="totalOrders">856</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> 8.7% so với kỳ trước
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Lợi nhuận trung bình</div>
+                <div class="stat-value" id="avgProfit">42.5%</div>
+                <div class="stat-change negative">
+                    <i class="fas fa-arrow-down"></i> 1.2% so với kỳ trước
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Khách hàng mới</div>
+                <div class="stat-value" id="newCustomers">125</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> 23.8% so với kỳ trước
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Chart -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">Doanh thu theo thời gian</h3>
+                <div class="chart-period">
+                    <span id="chartPeriodDisplay">Tháng 12/2025</span>
+                </div>
+            </div>
+            
+            <!-- Chart Controls -->
+            <div class="chart-controls">
+                <button class="chart-type-btn active" data-type="line" onclick="changeChartType('line')">
+                    <i class="fas fa-chart-line"></i> Đường
+                </button>
+                <button class="chart-type-btn" data-type="bar" onclick="changeChartType('bar')">
+                    <i class="fas fa-chart-bar"></i> Cột
+                </button>
+                <button class="chart-type-btn" data-type="mixed" onclick="changeChartType('mixed')">
+                    <i class="fas fa-chart-area"></i> Kết hợp
+                </button>
+            </div>
+            
+            <!-- Chart Canvas -->
+            <div class="chart-wrapper">
+                <canvas id="revenueChart"></canvas>
+            </div>
+            
+            <div class="chart-legend" id="chartLegend"></div>
+        </div>
+
+        <!-- Detailed Revenue Report -->
+        <div class="table-section">
+            <h3 class="section-title">CHI TIẾT DOANH THU</h3>
+            <div class="table-responsive">
+                <table class="revenue-detail-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Khoản mục</th>
+                            <th>Giá trị</th>
+                            <th>Tỷ lệ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="revenue-section">
+                            <td><strong>I</strong></td>
+                            <td><strong>DOANH THU (1+2+3)</strong></td>
+                            <td><strong id="revenueTotal">125.450.000đ</strong></td>
+                            <td><strong>100%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Tiền bán hàng</td>
+                            <td id="salesRevenue">115.250.000đ</td>
+                            <td>91.9%</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Tiền thu từ dịch vụ</td>
+                            <td id="serviceRevenue">8.200.000đ</td>
+                            <td>6.5%</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Tiền thu khác</td>
+                            <td id="otherRevenue">2.000.000đ</td>
+                            <td>1.6%</td>
+                        </tr>
+                        
+                        <tr class="cost-section">
+                            <td><strong>II</strong></td>
+                            <td><strong>CHI PHÍ (1+2+3)</strong></td>
+                            <td><strong id="costTotal">72.150.000đ</strong></td>
+                            <td><strong>57.5%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Chi phí nguyên vật liệu</td>
+                            <td id="materialCost">45.800.000đ</td>
+                            <td>36.5%</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Chi phí nhân công</td>
+                            <td id="laborCost">18.350.000đ</td>
+                            <td>14.6%</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Chi phí khác (điện, nước, wifi,...)</td>
+                            <td id="otherCost">8.000.000đ</td>
+                            <td>6.4%</td>
+                        </tr>
+                        
+                        <tr class="profit-section">
+                            <td><strong>III</strong></td>
+                            <td><strong>LỢI NHUẬN (I - II)</strong></td>
+                            <td id="profitTotal">53.300.000đ</td>
+                            <td>42.5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Key Performance Indicators -->
+        <div class="table-section">
+            <h3 class="section-title">CHỈ SỐ HIỆU SUẤT KINH DOANH (KPI)</h3>
+            <div class="sale-cards-grid" style="grid-template-columns: repeat(4, 1fr); margin-top: 20px;">
+                <div class="sale-card">
+                    <div class="sale-card-header">
+                        <div class="sale-card-title">Giá trị đơn TB</div>
+                        <div class="sale-card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="sale-card-value">146.500đ</div>
+                    <div class="sale-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 5.2%
+                    </div>
+                </div>
+                <div class="sale-card">
+                    <div class="sale-card-header">
+                        <div class="sale-card-title">Số SP/đơn</div>
+                        <div class="sale-card-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="sale-card-value">2.4</div>
+                    <div class="sale-card-change negative">
+                        <i class="fas fa-arrow-down"></i> 0.3%
+                    </div>
+                </div>
+                <div class="sale-card">
+                    <div class="sale-card-header">
+                        <div class="sale-card-title">Tỷ lệ chốt đơn</div>
+                        <div class="sale-card-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                    </div>
+                    <div class="sale-card-value">68%</div>
+                    <div class="sale-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 3.5%
+                    </div>
+                </div>
+                <div class="sale-card">
+                    <div class="sale-card-header">
+                        <div class="sale-card-title">KH quay lại</div>
+                        <div class="sale-card-icon">
+                            <i class="fas fa-redo"></i>
+                        </div>
+                    </div>
+                    <div class="sale-card-value">35%</div>
+                    <div class="sale-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 8.2%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Products Report -->
+        <div class="table-section">
+            <h3 class="section-title">TOP 5 SẢN PHẨM BÁN CHẠY</h3>
+            <div class="table-responsive">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Hạng</th>
+                            <th>Sản phẩm</th>
+                            <th>Đã bán</th>
+                            <th>Doanh thu</th>
+                            <th>Tỷ lệ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="product-rank">1</span></td>
+                            <td><strong>Charm mèo thần tài</strong></td>
+                            <td>167</td>
+                            <td>25.050.000đ</td>
+                            <td>19.8%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">2</span></td>
+                            <td><strong>Sét DIY Hoa Hồng</strong></td>
+                            <td>98</td>
+                            <td>24.500.000đ</td>
+                            <td>19.4%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">3</span></td>
+                            <td><strong>Charm móc khóa Hồ Ly</strong></td>
+                            <td>145</td>
+                            <td>17.400.000đ</td>
+                            <td>13.8%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">4</span></td>
+                            <td><strong>Móc khóa da bò</strong></td>
+                            <td>67</td>
+                            <td>23.450.000đ</td>
+                            <td>18.6%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="product-rank">5</span></td>
+                            <td><strong>Charm dây đeo điện thoại</strong></td>
+                            <td>128</td>
+                            <td>23.040.000đ</td>
+                            <td>18.2%</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background-color: #f8f9fa;">
+                            <td colspan="2"><strong>Tổng cộng</strong></td>
+                            <td><strong>605</strong></td>
+                            <td><strong>113.440.000đ</strong></td>
+                            <td><strong>90.4%</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== MODALS ===== -->
+    
+    <!-- Share Report Modal -->
+    <div class="modal-overlay" id="shareReportModal">
+        <div class="modal-content share-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-share-alt" style="margin-right: 10px;"></i> Chia sẻ báo cáo</h3>
+                <button class="modal-close" onclick="closeModal('shareReportModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Chọn đối tượng nhận báo cáo</label>
+                    <div class="share-options">
+                        <div class="share-option" onclick="toggleShareOption(this)">
+                            <input type="checkbox" id="shareManager" value="manager">
+                            <label for="shareManager">
+                                Quản lý
+                                <div class="option-desc">Gửi cho quản lý cấp cao để xem xét và phê duyệt</div>
+                            </label>
+                        </div>
+                        <div class="share-option" onclick="toggleShareOption(this)">
+                            <input type="checkbox" id="shareMarketing" value="marketing">
+                            <label for="shareMarketing">
+                                Marketing
+                                <div class="option-desc">Gửi cho đội ngũ Marketing để lên kế hoạch quảng cáo</div>
+                            </label>
+                        </div>
+                        <div class="share-option" onclick="toggleShareOption(this)">
+                            <input type="checkbox" id="shareAccounting" value="accounting">
+                            <label for="shareAccounting">
+                                Kế toán
+                                <div class="option-desc">Gửi cho phòng kế toán để hạch toán doanh thu</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Định dạng file</label>
+                    <div class="format-options">
+                        <label class="format-option">
+                            <input type="checkbox" id="formatPdf" checked>
+                            <span>PDF <small>(Tốt cho in ấn)</small></span>
+                        </label>
+                        <label class="format-option">
+                            <input type="checkbox" id="formatExcel">
+                            <span>Excel <small>(Tốt cho phân tích)</small></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Additional Email Recipients -->
+                <div class="additional-recipient">
+                    <label class="form-label">Thêm người nhận khác (email)</label>
+                    <div class="email-input-group">
+                        <input type="email" class="form-input" id="additionalEmail" placeholder="Nhập email...">
+                        <button class="btn-sale-secondary" onclick="addAdditionalEmail()" style="white-space: nowrap;">
+                            <i class="fas fa-plus"></i> Thêm
+                        </button>
+                    </div>
+                    <div class="email-tags" id="emailTags"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Ghi chú (tùy chọn)</label>
+                    <textarea class="form-input" id="shareNotes" rows="3" 
+                              placeholder="Thêm ghi chú hoặc hướng dẫn cho người nhận..."></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal cancel" onclick="closeModal('shareReportModal')">Hủy</button>
+                <button class="btn-modal confirm" onclick="shareReport()">
+                    <i class="fas fa-paper-plane"></i> Gửi báo cáo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/sale.js"></script>
+    <script>
+        // Tạo đối tượng reportModule để quản lý riêng biệt
+        const reportModule = {
+            // Biến toàn cục
+            revenueChart: null,
+            chartType: 'line',
+            additionalEmails: [],
+            
+            // Khởi tạo module
+            init: function() {
+                this.initSidebar();
+                this.initDateTime();
+                this.initDatePickers();
+                this.initEventListeners();
+                this.initChart();
+                this.updateReportData('monthly');
+                this.updateChartPeriodDisplay();
+                
+                // Tự động mở submenu Sale
+                const saleItem = document.querySelector('.nav-item.has-submenu');
+                if (saleItem) {
+                    saleItem.classList.add('active');
+                }
+            },
+            
+            // Khởi tạo sidebar và submenu
+            initSidebar: function() {
+                // Mobile toggle
+                const mobileToggle = document.getElementById('mobileToggle');
+                const sidebar = document.getElementById('sidebar');
+                
+                if (mobileToggle && sidebar) {
+                    mobileToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('active');
+                    });
+                }
+                
+                // Xử lý click ra ngoài để đóng sidebar trên mobile
+                document.addEventListener('click', function(event) {
+                    if (window.innerWidth <= 768 && !event.target.closest('.sidebar') && 
+                        !event.target.closest('.mobile-toggle') && sidebar.classList.contains('active')) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+            },
+            
+            // Khởi tạo hiển thị thời gian
+            initDateTime: function() {
+                function updateDateTime() {
+                    const now = new Date();
+                    const options = { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    };
+                    const dateStr = now.toLocaleDateString('vi-VN', options);
+                    const timeStr = now.toLocaleTimeString('vi-VN');
+                    
+                    const dateTimeElement = document.getElementById('currentDateTime');
+                    if (dateTimeElement) {
+                        dateTimeElement.textContent = `Hôm nay: ${dateStr} - ${timeStr}`;
+                    }
+                }
+                
+                updateDateTime();
+                setInterval(updateDateTime, 1000);
+            },
+            
+            // Khởi tạo date pickers với giá trị mặc định
+            initDatePickers: function() {
+                const today = new Date();
+                const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+                const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                
+                const formatDate = (date) => {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                };
+                
+                const fromDateInput = document.getElementById('fromDate');
+                const toDateInput = document.getElementById('toDate');
+                
+                if (fromDateInput) fromDateInput.value = formatDate(firstDay);
+                if (toDateInput) toDateInput.value = formatDate(lastDay);
+            },
+            
+            // Khởi tạo event listeners
+            initEventListeners: function() {
+                // Report type change
+                const reportTypeSelect = document.getElementById('reportType');
+                if (reportTypeSelect) {
+                    reportTypeSelect.addEventListener('change', this.handleReportTypeChange.bind(this));
+                }
+                
+                // Generate report button
+                const generateBtn = document.getElementById('generateReportBtn');
+                if (generateBtn) {
+                    generateBtn.addEventListener('click', this.generateReport.bind(this));
+                }
+                
+                // Export buttons
+                document.getElementById('exportPdfBtn')?.addEventListener('click', this.exportToPDF.bind(this));
+                document.getElementById('exportExcelBtn')?.addEventListener('click', this.exportToExcel.bind(this));
+                document.getElementById('printReportBtn')?.addEventListener('click', this.printReport.bind(this));
+                document.getElementById('shareReportBtn')?.addEventListener('click', () => this.openModal('shareReportModal'));
+                
+                // Email input
+                const emailInput = document.getElementById('additionalEmail');
+                if (emailInput) {
+                    emailInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.addAdditionalEmail();
+                        }
+                    });
+                }
+            },
+            
+            // Xử lý thay đổi loại báo cáo
+            handleReportTypeChange: function() {
+                const reportType = document.getElementById('reportType').value;
+                const today = new Date();
+                let fromDate, toDate;
+                
+                switch(reportType) {
+                    case 'daily':
+                        fromDate = toDate = today;
+                        break;
+                    case 'weekly':
+                        const dayOfWeek = today.getDay();
+                        const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+                        fromDate = new Date(today.setDate(diff));
+                        toDate = new Date(fromDate);
+                        toDate.setDate(fromDate.getDate() + 6);
+                        break;
+                    case 'monthly':
+                        fromDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                        toDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                        break;
+                    case 'quarterly':
+                        const quarter = Math.floor(today.getMonth() / 3);
+                        fromDate = new Date(today.getFullYear(), quarter * 3, 1);
+                        toDate = new Date(today.getFullYear(), quarter * 3 + 3, 0);
+                        break;
+                    case 'yearly':
+                        fromDate = new Date(today.getFullYear(), 0, 1);
+                        toDate = new Date(today.getFullYear(), 11, 31);
+                        break;
+                    case 'custom':
+                        return;
+                }
+                
+                if (fromDate && toDate) {
+                    const formatDate = (date) => {
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        return `${year}-${month}-${day}`;
+                    };
+                    
+                    document.getElementById('fromDate').value = formatDate(fromDate);
+                    document.getElementById('toDate').value = formatDate(toDate);
+                    this.updateChartPeriodDisplay();
+                }
+            },
+            
+            // Tạo báo cáo
+            generateReport: function() {
+                const reportType = document.getElementById('reportType').value;
+                const fromDate = document.getElementById('fromDate').value;
+                const toDate = document.getElementById('toDate').value;
+                
+                if (!fromDate || !toDate) {
+                    this.showToast('Vui lòng chọn khoảng thời gian', 'error');
+                    return;
+                }
+                
+                if (new Date(fromDate) > new Date(toDate)) {
+                    this.showToast('Ngày bắt đầu phải nhỏ hơn ngày kết thúc', 'error');
+                    return;
+                }
+                
+                const generateBtn = document.getElementById('generateReportBtn');
+                if (generateBtn) {
+                    const originalText = generateBtn.innerHTML;
+                    generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+                    generateBtn.disabled = true;
+
+                    // Giả lập xử lý API
+                    setTimeout(() => {
+                        this.updateReportData(reportType);
+                        this.updateChartPeriodDisplay();
+                        this.updateRevenueChartData(reportType);
+                        
+                        this.showToast('Đã tạo báo cáo thành công!');
+                        
+                        generateBtn.innerHTML = originalText;
+                        generateBtn.disabled = false;
+                    }, 1500);
+                }
+            },
+            
+            // Cập nhật dữ liệu báo cáo
+            updateReportData: function(reportType) {
+                const dataSets = {
+                    daily: {
+                        totalRevenue: '15.250.000đ',
+                        totalOrders: '45',
+                        avgProfit: '43.2%',
+                        newCustomers: '12',
+                        salesRevenue: '14.250.000đ',
+                        serviceRevenue: '800.000đ',
+                        otherRevenue: '200.000đ',
+                        materialCost: '6.800.000đ',
+                        laborCost: '3.350.000đ',
+                        otherCost: '1.000.000đ',
+                        profitTotal: '4.100.000đ'
+                    },
+                    weekly: {
+                        totalRevenue: '89.750.000đ',
+                        totalOrders: '245',
+                        avgProfit: '42.8%',
+                        newCustomers: '38',
+                        salesRevenue: '82.750.000đ',
+                        serviceRevenue: '5.200.000đ',
+                        otherRevenue: '1.800.000đ',
+                        materialCost: '38.800.000đ',
+                        laborCost: '9.350.000đ',
+                        otherCost: '3.000.000đ',
+                        profitTotal: '38.800.000đ'
+                    },
+                    monthly: {
+                        totalRevenue: '125.450.000đ',
+                        totalOrders: '856',
+                        avgProfit: '42.5%',
+                        newCustomers: '125',
+                        salesRevenue: '115.250.000đ',
+                        serviceRevenue: '8.200.000đ',
+                        otherRevenue: '2.000.000đ',
+                        materialCost: '45.800.000đ',
+                        laborCost: '18.350.000đ',
+                        otherCost: '8.000.000đ',
+                        profitTotal: '53.300.000đ'
+                    },
+                    quarterly: {
+                        totalRevenue: '376.350.000đ',
+                        totalOrders: '2,568',
+                        avgProfit: '41.8%',
+                        newCustomers: '375',
+                        salesRevenue: '345.750.000đ',
+                        serviceRevenue: '24.600.000đ',
+                        otherRevenue: '6.000.000đ',
+                        materialCost: '137.400.000đ',
+                        laborCost: '55.050.000đ',
+                        otherCost: '24.000.000đ',
+                        profitTotal: '159.900.000đ'
+                    },
+                    yearly: {
+                        totalRevenue: '1.505.400.000đ',
+                        totalOrders: '10,272',
+                        avgProfit: '42.1%',
+                        newCustomers: '1,500',
+                        salesRevenue: '1.383.000.000đ',
+                        serviceRevenue: '98.400.000đ',
+                        otherRevenue: '24.000.000đ',
+                        materialCost: '549.600.000đ',
+                        laborCost: '220.200.000đ',
+                        otherCost: '96.000.000đ',
+                        profitTotal: '639.600.000đ'
+                    }
+                };
+
+                const data = dataSets[reportType] || dataSets.monthly;
+
+                Object.keys(data).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.textContent = data[key];
+                    }
+                });
+
+                const revenueTotal = data.totalRevenue;
+                const costTotal = '72.150.000đ';
+                
+                document.getElementById('revenueTotal').textContent = revenueTotal;
+                document.getElementById('costTotal').textContent = costTotal;
+            },
+            
+            // Khởi tạo biểu đồ
+            initChart: function() {
+                const ctx = document.getElementById('revenueChart').getContext('2d');
+                
+                this.revenueChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4'],
+                        datasets: [
+                            {
+                                label: 'Doanh thu',
+                                data: [45200000, 52800000, 48500000, 51300000],
+                                borderColor: '#F3376D',
+                                backgroundColor: 'rgba(243, 55, 109, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.3
+                            },
+                            {
+                                label: 'Đơn hàng',
+                                data: [320, 375, 345, 365],
+                                borderColor: '#FF95A6',
+                                backgroundColor: 'rgba(255, 149, 166, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.3,
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label === 'Doanh thu') {
+                                            if (context.parsed.y !== null) {
+                                                label += ': ' + reportModule.formatCurrency(context.parsed.y);
+                                            }
+                                        } else {
+                                            if (context.parsed.y !== null) {
+                                                label += ': ' + context.parsed.y;
+                                            }
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Doanh thu (VND)',
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return reportModule.formatCurrency(value);
+                                    }
+                                }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'Số đơn hàng',
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                                grid: {
+                                    drawOnChartArea: false,
+                                },
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'nearest'
+                        }
+                    }
+                });
+                
+                this.updateChartLegend();
+            },
+            
+            // Cập nhật dữ liệu biểu đồ
+            updateRevenueChartData: function(reportType) {
+                if (!this.revenueChart) return;
+                
+                const chartData = {
+                    daily: {
+                        labels: ['9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h'],
+                        revenue: [1200000, 1800000, 1500000, 2100000, 1900000, 2300000, 2800000, 1900000, 900000],
+                        orders: [8, 12, 10, 14, 13, 15, 18, 12, 6]
+                    },
+                    weekly: {
+                        labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN'],
+                        revenue: [12500000, 14200000, 11800000, 15300000, 13900000, 16200000, 6900000],
+                        orders: [85, 95, 80, 105, 95, 110, 45]
+                    },
+                    monthly: {
+                        labels: ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4'],
+                        revenue: [45200000, 52800000, 48500000, 51300000],
+                        orders: [320, 375, 345, 365]
+                    },
+                    quarterly: {
+                        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3'],
+                        revenue: [120500000, 125400000, 130200000],
+                        orders: [820, 855, 893]
+                    },
+                    yearly: {
+                        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                        revenue: [350200000, 376400000, 398700000, 380100000],
+                        orders: [2450, 2568, 2680, 2574]
+                    }
+                };
+                
+                const data = chartData[reportType] || chartData.monthly;
+                
+                this.revenueChart.data.labels = data.labels;
+                this.revenueChart.data.datasets[0].data = data.revenue;
+                this.revenueChart.data.datasets[1].data = data.orders;
+                
+                const maxRevenue = Math.max(...data.revenue);
+                const yAxisTitle = maxRevenue > 100000000 ? 'Doanh thu (triệu VND)' : 'Doanh thu (VND)';
+                
+                this.revenueChart.options.scales.y.title.text = yAxisTitle;
+                this.revenueChart.options.scales.y.ticks.callback = function(value) {
+                    if (maxRevenue > 100000000) {
+                        return (value / 1000000).toFixed(1) + 'M';
+                    }
+                    return reportModule.formatCurrency(value);
+                };
+                
+                this.revenueChart.update();
+                this.updateChartLegend();
+            },
+            
+            // Thay đổi loại biểu đồ
+            changeChartType: function(type) {
+                this.chartType = type;
+                
+                document.querySelectorAll('.chart-type-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.type === type) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                if (!this.revenueChart) return;
+                
+                if (type === 'mixed') {
+                    this.revenueChart.data.datasets[0].type = 'line';
+                    this.revenueChart.data.datasets[1].type = 'bar';
+                    this.revenueChart.data.datasets[1].backgroundColor = 'rgba(255, 149, 166, 0.5)';
+                    this.revenueChart.data.datasets[1].borderColor = '#FF95A6';
+                } else {
+                    this.revenueChart.data.datasets.forEach(dataset => {
+                        dataset.type = type;
+                        if (type === 'bar') {
+                            dataset.backgroundColor = dataset.label === 'Doanh thu' 
+                                ? 'rgba(243, 55, 109, 0.7)' 
+                                : 'rgba(255, 149, 166, 0.7)';
+                        } else {
+                            dataset.backgroundColor = dataset.label === 'Doanh thu' 
+                                ? 'rgba(243, 55, 109, 0.1)' 
+                                : 'rgba(255, 149, 166, 0.1)';
+                        }
+                    });
+                }
+                
+                this.revenueChart.update();
+            },
+            
+            // Cập nhật chú thích biểu đồ
+            updateChartLegend: function() {
+                const legendContainer = document.getElementById('chartLegend');
+                if (!legendContainer || !this.revenueChart) return;
+                
+                const datasets = this.revenueChart.data.datasets;
+                let html = '<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 15px;">';
+                
+                datasets.forEach(dataset => {
+                    const color = dataset.borderColor || dataset.backgroundColor;
+                    html += `
+                        <div class="legend-item" style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 12px; height: 12px; background: ${color}; border-radius: 2px;"></div>
+                            <span style="font-size: 12px; color: #666;">${dataset.label}</span>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                legendContainer.innerHTML = html;
+            },
+            
+            // Định dạng tiền tệ
+            formatCurrency: function(value) {
+                if (value >= 1000000000) {
+                    return (value / 1000000000).toFixed(1) + ' tỷ';
+                } else if (value >= 1000000) {
+                    return (value / 1000000).toFixed(1) + ' triệu';
+                } else if (value >= 1000) {
+                    return (value / 1000).toFixed(1) + ' nghìn';
+                }
+                return value.toString();
+            },
+            
+            // Cập nhật hiển thị thời gian biểu đồ
+            updateChartPeriodDisplay: function() {
+                const fromDate = document.getElementById('fromDate').value;
+                const toDate = document.getElementById('toDate').value;
+                const reportType = document.getElementById('reportType').value;
+                
+                if (!fromDate || !toDate) return;
+                
+                const from = new Date(fromDate);
+                const to = new Date(toDate);
+                
+                let displayText = '';
+                
+                switch(reportType) {
+                    case 'daily':
+                        displayText = `Ngày ${this.formatDisplayDate(from)}`;
+                        break;
+                    case 'weekly':
+                        displayText = `Tuần từ ${this.formatDisplayDate(from)} đến ${this.formatDisplayDate(to)}`;
+                        break;
+                    case 'monthly':
+                        displayText = `Tháng ${from.getMonth() + 1}/${from.getFullYear()}`;
+                        break;
+                    case 'quarterly':
+                        const quarter = Math.floor(from.getMonth() / 3) + 1;
+                        displayText = `Quý ${quarter}/${from.getFullYear()}`;
+                        break;
+                    case 'yearly':
+                        displayText = `Năm ${from.getFullYear()}`;
+                        break;
+                    case 'custom':
+                        displayText = `Từ ${this.formatDisplayDate(from)} đến ${this.formatDisplayDate(to)}`;
+                        break;
+                }
+                
+                document.getElementById('chartPeriodDisplay').textContent = displayText;
+            },
+            
+            formatDisplayDate: function(date) {
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            },
+            
+            // Xuất PDF
+            exportToPDF: function() {
+                this.showToast('Đang xuất báo cáo PDF...', 'warning');
+                
+                setTimeout(() => {
+                    this.showToast('Đã xuất báo cáo PDF thành công!');
+                    
+                    // Giả lập tải file
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.download = `BaoCaoDoanhThu_${new Date().toISOString().split('T')[0]}.pdf`;
+                    link.click();
+                }, 2000);
+            },
+            
+            // Xuất Excel
+            exportToExcel: function() {
+                this.showToast('Đang xuất báo cáo Excel...', 'warning');
+                
+                setTimeout(() => {
+                    this.showToast('Đã xuất báo cáo Excel thành công!');
+                    
+                    // Giả lập tải file
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.download = `BaoCaoDoanhThu_${new Date().toISOString().split('T')[0]}.xlsx`;
+                    link.click();
+                }, 2000);
+            },
+            
+            // In báo cáo
+            printReport: function() {
+                this.showToast('Đang chuẩn bị báo cáo để in...', 'warning');
+                
+                setTimeout(() => {
+                    window.print();
+                    this.showToast('Báo cáo đã sẵn sàng để in.');
+                }, 1000);
+            },
+            
+            // Modal functions
+            openModal: function(modalId) {
+                document.getElementById(modalId).style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById(modalId).style.opacity = '1';
+                }, 10);
+            },
+            
+            closeModal: function(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            },
+            
+            // Share report functions
+            toggleShareOption: function(element) {
+                element.classList.toggle('selected');
+                const checkbox = element.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+            },
+            
+            addAdditionalEmail: function() {
+                const emailInput = document.getElementById('additionalEmail');
+                const email = emailInput.value.trim();
+                
+                if (!email) {
+                    this.showToast('Vui lòng nhập địa chỉ email', 'error');
+                    return;
+                }
+                
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    this.showToast('Địa chỉ email không hợp lệ', 'error');
+                    return;
+                }
+                
+                if (this.additionalEmails.includes(email)) {
+                    this.showToast('Email đã được thêm vào danh sách', 'warning');
+                    return;
+                }
+                
+                this.additionalEmails.push(email);
+                this.updateEmailTags();
+                emailInput.value = '';
+                emailInput.focus();
+            },
+            
+            removeAdditionalEmail: function(email) {
+                this.additionalEmails = this.additionalEmails.filter(e => e !== email);
+                this.updateEmailTags();
+            },
+            
+            updateEmailTags: function() {
+                const emailTagsContainer = document.getElementById('emailTags');
+                if (!emailTagsContainer) return;
+                
+                if (this.additionalEmails.length === 0) {
+                    emailTagsContainer.innerHTML = '<div style="font-size: 12px; color: #666; font-style: italic;">Chưa có email nào được thêm</div>';
+                    return;
+                }
+                
+                emailTagsContainer.innerHTML = this.additionalEmails.map(email => `
+                    <div class="email-tag" style="background: var(--sale-bg); color: var(--sale-primary); padding: 5px 10px; border-radius: 15px; font-size: 12px; display: flex; align-items: center; gap: 5px;">
+                        ${email}
+                        <span class="remove-email" onclick="reportModule.removeAdditionalEmail('${email}')" style="cursor: pointer; font-size: 14px; color: #666;">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </div>
+                `).join('');
+            },
+            
+            shareReport: function() {
+                const selectedOptions = [];
+                const checkboxes = document.querySelectorAll('.share-option input[type="checkbox"]:checked');
+                
+                if (checkboxes.length === 0 && this.additionalEmails.length === 0) {
+                    this.showToast('Vui lòng chọn ít nhất một đối tượng để chia sẻ', 'error');
+                    return;
+                }
+                
+                checkboxes.forEach(checkbox => {
+                    selectedOptions.push(checkbox.value);
+                });
+                
+                const formatPdf = document.getElementById('formatPdf').checked;
+                const formatExcel = document.getElementById('formatExcel').checked;
+                const notes = document.getElementById('shareNotes').value;
+                
+                if (!formatPdf && !formatExcel) {
+                    this.showToast('Vui lòng chọn ít nhất một định dạng file', 'error');
+                    return;
+                }
+                
+                const formats = [];
+                if (formatPdf) formats.push('PDF');
+                if (formatExcel) formats.push('Excel');
+                
+                // Show loading
+                const shareBtn = document.querySelector('#shareReportModal .btn-modal.confirm');
+                const originalText = shareBtn.innerHTML;
+                shareBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+                shareBtn.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    const recipients = selectedOptions.map(opt => {
+                        switch(opt) {
+                            case 'manager': return 'Quản lý';
+                            case 'marketing': return 'Marketing';
+                            case 'accounting': return 'Kế toán';
+                            default: return opt;
+                        }
+                    });
+                    
+                    const allRecipients = [...recipients, ...this.additionalEmails];
+                    
+                    this.showToast(`Đã gửi báo cáo (${formats.join(', ')}) đến ${allRecipients.length} người nhận`);
+                    
+                    // Reset form
+                    document.querySelectorAll('.share-option input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    document.querySelectorAll('.share-option').forEach(el => el.classList.remove('selected'));
+                    document.getElementById('shareNotes').value = '';
+                    document.getElementById('formatPdf').checked = true;
+                    document.getElementById('formatExcel').checked = false;
+                    
+                    // Clear additional emails
+                    this.additionalEmails = [];
+                    this.updateEmailTags();
+                    
+                    shareBtn.innerHTML = originalText;
+                    shareBtn.disabled = false;
+                    this.closeModal('shareReportModal');
+                }, 1500);
+            },
+            
+            // Toast notification
+            showToast: function(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                if (!toast) return;
+                
+                const iconClass = type === 'success' ? 'fa-check-circle' : 
+                                 type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+                const titleText = type === 'success' ? 'Thành công!' : 
+                                type === 'error' ? 'Lỗi!' : 'Thông báo';
+                
+                toast.innerHTML = `
+                    <div class="toast-icon">
+                        <i class="fas ${iconClass}"></i>
+                    </div>
+                    <div class="toast-content">
+                        <h4>${titleText}</h4>
+                        <p>${message}</p>
+                    </div>
+                `;
+                
+                toast.className = `toast ${type} show`;
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+        };
+
+        // Toggle submenu function (to be used globally)
+        function toggleSubmenu(link) {
+            const navItem = link.closest('.nav-item.has-submenu');
+            const isActive = navItem.classList.contains('active');
+            
+            // Đóng tất cả submenu khác
+            document.querySelectorAll('.nav-item.has-submenu').forEach(item => {
+                if (item !== navItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle submenu hiện tại
+            navItem.classList.toggle('active');
+            
+            return false;
+        }
+
+        // Khởi tạo khi DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            reportModule.init();
+            
+            // Gán hàm changeChartType ra global để có thể gọi từ onclick
+            window.changeChartType = function(type) {
+                reportModule.changeChartType(type);
+            };
+            
+            // Gán hàm toggleShareOption ra global
+            window.toggleShareOption = function(element) {
+                reportModule.toggleShareOption(element);
+            };
+            
+            // Gán hàm addAdditionalEmail ra global
+            window.addAdditionalEmail = function() {
+                reportModule.addAdditionalEmail();
+            };
+            
+            // Gán hàm shareReport ra global
+            window.shareReport = function() {
+                reportModule.shareReport();
+            };
+            
+            // Gán hàm closeModal ra global
+            window.closeModal = function(modalId) {
+                reportModule.closeModal(modalId);
+            };
+            
+            // Gán hàm toggleSubmenu ra global
+            window.toggleSubmenu = toggleSubmenu;
+        });
+    </script>
+</body>
+</html>

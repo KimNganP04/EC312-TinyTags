@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Xác thực email</title>
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-form-wrapper">
+            <div class="auth-header">
+                <h1>Kiểm tra hộp thư</h1>
+                <p>Chúng tôi đã gửi email xác nhận của bạn, hãy click vào để xác thực</p>
+            </div>
+
+            <div class="email-illustration">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+
+            <div class="action-buttons">
+                <button id="resendBtn" class="btn btn-outline btn-block">
+                    <i class="fas fa-redo"></i> Gửi lại email
+                </button>
+                <a href="login.html" class="btn btn-secondary btn-block">
+                    Quay lại đăng nhập
+                </a>
+            </div>
+
+            <div class="auth-footer">
+                <p>Email không đến? Kiểm tra thư mục <strong>Spam</strong> hoặc <strong>Quảng cáo</strong>.</p>
+            </div>
+        </div>
+
+            <!-- KHUNG BÊN PHẢI: Chỉ hiển thị Logo full -->
+        <div class="auth-logo-wrapper">
+            <div class="logo-full-container">
+                <img src="../assets/images/LOGO.png" alt="Tiny Tags Logo" class="logo-full-image">
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <span class="notification-icon">🔄</span>
+            <span class="notification-text">Đã gửi lại email xác nhận!</span>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

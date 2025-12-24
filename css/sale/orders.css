@@ -1,0 +1,750 @@
+/* 1. Header Styles */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.report-title-section h1 {
+    color: var(--sale-secondary);
+    margin-bottom: 5px;
+}
+
+.report-subtitle {
+    color: #666;
+    font-size: 14px;
+}
+
+/* 2. Customer Search - Đã fix kính lúp bị lệch */
+.customer-search-box {
+    position: relative;
+    flex: 1;
+}
+
+.customer-search-box i {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    z-index: 1;
+}
+
+.customer-search-box input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid var(--sale-border);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s;
+    background: white;
+    box-sizing: border-box;
+    height: 44px;
+}
+
+.customer-search-box input:focus {
+    outline: none;
+    border-color: var(--sale-primary);
+    box-shadow: 0 0 0 3px rgba(243, 55, 109, 0.1);
+}
+
+/* 3. Action Bar */
+.sale-action-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-select {
+    padding: 12px 15px;
+    border: 2px solid var(--sale-border);
+    border-radius: 8px;
+    font-size: 14px;
+    min-width: 200px;
+    background: white;
+    cursor: pointer;
+    height: 44px;
+    box-sizing: border-box;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
+    padding-right: 40px;
+}
+
+/* 4. Customer Details */
+.customer-details-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--sale-border);
+}
+
+.customer-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.customer-info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.customer-info-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.customer-info-value {
+    font-weight: 500;
+    color: #333;
+}
+
+/* 5. Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--sale-border);
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(243, 55, 109, 0.1);
+    border-color: var(--sale-primary);
+}
+
+.product-card.selected {
+    border-color: var(--sale-primary);
+    background-color: var(--sale-bg);
+}
+
+.product-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid var(--sale-border);
+}
+
+.product-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.product-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    color: var(--sale-primary);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.product-stock {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.product-quantity-indicator {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: var(--sale-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.btn-quantity {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid var(--sale-border);
+    background: white;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-quantity:hover {
+    background: var(--sale-bg);
+    border-color: var(--sale-primary);
+    color: var(--sale-primary);
+}
+
+.btn-quantity:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.quantity-input {
+    width: 60px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid var(--sale-border);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* 6. Order Items Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.order-items-table th {
+    padding: 15px;
+    text-align: left;
+    color: var(--sale-secondary);
+    font-weight: 600;
+    background-color: var(--sale-bg);
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.order-items-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--sale-border);
+}
+
+.order-items-table tr:last-child td {
+    border-bottom: none;
+}
+
+.item-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid var(--sale-border);
+}
+
+.item-name {
+    display: flex;
+    align-items: center;
+}
+
+.remove-item {
+    color: #d63031;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-item:hover {
+    background: #ffebee;
+}
+
+/* 7. Order Summary Grid */
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.payment-methods {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.payment-method {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid var(--sale-border);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.payment-method:hover {
+    border-color: var(--sale-primary);
+    background: var(--sale-bg);
+}
+
+.payment-method.selected {
+    border-color: var(--sale-primary);
+    background: var(--sale-bg);
+}
+
+.payment-method i {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--sale-primary);
+}
+
+.payment-method span {
+    display: block;
+    font-weight: 500;
+    color: #333;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--sale-border);
+}
+
+.summary-row.total {
+    border-bottom: none;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sale-primary);
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 2px solid var(--sale-border);
+}
+
+/* 8. Order Actions */
+.order-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.order-actions button {
+    padding: 12px 24px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.order-actions .btn-sale-secondary {
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid var(--sale-border);
+}
+
+.order-actions .btn-sale-secondary:hover {
+    background: #e9ecef;
+}
+
+.order-actions .btn-sale {
+    background: var(--sale-primary);
+    color: white;
+}
+
+.order-actions .btn-sale:hover {
+    background: #e03162;
+    transform: translateY(-1px);
+}
+
+/* 9. Customer Suggestions */
+.customer-suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid var(--sale-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 5px;
+    display: none;
+}
+
+.customer-suggestion {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--sale-border);
+    transition: background 0.3s;
+}
+
+.customer-suggestion:hover {
+    background: var(--sale-bg);
+}
+
+.customer-suggestion.active {
+    background: var(--sale-bg);
+    border-left: 3px solid var(--sale-primary);
+}
+
+.suggestion-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.suggestion-info {
+    font-size: 13px;
+    color: #666;
+}
+
+/* 10. Empty States */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 48px;
+    color: var(--sale-border);
+    margin-bottom: 15px;
+}
+
+/* 11. Voucher Styles */
+.voucher-applied {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.voucher-tag {
+    background: var(--sale-bg);
+    color: var(--sale-primary);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remove-voucher {
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.remove-voucher:hover {
+    color: var(--sale-primary);
+}
+
+/* 12. Voucher Modal Items */
+.voucher-item {
+    padding: 15px;
+    border: 1px solid var(--sale-border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.voucher-item:hover {
+    border-color: var(--sale-primary);
+    background: var(--sale-bg);
+}
+
+.voucher-item.selected {
+    border-color: var(--sale-primary);
+    background: var(--sale-bg);
+}
+
+.voucher-checkbox {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--sale-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.voucher-item.selected .voucher-checkbox {
+    background: var(--sale-primary);
+    border-color: var(--sale-primary);
+}
+
+.voucher-item.selected .voucher-checkbox:after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+}
+
+.voucher-code {
+    font-weight: 700;
+    color: var(--sale-primary);
+    margin-bottom: 5px;
+}
+
+.voucher-desc {
+    font-size: 13px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.voucher-condition {
+    font-size: 12px;
+    color: #999;
+    margin-top: 3px;
+}
+
+/* 13. Form Elements cho trang orders */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--sale-border);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--sale-primary);
+    box-shadow: 0 0 0 3px rgba(243, 55, 109, 0.1);
+}
+
+/* 14. Draft Orders Section */
+.draft-orders-container {
+    background: var(--sale-bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid var(--sale-border);
+}
+
+.draft-orders-section {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+
+.draft-order-item {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--sale-border);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.draft-order-item:hover {
+    border-color: var(--sale-primary);
+    background: var(--sale-bg);
+}
+
+.draft-order-info h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.draft-order-info p {
+    margin: 0;
+    color: #666;
+    font-size: 12px;
+}
+
+.draft-order-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-draft-action {
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-load-draft {
+    background: var(--sale-primary);
+    color: white;
+}
+
+.btn-load-draft:hover {
+    background: #e03162;
+}
+
+.btn-delete-draft {
+    background: #ffebee;
+    color: #d63031;
+}
+
+.btn-delete-draft:hover {
+    background: #ffcdd2;
+}
+
+/* 15. Confirmation Modal Styles */
+.confirmation-modal .modal-content {
+    max-width: 400px;
+}
+
+.confirmation-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.confirmation-icon.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.confirmation-icon.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.confirmation-message {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* 16. Responsive Design */
+@media (max-width: 768px) {
+    .report-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .sale-action-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-select {
+        min-width: 100%;
+    }
+    
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .customer-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .payment-methods {
+        flex-direction: column;
+    }
+    
+    .order-actions {
+        flex-direction: column;
+    }
+    
+    .order-actions button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .customer-search-box i {
+        left: 15px;
+    }
+    
+    .customer-search-box input {
+        padding: 12px 15px 12px 40px;
+    }
+    
+    .draft-order-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .draft-order-actions {
+        align-self: flex-end;
+    }
+}

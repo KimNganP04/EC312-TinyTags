@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags - Tạo Bài Viết</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="marketing.css">
+    
+    <!-- Additional CSS specific for create post page -->
+    <style>
+        /* Editor */
+        .editor-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .editor-toolbar {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .editor-content {
+            min-height: 300px;
+            padding: 20px;
+            outline: none;
+        }
+        
+        /* Platform Cards */
+        .platform-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .platform-card:hover {
+            border-color: var(--primary-pink);
+            transform: translateY(-2px);
+        }
+        
+        .platform-card.selected {
+            border-color: var(--primary-red);
+            background-color: var(--primary-pink-light);
+        }
+        
+        /* Preview Card */
+        .preview-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 16px;
+        }
+        
+        .facebook-preview {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        
+        .tiktok-preview {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* TikTok 9:16 Aspect Ratio - FORM DỌC */
+        .tiktok-portrait {
+            position: relative;
+            width: 180px; /* Rộng nhỏ */
+            height: 320px; /* Cao hơn rộng (9:16) */
+            background-color: black;
+            overflow: hidden;
+            border-radius: 8px;
+            margin: 0 auto;
+        }
+        
+        /* File Upload */
+        .file-upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--primary-red);
+            background: var(--primary-pink-light);
+        }
+        
+        /* Hashtag Input */
+        .hashtag-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            min-height: 60px;
+        }
+        
+        .hashtag {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        /* Group Selection */
+        .group-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .group-option:hover {
+            border-color: var(--primary-pink);
+            transform: translateY(-2px);
+        }
+        
+        .group-option.selected {
+            border-color: var(--primary-red);
+            background-color: var(--primary-pink-light);
+        }
+        
+        /* Image Preview */
+        .image-preview-container {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+        
+        .image-preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: var(--primary-red);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            background: #10b981;
+        }
+        
+        .toast.info {
+            background: #3b82f6;
+        }
+
+        /* Custom scrollbar for create post page */
+        #facebookGroupsSelection .bg-gray-50 {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-pink) #f1f1f1;
+        }
+
+        #facebookGroupsSelection .bg-gray-50::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #facebookGroupsSelection .bg-gray-50::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        #facebookGroupsSelection .bg-gray-50::-webkit-scrollbar-thumb {
+            background: var(--primary-pink);
+            border-radius: 3px;
+        }
+
+        /* Custom styling for create post specific elements */
+        .btn-primary-custom {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary-custom {
+            background-color: white;
+            color: var(--primary-dark);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 2px solid var(--primary-dark);
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary-custom:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Thông báo</span>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="min-h-screen flex" style="width: 100%;">
+        
+        <!-- Sidebar Container (will be loaded by JS) -->
+        <div id="sidebar-container">
+            <!-- Sidebar will be loaded here -->
+        </div>
+        
+        <div class="main-content">
+            <!-- MAIN CONTENT -->
+            <div class="flex-1">
+                <!-- Header -->
+                <header class="bg-white border-b px-8 py-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-dark">Tạo Bài Viết Mới</h2>
+                            <p class="text-gray-600">UC-MKT-01-01: Tạo nội dung đa kênh từ đầu</p>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200">
+                                    <i class="fas fa-bell text-gray-600"></i>
+                                </button>
+                                <span class="absolute -top-1 -right-1 w-5 h-5 bg-red text-white text-xs rounded-full flex items-center justify-center">2</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-r from-red to-pink rounded-full flex items-center justify-center text-white font-bold">
+                                    MS
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Phương Nghi</p>
+                                    <p class="text-xs text-gray-500">ID: S0001</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                
+                <!-- Main Content -->
+                <main class="p-8">
+                    <!-- Action Buttons -->
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="flex space-x-3">
+                            <button onclick="saveAsDraft()" class="btn-secondary-custom">
+                                <i class="fas fa-save mr-2"></i>Lưu nháp
+                            </button>
+                            <button onclick="submitForApproval()" class="btn-primary-custom">
+                                <i class="fas fa-paper-plane mr-2"></i>Gửi duyệt
+                            </button>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Tất cả thông tin đánh dấu * là bắt buộc
+                        </div>
+                    </div>
+                    
+                    <!-- Content Area -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- LEFT COLUMN: Content Creation -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Title Input -->
+                            <div class="editor-container">
+                                <div class="p-6">
+                                    <label class="block text-sm font-medium text-dark mb-2">
+                                        Tiêu đề bài viết <span class="text-red">*</span>
+                                    </label>
+                                    <input type="text" id="postTitle" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red focus:border-transparent"
+                                           placeholder="Nhập tiêu đề hấp dẫn..."
+                                           value="">
+                                </div>
+                            </div>
+                            
+                            <!-- Content Editor -->
+                            <div class="editor-container">
+                                <div class="editor-toolbar">
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="In đậm" onclick="formatText('bold')">
+                                        <i class="fas fa-bold"></i>
+                                    </button>
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="In nghiêng" onclick="formatText('italic')">
+                                        <i class="fas fa-italic"></i>
+                                    </button>
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="Gạch chân" onclick="formatText('underline')">
+                                        <i class="fas fa-underline"></i>
+                                    </button>
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="Danh sách" onclick="formatText('insertUnorderedList')">
+                                        <i class="fas fa-list-ul"></i>
+                                    </button>
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="Số thứ tự" onclick="formatText('insertOrderedList')">
+                                        <i class="fas fa-list-ol"></i>
+                                    </button>
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="Liên kết" onclick="insertLink()">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="Emoji" onclick="insertEmoji()">
+                                        <i class="fas fa-smile"></i>
+                                    </button>
+                                    <div class="flex-1"></div>
+                                    <button class="w-8 h-8 rounded hover:bg-gray-200" title="Xóa định dạng" onclick="formatText('removeFormat')">
+                                        <i class="fas fa-eraser"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="p-6">
+                                    <label class="block text-sm font-medium text-dark mb-2">
+                                        Nội dung bài viết <span class="text-red">*</span>
+                                    </label>
+                                    <div class="editor-content border border-gray-300 rounded-lg" 
+                                         contenteditable="true" 
+                                         id="postContent"
+                                         placeholder="Nhập nội dung bài viết của bạn ở đây..."></div>
+                                    <div class="mt-2 text-xs text-gray-500 flex justify-between">
+                                        <span id="charCount">0 ký tự</span>
+                                        <span>Gợi ý: Sử dụng emoji để tăng tương tác</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Image Upload -->
+                            <div class="editor-container">
+                                <div class="p-6">
+                                    <label class="block text-sm font-medium text-dark mb-2">
+                                        Hình ảnh đính kèm
+                                    </label>
+                                    <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                        <p class="text-gray-600 mb-2">Kéo thả hình ảnh vào đây hoặc nhấn để chọn</p>
+                                        <p class="text-sm text-gray-500">Hỗ trợ: JPG, PNG, GIF (tối đa 5MB)</p>
+                                        <input type="file" id="fileInput" class="hidden" accept="image/*" multiple onchange="handleFileSelect(event)">
+                                    </div>
+                                    
+                                    <!-- Image Preview -->
+                                    <div id="imagePreview" class="mt-4 grid grid-cols-3 gap-4 hidden">
+                                        <!-- Images will be added here -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Hashtags -->
+                            <div class="editor-container">
+                                <div class="p-6">
+                                    <label class="block text-sm font-medium text-dark mb-2">
+                                        Hashtags
+                                    </label>
+                                    <div class="hashtag-input" id="hashtagContainer">
+                                        <input type="text" 
+                                               id="hashtagInput"
+                                               class="flex-1 border-0 focus:outline-none focus:ring-0"
+                                               placeholder="Nhập hashtag và nhấn Enter..."
+                                               onkeypress="addHashtag(event)">
+                                        <div class="hidden" id="hashtagTemplate">
+                                            <span class="hashtag">
+                                                <span class="hashtag-text">#example</span>
+                                                <button class="ml-2 text-gray-500 hover:text-red" onclick="removeHashtag(this)">×</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 text-xs text-gray-500">
+                                        Gợi ý: #marketing #sale #tinytags #campaign
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Platform Selection -->
+                            <div class="editor-container">
+                                <div class="p-6">
+                                    <label class="block text-sm font-medium text-dark mb-2">
+                                        Chọn nền tảng đăng bài <span class="text-red">*</span>
+                                    </label>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <!-- Facebook -->
+                                        <div class="platform-card" onclick="selectPlatform('facebook')">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+                                                    <i class="fab fa-facebook text-blue-600 text-2xl"></i>
+                                                </div>
+                                                <h4 class="font-semibold text-dark mb-1">Facebook Page</h4>
+                                                <p class="text-xs text-gray-600">@TinyTagsOfficial</p>
+                                                <div class="mt-3 text-sm text-green-600">
+                                                    <i class="fas fa-check-circle"></i> Đang hoạt động
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- TikTok -->
+                                        <div class="platform-card" onclick="selectPlatform('tiktok')">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                                                    <i class="fab fa-tiktok text-black text-2xl"></i>
+                                                </div>
+                                                <h4 class="font-semibold text-dark mb-1">TikTok</h4>
+                                                <p class="text-xs text-gray-600">@tinytags.vn</p>
+                                                <div class="mt-3 text-sm text-green-600">
+                                                    <i class="fas fa-check-circle"></i> Đang hoạt động
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Facebook Group -->
+                                        <div class="platform-card" onclick="selectPlatform('group')">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-3">
+                                                    <i class="fab fa-facebook-square text-blue-700 text-2xl"></i>
+                                                </div>
+                                                <h4 class="font-semibold text-dark mb-1">Nhóm Facebook</h4>
+                                                <p class="text-xs text-gray-600">Chọn nhóm phù hợp</p>
+                                                <div class="mt-3 text-sm text-green-600">
+                                                    <i class="fas fa-check-circle"></i> Đang hoạt động
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Facebook Groups Selection (Hidden by default) -->
+                                    <div id="facebookGroupsSelection" class="mt-6 hidden">
+                                        <label class="block text-sm font-medium text-dark mb-3">
+                                            <i class="fas fa-users mr-2"></i>Chọn nhóm Facebook để đăng bài
+                                        </label>
+                                        
+                                        <div class="bg-gray-50 p-4 rounded-lg max-h-60 overflow-y-auto">
+                                            <!-- Group 1 -->
+                                            <label class="group-option" onclick="toggleGroup('charm_accessories_vn')">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-pink to-red rounded-full flex items-center justify-center text-white mr-3">
+                                                        <i class="fas fa-gem"></i>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <p class="font-medium text-dark">Charm & Accessories Vietnam</p>
+                                                        <p class="text-xs text-gray-600">Nhóm công khai • 25K thành viên</p>
+                                                        <div class="flex items-center mt-1">
+                                                            <span class="text-xs px-2 py-1 bg-pink-light text-red rounded">Phụ kiện</span>
+                                                            <span class="text-xs px-2 py-1 bg-yellow text-dark rounded ml-2">Charm</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="text-xs text-green-600 font-medium">Kết nối</span>
+                                                        <p class="text-xs text-gray-500">2.4K bài/tháng</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            
+                                            <!-- Group 2 -->
+                                            <label class="group-option" onclick="toggleGroup('handmade_charm')">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink rounded-full flex items-center justify-center text-white mr-3">
+                                                        <i class="fas fa-hand-sparkles"></i>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <p class="font-medium text-dark">Handmade Charm Lovers</p>
+                                                        <p class="text-xs text-gray-600">Nhóm công khai • 18K thành viên</p>
+                                                        <div class="flex items-center mt-1">
+                                                            <span class="text-xs px-2 py-1 bg-pink-light text-red rounded">Handmade</span>
+                                                            <span class="text-xs px-2 py-1 bg-beige text-dark rounded ml-2">Thủ công</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="text-xs text-green-600 font-medium">Kết nối</span>
+                                                        <p class="text-xs text-gray-500">1.8K bài/tháng</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            
+                                            <!-- Group 3 -->
+                                            <label class="group-option" onclick="toggleGroup('jewelry_lovers')">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-yellow to-pink rounded-full flex items-center justify-center text-white mr-3">
+                                                        <i class="fas fa-crown"></i>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <p class="font-medium text-dark">Jewelry & Accessories Lovers</p>
+                                                        <p class="text-xs text-gray-600">Nhóm công khai • 42K thành viên</p>
+                                                        <div class="flex items-center mt-1">
+                                                            <span class="text-xs px-2 py-1 bg-pink-light text-red rounded">Trang sức</span>
+                                                            <span class="text-xs px-2 py-1 bg-beige text-dark rounded ml-2">Phụ kiện</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="text-xs text-green-600 font-medium">Kết nối</span>
+                                                        <p class="text-xs text-gray-500">3.5K bài/tháng</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            
+                                            <!-- Group 4 -->
+                                            <label class="group-option" onclick="toggleGroup('vietnam_fashion')">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white mr-3">
+                                                        <i class="fas fa-tshirt"></i>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <p class="font-medium text-dark">Fashion & Style Vietnam</p>
+                                                        <p class="text-xs text-gray-600">Nhóm công khai • 85K thành viên</p>
+                                                        <div class="flex items-center mt-1">
+                                                            <span class="text-xs px-2 py-1 bg-pink-light text-red rounded">Thời trang</span>
+                                                            <span class="text-xs px-2 py-1 bg-beige text-dark rounded ml-2">Style</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="text-xs text-green-600 font-medium">Kết nối</span>
+                                                        <p class="text-xs text-gray-500">5.2K bài/tháng</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            
+                                            <!-- Group 5 -->
+                                            <label class="group-option" onclick="toggleGroup('teen_girls_vietnam')">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-pink to-red rounded-full flex items-center justify-center text-white mr-3">
+                                                        <i class="fas fa-heart"></i>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <p class="font-medium text-dark">Teen Girls Vietnam - Phụ kiện</p>
+                                                        <p class="text-xs text-gray-600">Nhóm công khai • 120K thành viên</p>
+                                                        <div class="flex items-center mt-1">
+                                                            <span class="text-xs px-2 py-1 bg-pink-light text-red rounded">Teen</span>
+                                                            <span class="text-xs px-2 py-1 bg-beige text-dark rounded ml-2">Giới trẻ</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="text-xs text-green-600 font-medium">Kết nối</span>
+                                                        <p class="text-xs text-gray-500">8.7K bài/tháng</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            
+                                            <!-- Group 6 -->
+                                            <label class="group-option" onclick="toggleGroup('gift_ideas_vn')">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white mr-3">
+                                                        <i class="fas fa-gift"></i>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <p class="font-medium text-dark">Quà tặng & Phụ kiện độc đáo</p>
+                                                        <p class="text-xs text-gray-600">Nhóm công khai • 35K thành viên</p>
+                                                        <div class="flex items-center mt-1">
+                                                            <span class="text-xs px-2 py-1 bg-pink-light text-red rounded">Quà tặng</span>
+                                                            <span class="text-xs px-2 py-1 bg-beige text-dark rounded ml-2">Độc đáo</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="text-xs text-green-600 font-medium">Kết nối</span>
+                                                        <p class="text-xs text-gray-500">2.1K bài/tháng</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        
+                                        <!-- Selected Groups Summary -->
+                                        <div id="selectedGroupsSummary" class="mt-4 hidden">
+                                            <div class="flex items-center justify-between p-3 bg-beige rounded-lg">
+                                                <div>
+                                                    <p class="text-sm font-medium text-dark">Đã chọn: <span id="selectedGroupsCount">0</span> nhóm</p>
+                                                    <p class="text-xs text-gray-600" id="selectedGroupsList"></p>
+                                                </div>
+                                                <button type="button" onclick="deselectAllGroups()" class="text-sm text-red hover:underline">
+                                                    <i class="fas fa-times mr-1"></i>Bỏ chọn tất cả
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Quick Actions -->
+                                        <div class="flex space-x-3 mt-4">
+                                            <button type="button" onclick="selectAllGroups()" class="flex-1 px-4 py-2 bg-gray-100 text-dark rounded-lg text-sm hover:bg-gray-200">
+                                                <i class="fas fa-check-square mr-2"></i>Chọn tất cả
+                                            </button>
+                                            <button type="button" onclick="showAddGroupModal()" class="flex-1 px-4 py-2 bg-pink-light text-red rounded-lg text-sm hover:bg-pink">
+                                                <i class="fas fa-plus mr-2"></i>Thêm nhóm mới
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-4 text-sm text-gray-600">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        Đã chọn: <span id="selectedPlatforms">Chưa chọn nền tảng nào</span>
+                                        <span id="groupsInfo" class="hidden ml-2 text-red">• <span id="groupsCount">0</span> nhóm FB được chọn</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- RIGHT COLUMN: Preview -->
+                        <div class="space-y-6">
+                            <!-- Facebook Preview -->
+                            <div class="preview-card">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-bold text-dark">Preview Facebook</h3>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fab fa-facebook text-blue-600 mr-2"></i>
+                                        <span>Page Preview</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="facebook-preview">
+                                    <!-- Header -->
+                                    <div class="p-4 border-b">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fab fa-facebook text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-sm">Tiny Tags Official</p>
+                                                <p class="text-xs text-gray-500">Vừa xong • 🌐</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="p-4">
+                                        <h4 class="font-bold mb-2" id="fbPreviewTitle">Tiêu đề bài viết sẽ hiển thị ở đây...</h4>
+                                        <p class="text-sm mb-3" id="fbPreviewContent">Nội dung bài viết sẽ hiển thị ở đây. Bạn có thể xem trước bài viết sẽ trông như thế nào trên Facebook.</p>
+                                        
+                                        <!-- Hashtags Preview -->
+                                        <div class="mb-3" id="fbPreviewHashtags">
+                                            <span class="text-blue-600 text-sm">#marketing</span>
+                                            <span class="text-blue-600 text-sm">#preview</span>
+                                        </div>
+                                        
+                                        <!-- Image Preview -->
+                                        <div id="fbImagePreview" class="image-preview-container h-48 rounded mb-3">
+                                            <i class="fas fa-image text-gray-400 text-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                                        </div>
+                                        
+                                        <!-- Interaction Stats -->
+                                        <div class="text-xs text-gray-500 border-t pt-3">
+                                            <div class="flex justify-between">
+                                                <span>👍 0</span>
+                                                <span>💬 0 bình luận</span>
+                                                <span>↪️ 0 chia sẻ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Actions -->
+                                    <div class="border-t p-3">
+                                        <div class="flex justify-around text-sm text-gray-600">
+                                            <button class="flex items-center hover:text-blue-600">
+                                                <i class="far fa-thumbs-up mr-2"></i>Thích
+                                            </button>
+                                            <button class="flex items-center hover:text-green-600">
+                                                <i class="far fa-comment mr-2"></i>Bình luận
+                                            </button>
+                                            <button class="flex items-center hover:text-red-600">
+                                                <i class="far fa-share-square mr-2"></i>Chia sẻ
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- TikTok Preview -->
+                            <div class="preview-card">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-bold text-dark">Preview TikTok</h3>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fab fa-tiktok mr-2"></i>
+                                        <span>Video Preview (9:16)</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="tiktok-preview">
+                                    <!-- Video Container với tỷ lệ 9:16 DỌC -->
+                                    <div class="tiktok-portrait">
+                                        <!-- Video/Image Thumbnail -->
+                                        <div id="ttImagePreview" class="w-full h-full bg-black flex items-center justify-center relative overflow-hidden">
+                                            <i class="fas fa-play text-white text-4xl" id="ttImagePlaceholder"></i>
+                                            <div class="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded">
+                                                0:00
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="p-4">
+                                        <div class="flex items-start mb-3">
+                                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-semibold text-sm">@tinytags.vn</p>
+                                                <p class="text-xs text-gray-500">Tiny Tags Official</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <p class="text-sm mb-2" id="ttPreviewContent">Nội dung bài viết sẽ hiển thị ở đây...</p>
+                                        
+                                        <!-- Hashtags -->
+                                        <div class="mb-3" id="ttPreviewHashtags">
+                                            <span class="text-blue-500 text-sm">#marketing</span>
+                                            <span class="text-blue-500 text-sm">#tiktok</span>
+                                        </div>
+                                        
+                                        <!-- Music -->
+                                        <div class="flex items-center text-xs text-gray-600 mb-3">
+                                            <i class="fas fa-music mr-2"></i>
+                                            <span>Original sound - Tiny Tags</span>
+                                        </div>
+                                        
+                                        <!-- Stats -->
+                                        <div class="flex items-center text-xs text-gray-500 space-x-4">
+                                            <span><i class="fas fa-heart mr-1"></i> 0</span>
+                                            <span><i class="fas fa-comment mr-1"></i> 0</span>
+                                            <span><i class="fas fa-share mr-1"></i> 0</span>
+                                            <span><i class="fas fa-bookmark mr-1"></i> 0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Facebook Group Preview -->
+                            <div class="preview-card">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-bold text-dark">Preview Nhóm Facebook</h3>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fab fa-facebook-square text-blue-700 mr-2"></i>
+                                        <span>Group Preview</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="facebook-preview">
+                                    <!-- Header -->
+                                    <div class="p-4 border-b">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fab fa-facebook-square text-blue-700"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-sm" id="groupPreviewName">Tiny Tags Community</p>
+                                                <p class="text-xs text-gray-500" id="groupPreviewInfo">Nhóm công khai • 1.2K thành viên • Bài viết mới</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="p-4">
+                                        <p class="text-sm mb-3" id="groupPreviewContent">Nội dung bài viết sẽ hiển thị ở đây...</p>
+                                        
+                                        <!-- Image Preview -->
+                                        <div id="groupImagePreview" class="image-preview-container h-32 rounded mb-3">
+                                            <i class="fas fa-image text-gray-400 text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                                        </div>
+                                        
+                                        <!-- Group Info -->
+                                        <div class="text-xs text-gray-500 mb-3">
+                                            <p>📢 <span class="font-medium">Bài viết trong nhóm</span></p>
+                                            <p id="groupPreviewStats">👥 1.2K thành viên • 🔔 Thông báo bật</p>
+                                        </div>
+                                        
+                                        <!-- Reactions -->
+                                        <div class="flex items-center text-xs text-gray-500">
+                                            <div class="flex items-center mr-4">
+                                                <div class="flex -space-x-2 mr-2">
+                                                    <div class="w-5 h-5 bg-red-200 rounded-full"></div>
+                                                    <div class="w-5 h-5 bg-blue-200 rounded-full"></div>
+                                                    <div class="w-5 h-5 bg-green-200 rounded-full"></div>
+                                                </div>
+                                                <span>0</span>
+                                            </div>
+                                            <span>0 bình luận • 0 lượt chia sẻ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Tips -->
+                            <div class="preview-card bg-pink-light border-l-4 border-red">
+                                <h3 class="font-bold text-dark mb-4">💡 Mẹo tạo nội dung</h3>
+                                <ul class="space-y-2 text-sm text-dark">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                                        <span>Tiêu đề ngắn gọn, hấp dẫn (5-10 từ)</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                                        <span>Sử dụng emoji để tăng tương tác</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                                        <span>Hashtags phù hợp với từng nền tảng</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                                        <span>Hình ảnh chất lượng cao tăng 80% tương tác</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                                        <span>Kiểm tra preview trước khi gửi</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="marketing.js"></script>
+    
+    <!-- JavaScript for Create Post Page -->
+    <script>
+        // Data
+        let selectedPlatforms = [];
+        let hashtags = [];
+        let uploadedImages = [];
+        let selectedGroups = [];
+        
+        // Facebook Groups Data
+        const facebookGroups = [
+            {
+                id: 'charm_accessories_vn',
+                name: 'Charm & Accessories Vietnam',
+                members: '25K',
+                activity: '2.4K bài/tháng'
+            },
+            {
+                id: 'handmade_charm',
+                name: 'Handmade Charm Lovers',
+                members: '18K',
+                activity: '1.8K bài/tháng'
+            },
+            {
+                id: 'jewelry_lovers',
+                name: 'Jewelry & Accessories Lovers',
+                members: '42K',
+                activity: '3.5K bài/tháng'
+            },
+            {
+                id: 'vietnam_fashion',
+                name: 'Fashion & Style Vietnam',
+                members: '85K',
+                activity: '5.2K bài/tháng'
+            },
+            {
+                id: 'teen_girls_vietnam',
+                name: 'Teen Girls Vietnam - Phụ kiện',
+                members: '120K',
+                activity: '8.7K bài/tháng'
+            },
+            {
+                id: 'gift_ideas_vn',
+                name: 'Quà tặng & Phụ kiện độc đáo',
+                members: '35K',
+                activity: '2.1K bài/tháng'
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEditor();
+            setupPreviewUpdates();
+            
+            // Add active class to current page in navigation
+            setTimeout(() => {
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('#sidebar-container a');
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && currentPath.includes(href)) {
+                        link.classList.add('active');
+                    }
+                });
+            }, 500);
+        });
+
+        // Editor Functions
+        function setupEditor() {
+            const editor = document.getElementById('postContent');
+            const charCount = document.getElementById('charCount');
+            
+            editor.addEventListener('input', function() {
+                const charLength = this.textContent.length;
+                charCount.textContent = `${charLength} ký tự`;
+                
+                // Update previews
+                updatePreviews();
+            });
+        }
+
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+
+        function insertLink() {
+            const url = prompt('Nhập URL liên kết:', 'https://');
+            if (url) {
+                document.execCommand('createLink', false, url);
+            }
+        }
+
+        function insertEmoji() {
+            const emoji = prompt('Nhập emoji: 😀🎉🔥❤️✨');
+            if (emoji) {
+                document.execCommand('insertText', false, emoji);
+            }
+        }
+
+        // Image Upload
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            const preview = document.getElementById('imagePreview');
+            
+            preview.innerHTML = '';
+            uploadedImages = [];
+            
+            for (let i = 0; i < Math.min(files.length, 5); i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    uploadedImages.push(imageData);
+                    
+                    // Add to thumbnail preview
+                    addImageThumbnail(imageData);
+                    
+                    // Update preview images
+                    updateImagePreviews();
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            preview.classList.remove('hidden');
+            event.target.value = '';
+        }
+
+        function addImageThumbnail(imageSrc) {
+            const preview = document.getElementById('imagePreview');
+            const img = document.createElement('div');
+            img.className = 'relative';
+            img.innerHTML = `
+                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+                    <img src="${imageSrc}" class="w-full h-full object-cover">
+                </div>
+                <button class="absolute -top-2 -right-2 w-6 h-6 bg-red text-white rounded-full text-xs"
+                        onclick="removeImage('${imageSrc}')">
+                    ×
+                </button>
+            `;
+            preview.appendChild(img);
+        }
+
+        function removeImage(imageSrc) {
+            // Remove from array
+            uploadedImages = uploadedImages.filter(img => img !== imageSrc);
+            
+            // Update previews
+            updateImagePreviews();
+            
+            // Remove thumbnail
+            const thumbnails = document.querySelectorAll('#imagePreview .relative');
+            thumbnails.forEach(thumb => {
+                if (thumb.querySelector('img').src === imageSrc) {
+                    thumb.remove();
+                }
+            });
+            
+            // Hide preview container if empty
+            if (uploadedImages.length === 0) {
+                document.getElementById('imagePreview').classList.add('hidden');
+            }
+        }
+
+        // Update image previews in all platforms
+        function updateImagePreviews() {
+            // Facebook Preview
+            const fbImagePreview = document.getElementById('fbImagePreview');
+            
+            if (uploadedImages.length > 0) {
+                fbImagePreview.innerHTML = `
+                    <img src="${uploadedImages[0]}" class="w-full h-full object-cover">
+                `;
+            } else {
+                fbImagePreview.innerHTML = `
+                    <i class="fas fa-image text-gray-400 text-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                `;
+            }
+            
+            // TikTok Preview
+            const ttImagePreview = document.getElementById('ttImagePreview');
+            
+            if (uploadedImages.length > 0) {
+                ttImagePreview.innerHTML = `
+                    <img src="${uploadedImages[0]}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                        <i class="fas fa-play text-white text-4xl"></i>
+                    </div>
+                    <div class="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded">
+                        0:00
+                    </div>
+                `;
+            } else {
+                ttImagePreview.innerHTML = `
+                    <i class="fas fa-play text-white text-4xl"></i>
+                    <div class="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded">
+                        0:00
+                    </div>
+                `;
+            }
+            
+            // Group Preview
+            const groupImagePreview = document.getElementById('groupImagePreview');
+            
+            if (uploadedImages.length > 0) {
+                groupImagePreview.innerHTML = `
+                    <img src="${uploadedImages[0]}" class="w-full h-full object-cover">
+                `;
+            } else {
+                groupImagePreview.innerHTML = `
+                    <i class="fas fa-image text-gray-400 text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                `;
+            }
+        }
+
+        // Hashtag Functions
+        function addHashtag(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const input = document.getElementById('hashtagInput');
+                const hashtag = input.value.trim();
+                
+                if (hashtag && !hashtags.includes(hashtag) && hashtags.length < 10) {
+                    hashtags.push(hashtag);
+                    renderHashtags();
+                    input.value = '';
+                    
+                    // Update preview
+                    updatePreviews();
+                    updatePreviewHashtags();
+                }
+            }
+        }
+
+        function renderHashtags() {
+            const container = document.getElementById('hashtagContainer');
+            const existingTags = container.querySelectorAll('.hashtag');
+            existingTags.forEach(tag => tag.remove());
+            
+            hashtags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'hashtag';
+                tagElement.innerHTML = `
+                    <span class="hashtag-text">${tag.startsWith('#') ? tag : '#' + tag}</span>
+                    <button class="ml-2 text-gray-500 hover:text-red" onclick="removeHashtag(this)">×</button>
+                `;
+                container.prepend(tagElement);
+            });
+        }
+
+        function removeHashtag(button) {
+            const hashtagElement = button.closest('.hashtag');
+            const hashtagText = hashtagElement.querySelector('.hashtag-text').textContent;
+            hashtags = hashtags.filter(tag => tag !== hashtagText.replace('#', ''));
+            hashtagElement.remove();
+            
+            // Update preview
+            updatePreviews();
+            updatePreviewHashtags();
+        }
+
+        // Platform Selection with Groups
+        function selectPlatform(platform) {
+            const card = event.currentTarget;
+            
+            if (platform === 'group') {
+                // Toggle group selection
+                if (selectedPlatforms.includes('group')) {
+                    selectedPlatforms = selectedPlatforms.filter(p => p !== 'group');
+                    card.classList.remove('selected');
+                    hideGroupsSelection();
+                } else {
+                    selectedPlatforms.push('group');
+                    card.classList.add('selected');
+                    showGroupsSelection();
+                }
+            } else {
+                // Normal platform toggle
+                if (selectedPlatforms.includes(platform)) {
+                    selectedPlatforms = selectedPlatforms.filter(p => p !== platform);
+                    card.classList.remove('selected');
+                } else {
+                    selectedPlatforms.push(platform);
+                    card.classList.add('selected');
+                }
+            }
+            
+            updateSelectedPlatforms();
+        }
+
+        function showGroupsSelection() {
+            document.getElementById('facebookGroupsSelection').classList.remove('hidden');
+        }
+
+        function hideGroupsSelection() {
+            document.getElementById('facebookGroupsSelection').classList.add('hidden');
+            document.getElementById('selectedGroupsSummary').classList.add('hidden');
+            
+            // Clear selected groups
+            selectedGroups = [];
+            updateGroupsInfo();
+        }
+
+        function toggleGroup(groupId) {
+            const groupElement = document.querySelector(`[onclick="toggleGroup('${groupId}')"]`);
+            
+            if (selectedGroups.includes(groupId)) {
+                selectedGroups = selectedGroups.filter(id => id !== groupId);
+                groupElement.classList.remove('selected');
+            } else {
+                selectedGroups.push(groupId);
+                groupElement.classList.add('selected');
+            }
+            
+            updateGroupsInfo();
+            updateSelectedGroupsSummary();
+            updateGroupPreview();
+        }
+
+        function updateGroupsInfo() {
+            const groupsInfo = document.getElementById('groupsInfo');
+            const groupsCount = document.getElementById('groupsCount');
+            
+            if (selectedGroups.length > 0) {
+                groupsInfo.classList.remove('hidden');
+                groupsCount.textContent = selectedGroups.length;
+            } else {
+                groupsInfo.classList.add('hidden');
+            }
+            
+            // Update selected platforms display
+            updateSelectedPlatforms();
+        }
+
+        function updateSelectedGroupsSummary() {
+            const summary = document.getElementById('selectedGroupsSummary');
+            const count = document.getElementById('selectedGroupsCount');
+            const list = document.getElementById('selectedGroupsList');
+            
+            if (selectedGroups.length > 0) {
+                summary.classList.remove('hidden');
+                count.textContent = selectedGroups.length;
+                
+                // Get selected group names
+                const selectedNames = selectedGroups.map(groupId => {
+                    const group = facebookGroups.find(g => g.id === groupId);
+                    return group ? group.name.split(' ')[0] : '';
+                }).filter(name => name);
+                
+                list.textContent = selectedNames.join(', ') + (selectedNames.length > 2 ? '...' : '');
+            } else {
+                summary.classList.add('hidden');
+            }
+        }
+
+        function updateSelectedPlatforms() {
+            const display = document.getElementById('selectedPlatforms');
+            const platformNames = {
+                'facebook': 'Facebook Page',
+                'tiktok': 'TikTok',
+                'group': 'Nhóm Facebook'
+            };
+            
+            let platformsText = [];
+            
+            selectedPlatforms.forEach(platform => {
+                if (platform === 'group') {
+                    if (selectedGroups.length > 0) {
+                        platformsText.push(`${platformNames[platform]} (${selectedGroups.length} nhóm)`);
+                    } else {
+                        platformsText.push(platformNames[platform]);
+                    }
+                } else {
+                    platformsText.push(platformNames[platform]);
+                }
+            });
+            
+            if (platformsText.length === 0) {
+                display.textContent = 'Chưa chọn nền tảng nào';
+                display.className = 'text-red';
+            } else {
+                display.textContent = platformsText.join(', ');
+                display.className = 'text-green-600 font-medium';
+            }
+        }
+
+        // Group Selection Actions
+        function selectAllGroups() {
+            facebookGroups.forEach(group => {
+                if (!selectedGroups.includes(group.id)) {
+                    selectedGroups.push(group.id);
+                    const groupElement = document.querySelector(`[onclick="toggleGroup('${group.id}')"]`);
+                    groupElement.classList.add('selected');
+                }
+            });
+            
+            updateGroupsInfo();
+            updateSelectedGroupsSummary();
+            updateGroupPreview();
+        }
+
+        function deselectAllGroups() {
+            selectedGroups.forEach(groupId => {
+                const groupElement = document.querySelector(`[onclick="toggleGroup('${groupId}')"]`);
+                if (groupElement) {
+                    groupElement.classList.remove('selected');
+                }
+            });
+            
+            selectedGroups = [];
+            updateGroupsInfo();
+            updateSelectedGroupsSummary();
+            updateGroupPreview();
+        }
+
+        function showAddGroupModal() {
+            alert('Chức năng thêm nhóm Facebook mới sẽ được tích hợp sau!');
+        }
+
+        // Update group preview based on selected groups
+        function updateGroupPreview() {
+            const groupPreviewName = document.getElementById('groupPreviewName');
+            const groupPreviewInfo = document.getElementById('groupPreviewInfo');
+            const groupPreviewStats = document.getElementById('groupPreviewStats');
+            
+            if (selectedGroups.length > 0) {
+                const firstGroup = facebookGroups.find(g => g.id === selectedGroups[0]);
+                if (firstGroup) {
+                    groupPreviewName.textContent = firstGroup.name;
+                    groupPreviewInfo.textContent = `Nhóm công khai • ${firstGroup.members} thành viên • Bài viết mới`;
+                    groupPreviewStats.textContent = `👥 ${firstGroup.members} thành viên • 🔔 Thông báo bật`;
+                    
+                    // Show multiple groups indicator if more than 1
+                    if (selectedGroups.length > 1) {
+                        groupPreviewName.textContent = `${firstGroup.name} (+${selectedGroups.length - 1})`;
+                    }
+                }
+            } else {
+                groupPreviewName.textContent = 'Tiny Tags Community';
+                groupPreviewInfo.textContent = 'Nhóm công khai • 1.2K thành viên • Bài viết mới';
+                groupPreviewStats.textContent = '👥 1.2K thành viên • 🔔 Thông báo bật';
+            }
+        }
+
+        // Preview Updates
+        function setupPreviewUpdates() {
+            const titleInput = document.getElementById('postTitle');
+            const contentEditor = document.getElementById('postContent');
+            
+            titleInput.addEventListener('input', updatePreviews);
+            contentEditor.addEventListener('input', updatePreviews);
+        }
+
+        function updatePreviews() {
+            const title = document.getElementById('postTitle').value || 'Tiêu đề bài viết sẽ hiển thị ở đây...';
+            const content = document.getElementById('postContent').textContent || 'Nội dung bài viết sẽ hiển thị ở đây...';
+            
+            // Facebook Preview
+            document.getElementById('fbPreviewTitle').textContent = title;
+            document.getElementById('fbPreviewContent').textContent = content.substring(0, 200) + (content.length > 200 ? '...' : '');
+            
+            // TikTok Preview
+            document.getElementById('ttPreviewContent').textContent = content.substring(0, 150) + (content.length > 150 ? '...' : '');
+            
+            // Group Preview
+            document.getElementById('groupPreviewContent').textContent = content.substring(0, 200) + (content.length > 200 ? '...' : '');
+            
+            // Update hashtags in previews
+            updatePreviewHashtags();
+            
+            // Update group preview
+            updateGroupPreview();
+        }
+
+        function updatePreviewHashtags() {
+            const hashtagElements = hashtags.map(tag => 
+                `<span class="text-blue-600 text-sm mr-1">${tag.startsWith('#') ? tag : '#' + tag}</span>`
+            ).join('');
+            
+            document.getElementById('fbPreviewHashtags').innerHTML = hashtagElements;
+            document.getElementById('ttPreviewHashtags').innerHTML = hashtagElements;
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Format date to dd/mm/yyyy
+        function formatDate(date) {
+            const d = new Date(date);
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        // Save & Submit Functions - CHỈNH SỬA PHẦN NÀY
+        function saveAsDraft() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').textContent;
+            
+            if (!title) {
+                showToast('Vui lòng nhập tiêu đề bài viết', 'info');
+                return;
+            }
+            
+            // Get posts from localStorage
+            const posts = JSON.parse(localStorage.getItem('tiny_tags_posts') || '[]');
+            
+            // Generate new ID
+            const newId = posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1;
+            
+            const newPost = {
+                id: newId,
+                title: title,
+                content: content,
+                hashtags: hashtags,
+                platforms: selectedPlatforms,
+                facebookGroups: selectedGroups,
+                images: uploadedImages,
+                status: 'draft',
+                category: 'moc-khoa', // Mặc định category
+                description: content.substring(0, 100) + (content.length > 100 ? '...' : ''),
+                writeDate: formatDate(new Date()),
+                publishDate: '',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // Add to beginning of array (newest first)
+            posts.unshift(newPost);
+            localStorage.setItem('tiny_tags_posts', JSON.stringify(posts));
+            
+            // Show success message
+            showToast('Bài viết đã được lưu nháp thành công!', 'success');
+            
+            // Redirect to posts list after 1.5 seconds
+            setTimeout(() => {
+                window.location.href = 'danhsachbaiviet.html?fromCreate=true&status=draft';
+            }, 1500);
+        }
+
+        function submitForApproval() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').textContent;
+            
+            if (!title || !content) {
+                showToast('Vui lòng nhập tiêu đề và nội dung bài viết', 'info');
+                return;
+            }
+            
+            if (selectedPlatforms.length === 0) {
+                showToast('Vui lòng chọn ít nhất một nền tảng đăng bài', 'info');
+                return;
+            }
+            
+            // Validate groups if selected
+            if (selectedPlatforms.includes('group') && selectedGroups.length === 0) {
+                alert('Vui lòng chọn ít nhất một nhóm Facebook để đăng bài!');
+                return;
+            }
+            
+            // Get posts from localStorage
+            const posts = JSON.parse(localStorage.getItem('tiny_tags_posts') || '[]');
+            
+            // Generate new ID
+            const newId = posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1;
+            
+            const newPost = {
+                id: newId,
+                title: title,
+                content: content,
+                hashtags: hashtags,
+                platforms: selectedPlatforms,
+                facebookGroups: selectedGroups,
+                images: uploadedImages,
+                status: 'pending',
+                category: 'moc-khoa', // Mặc định category
+                description: content.substring(0, 100) + (content.length > 100 ? '...' : ''),
+                writeDate: formatDate(new Date()),
+                publishDate: '',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // Add to beginning of array (newest first)
+            posts.unshift(newPost);
+            localStorage.setItem('tiny_tags_posts', JSON.stringify(posts));
+            
+            // Show success message
+            showToast('Bài viết đã được gửi để phê duyệt thành công!', 'success');
+            
+            // Redirect to posts list after 1.5 seconds
+            setTimeout(() => {
+                window.location.href = 'danhsachbaiviet.html?fromCreate=true&status=pending';
+            }, 1500);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch(event.key.toLowerCase()) {
+                    case 's':
+                        event.preventDefault();
+                        saveAsDraft();
+                        break;
+                    case 'enter':
+                        event.preventDefault();
+                        submitForApproval();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags - Marketing Manager System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #F3376D;
+            --primary-light: #FFF5F7;
+            --sidebar-width: 260px;
+            --sidebar-collapsed: 80px;
+            --text-dark: #333333;
+            --text-gray: #666666;
+            --border-color: #FCE4E5;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.05);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        /* Brand Colors */
+        .brand-bg-light { background-color: #FAEED6; }
+        .brand-bg-dark { background-color: #90324D; }
+        .brand-bg-green { background-color: #FADE98; }
+        .brand-bg-pink-light { background-color: #FCE4E5; }
+        .brand-bg-pink { background-color: #FF95A6; }
+        .brand-bg-red { background-color: #F3376D; }
+        
+        .brand-text-dark { color: #90324D; }
+        .brand-text-red { color: #F3376D; }
+        
+        /* Status Colors */
+        .status-draft { background-color: #FAEED6; color: #90324D; }
+        .status-pending { background-color: #FADE98; color: #8B4513; }
+        .status-approved { background-color: #d1fae5; color: #065f46; }
+        .status-rejected { background-color: #fee2e2; color: #991b1b; }
+        .status-published { background-color: #dbeafe; color: #1e40af; }
+        
+        /* Requirement Colors */
+        .req-1 { border-left-color: #F3376D; }
+        .req-2 { border-left-color: #3B82F6; }
+        .req-3 { border-left-color: #8B5CF6; }
+        
+        /* Dashboard Cards */
+        .dashboard-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Fixed Width for Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 280px;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                padding-left: 100px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+        
+        /* Requirement Tabs */
+        .req-tab {
+            padding: 12px 24px;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .req-tab.active {
+            background: white;
+            color: #F3376D;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .req-tab:not(.active):hover {
+            background: rgba(243, 55, 109, 0.05);
+        }
+        
+        /* Use Case Badges */
+        .usecase-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .usecase-req1 { background-color: #FCE4E5; color: #F3376D; }
+        .usecase-req2 { background-color: #DBEAFE; color: #1D4ED8; }
+        .usecase-req3 { background-color: #EDE9FE; color: #7C3AED; }
+        
+        /* KPI Cards */
+        .kpi-card {
+            border-top: 4px solid;
+            transition: all 0.3s;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* ===== SIDEBAR STYLES ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            min-height: 100vh;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 4px 0 15px var(--shadow);
+            border-right: 1px solid #f0f0f0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Logo Section */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+            height: 100px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #F3376D 0%, #90324D 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(243, 55, 109, 0.2);
+        }
+
+        .logo-icon i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #90324D;
+            letter-spacing: 1px;
+            line-height: 1;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .logo p {
+            font-size: 12px;
+            color: #F3376D;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            list-style: none;
+            padding: 20px 0;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #ffd6e0 #f1f1f1;
+        }
+
+        .nav-menu::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .nav-menu::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: #ffd6e0;
+            border-radius: 10px;
+        }
+
+        .nav-menu::-webkit-scrollbar-thumb:hover {
+            background: #ffb8d0;
+        }
+
+        .nav-item {
+            margin-bottom: 4px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 24px;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border-radius: 0 12px 12px 0;
+            margin-right: 16px;
+        }
+
+        .nav-link:hover {
+            background: linear-gradient(90deg, var(--primary-light) 0%, rgba(255, 245, 247, 0.7) 100%);
+            color: var(--primary-color);
+            transform: translateX(8px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--primary-light) 0%, rgba(255, 245, 247, 0.9) 100%);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-right: 4px solid var(--primary-color);
+            box-shadow: inset 0 0 20px rgba(243, 55, 109, 0.08);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary-color);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .nav-icon {
+            width: 22px;
+            margin-right: 16px;
+            font-size: 18px;
+            text-align: center;
+            transition: all 0.3s;
+            color: #777;
+        }
+
+        .nav-link:hover .nav-icon,
+        .nav-link.active .nav-icon {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .nav-text {
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.3s, transform 0.3s;
+            white-space: nowrap;
+        }
+
+        /* Badge for notifications */
+        .nav-badge {
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(243, 55, 109, 0.2);
+        }
+
+        /* Logout Section */
+        .sidebar-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 20px 24px;
+            background: var(--white);
+            margin-top: auto;
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            color: #ff4444;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #fff5f5 0%, #fff0f0 100%);
+            border: 1px solid #ffcccc;
+        }
+
+        .logout-link:hover {
+            background: linear-gradient(90deg, #ffe6e6 0%, #ffd6d6 100%);
+            color: #ff0000;
+            transform: translateX(5px);
+            border-color: #ff9999;
+        }
+
+        .logout-link .nav-icon {
+            color: #ff4444;
+        }
+
+        .logout-link:hover .nav-icon {
+            color: #ff0000;
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        /* Mobile Toggle Button */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #FF6B9D 100%);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(243, 55, 109, 0.3);
+            transition: all 0.3s;
+            border: none;
+        }
+
+        /* PROFILE HEADER LIKE FACEBOOK */
+        .profile-header {
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .cover-photo {
+            height: 350px;
+            background-color: #90324D;
+            border-radius: 0 0 12px 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-photo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(144, 50, 77, 0.8) 0%, rgba(243, 55, 109, 0.6) 100%);
+        }
+
+        .profile-info {
+            position: relative;
+            padding: 0 32px 20px;
+            margin-top: -80px;
+        }
+
+        .profile-avatar {
+            width: 168px;
+            height: 168px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-color: white;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-name {
+            margin-top: 16px;
+            font-size: 32px;
+            font-weight: 700;
+            color: rgb(96, 24, 24);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .profile-title {
+            color: rgba(0, 0, 0, 0.9);
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        /* ===== RESPONSIVE SIDEBAR ===== */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: var(--sidebar-collapsed);
+            }
+            
+            .logo {
+                padding: 15px 10px;
+                height: 80px;
+                justify-content: center;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 0;
+            }
+            
+            .logo-icon i {
+                font-size: 20px;
+            }
+            
+            .logo h1, .logo p {
+                display: none;
+            }
+            
+            .nav-link {
+                padding: 18px 16px;
+                justify-content: center;
+                margin-right: 8px;
+                border-radius: 8px;
+            }
+            
+            .nav-link:hover {
+                transform: translateX(0) scale(1.05);
+            }
+            
+            .nav-icon {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .nav-text {
+                display: none;
+                opacity: 0;
+            }
+            
+            .nav-badge {
+                display: none;
+            }
+            
+            .sidebar-footer {
+                padding: 20px 16px;
+            }
+            
+            .logout-link {
+                padding: 16px;
+                justify-content: center;
+            }
+            
+            .logout-link .nav-text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                box-shadow: 8px 0 25px rgba(0, 0, 0, 0.15);
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .mobile-toggle {
+                display: flex;
+            }
+            
+            .sidebar.mobile-open ~ .mobile-toggle {
+                left: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar.mobile-open {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .mobile-toggle {
+                top: 15px;
+                left: 15px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .sidebar.mobile-open ~ .mobile-toggle {
+                left: 315px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-tags"></i>
+            </div>
+            <h1>Tiny Tags</h1>
+            <p>Marketing System</p>
+        </div>
+
+        <ul class="nav-menu">
+            <!-- Active item - Dashboard -->
+            <li class="nav-item">
+                <a href="index.html" class="nav-link ">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="products.html" class="nav-link">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="customer.html" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                    <span class="nav-badge">50</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                    <span class="nav-badge">100</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Top Navigation Bar -->
+        <header class="top-header bg-white shadow-sm">
+            <div class="px-6">
+                <!-- Main Top Bar -->
+                <div class="flex items-center justify-between h-16">
+                    <!-- Search Bar -->
+                    <div class="flex-1 max-w-2xl">
+                        <div class="relative">
+                            <input type="text" 
+                                   placeholder="Tìm kiếm bài viết, khách hàng, sản phẩm..." 
+                                   class="w-full bg-gray-100 rounded-full px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-red-300">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Actions -->
+                    <div class="flex items-center space-x-4">
+                        <button class="brand-bg-pink-light hover:brand-bg-pink text-gray-700 p-2 rounded-full relative">
+                            <i class="fas fa-bell"></i>
+                            <span class="absolute -top-1 -right-1 w-5 h-5 brand-bg-red text-white text-xs rounded-full flex items-center justify-center">3</span>
+                        </button>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-gradient-to-r from-brand-bg-dark to-brand-bg-red rounded-full flex items-center justify-center text-white font-bold">
+                                MM
+                            </div>
+                            <div class="ml-3 hidden md:block">
+                                <p class="text-sm font-medium">Marketing Manager</p>
+                                <p class="text-xs text-gray-500">Quản lý hệ thống</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Requirement Tabs -->
+                <div class="flex space-x-1 border-b">
+                    <a href="index.html" class="req-tab active">
+                        <i class="fas fa-home mr-2"></i>Tổng quan hệ thống
+                    </a>
+                    <a href="dsbaivietchoduyet.html" class="req-tab">
+                        <i class="fas fa-file-alt mr-2"></i> Quản lý nội dung đa kênh
+                    </a>
+                    <a href="requirement2.html" class="req-tab">
+                        <i class="fas fa-chart-line mr-2"></i> Phân tích dữ liệu
+                    </a>
+                    <a href="requirement3.html" class="req-tab">
+                        <i class="fas fa-robot mr-2"></i> Tự động hóa
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- PROFILE HEADER LIKE FACEBOOK -->
+        <div class="profile-header">
+            <!-- Cover Photo -->
+            <div class="cover-photo">
+                <!-- Solid color background -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    
+                    <div class="text-center text-white">
+                        <i class="fas fa-tags text-6xl opacity-30"></i>
+                        <p class="mt-4 text-xl opacity-80">Tiny Tags Marketing Management System</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Info -->
+            <div class="profile-info">
+                <!-- Avatar -->
+                <div class="profile-avatar">
+                <img src="profile-avt.jpg" alt="Avatar" class="w-full h-full object-cover rounded-full">
+            </div>
+                
+                <!-- Name and Title -->
+                <div class="flex items-end justify-between">
+                    <div>
+                        <h1 class="profile-name">Marketing Manager Dashboard</h1>
+                        <p class="profile-title">Quản lý 3 chức năng: Nội dung • Phân tích • Tự động hóa</p>
+                        
+                        <!-- Quick Stats -->
+                        <div class="flex items-center mt-4 space-x-6">
+                            <div class="text-dark">
+                                <span class="font-bold">42</span>
+                                <span class="ml-1 opacity-90">bài viết</span>
+                            </div>
+                            <div class="text-dark">
+                                <span class="font-bold">1.4K</span>
+                                <span class="ml-1 opacity-90">tương tác</span>
+                            </div>
+                            <div class="text-dark">
+                                <span class="font-bold">156</span>
+                                <span class="ml-1 opacity-90">leads</span>
+                            </div>
+                            <div class="text-dark">
+                                <span class="font-bold">8</span>
+                                <span class="ml-1 opacity-90">chiến dịch</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-3 mb-4">
+                        <button class="bg-white text-gray-800 px-6 py-2 rounded-lg font-medium hover:bg-gray-100 flex items-center"
+                                onclick="window.location.href='trangchu.html'">
+                            <i class="fas fa-play-circle mr-2"></i>Bắt đầu ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content - OVERVIEW OF ALL 3 REQUIREMENTS -->
+        <main class="px-6 py-8">
+            <!-- System Welcome & Quick Stats -->
+            <div class="mb-8">
+                <!-- Quick Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="dashboard-card bg-white p-6 rounded-xl shadow-sm kpi-card" style="border-top-color: #F3376D;">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600"> Bài viết</p>
+                                <p class="text-2xl font-bold mt-1">42</p>
+                                <p class="text-xs text-gray-500 mt-1">5 chờ duyệt, 24 đã duyệt</p>
+                            </div>
+                            <div class="w-12 h-12 brand-bg-light rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-alt brand-text-dark text-xl"></i>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="dashboard-card bg-white p-6 rounded-xl shadow-sm kpi-card" style="border-top-color: #3B82F6;">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600">Tương tác</p>
+                                <p class="text-2xl font-bold mt-1">1.4K</p>
+                                <p class="text-xs text-gray-500 mt-1">CTR: 4.8%, Conversion: 12.5%</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+            
+                    </div>
+                    
+                    <div class="dashboard-card bg-white p-6 rounded-xl shadow-sm kpi-card" style="border-top-color: #8B5CF6;">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600"> Tự động hóa</p>
+                                <p class="text-2xl font-bold mt-1">8</p>
+                                <p class="text-xs text-gray-500 mt-1">Chiến dịch đang chạy</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-robot text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    
+                    <div class="dashboard-card bg-white p-6 rounded-xl shadow-sm kpi-card" style="border-top-color: #10B981;">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600">Leads & CRM</p>
+                                <p class="text-2xl font-bold mt-1">156</p>
+                                <p class="text-xs text-gray-500 mt-1">24 leads mới tuần này</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <span class="text-xs text-gray-500">Tích hợp đa hệ thống</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- REQUIREMENT 1: Quản lý Bài viết (Bài viết chờ phê duyệt) -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Quản lý nội dung đa kênh</h2>
+                        <p class="text-gray-600">Tạo, chỉnh sửa, duyệt và đăng bài đa kênh</p>
+                    </div>
+                    <a href="dsbaivietchoduyet.html" class="text-brand-text-red hover:text-red-700 font-medium">
+                        Xem chi tiết  →
+                    </a>
+                </div>
+                
+                <!-- Bài viết chờ phê duyệt -->
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-lg font-semibold brand-text-dark">Bài viết chờ phê duyệt</h3>
+                            <p class="text-sm text-gray-600">Cần Marketing Manager review và phê duyệt</p>
+                        </div>
+                        <span class="px-3 py-1 bg-yellow-500 text-white rounded-full text-sm font-medium">5 bài đang chờ</span>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="border-b">
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-700">Tiêu đề</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-700">Người gửi</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-700">Kênh đăng</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-700">Ngày gửi</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-700">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 brand-bg-light rounded flex items-center justify-center mr-3">
+                                                <i class="fas fa-file-alt brand-text-dark"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">Black Friday Sale 2024</p>
+                                                <div class="flex items-center mt-1">
+                        
+                                                    <span class="text-xs text-gray-500">Chỉnh sửa bài viết</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center">
+                                            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xs mr-2">
+                                                S1
+                                            </div>
+                                            <span class="text-sm">Staff A</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex space-x-1">
+                                            <i class="fab fa-facebook text-blue-600"></i>
+                                            <i class="fab fa-tiktok"></i>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm">18/11/2024 14:30</td>
+                                    <td class="py-3 px-4">
+                                        <button class="text-brand-text-red hover:text-red-700 text-sm font-medium"
+                                                onclick="window.location.href='review.html?id=1'">
+                                            <i class="fas fa-eye mr-1"></i>Xem & Duyệt
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 brand-bg-light rounded flex items-center justify-center mr-3">
+                                                <i class="fas fa-calendar-alt brand-text-dark"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">Product Launch Event</p>
+                                                <div class="flex items-center mt-1">
+                                                   
+                                                    <span class="text-xs text-gray-500">Tạo bài viết mới</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center">
+                                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xs mr-2">
+                                                S2
+                                            </div>
+                                            <span class="text-sm">Staff B</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex space-x-1">
+                                            <i class="fab fa-facebook text-blue-600"></i>
+                                            <i class="fab fa-facebook-square text-blue-700" title="Hội nhóm Facebook"></i>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm">17/11/2024 09:15</td>
+                                    <td class="py-3 px-4">
+                                        <button class="text-brand-text-red hover:text-red-700 text-sm font-medium"
+                                                onclick="window.location.href='review.html?id=2'">
+                                            <i class="fas fa-eye mr-1"></i>Xem & Duyệt
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 brand-bg-light rounded flex items-center justify-center mr-3">
+                                                <i class="fas fa-gift brand-text-dark"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">Chiến dịch Tết 2025</p>
+                                                <div class="flex items-center mt-1">
+                                                   
+                                                    <span class="text-xs text-gray-500">Gửi phê duyệt bài viết</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center">
+                                            <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-xs mr-2">
+                                                S3
+                                            </div>
+                                            <span class="text-sm">Staff C</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex space-x-1">
+                                            <i class="fab fa-facebook text-blue-600"></i>
+                                            <i class="fab fa-tiktok"></i>
+                                             <i class="fab fa-facebook-square text-blue-700" title="Hội nhóm Facebook"></i>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm">16/11/2024 16:45</td>
+                                    <td class="py-3 px-4">
+                                        <button class="text-brand-text-red hover:text-red-700 text-sm font-medium"
+                                                onclick="window.location.href='review.html?id=3'">
+                                            <i class="fas fa-eye mr-1"></i>Xem & Duyệt
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-6 pt-6 border-t">
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600">Đăng nhập với tư cách Marketing Manager để duyệt bài</p>
+                            <div class="flex space-x-3">
+                                <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium">
+                                    <i class="fas fa-check-circle mr-2"></i>Duyệt tất cả
+                                </button>
+                                <button class="bg-brand-bg-red hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium"
+                                        onclick="window.location.href='requirement1.html'">
+                                    <i class="fas fa-external-link-alt mr-2"></i>Chi tiết
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- REQUIREMENT 2 & 3: Phân tích Dữ liệu & Tự động hóa -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- REQUIREMENT 2: MKT-02: Theo dõi và phân tích dữ liệu tương tác -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2"> Phân tích Dữ liệu Tương tác</h2>
+                            <p class="text-gray-600">Thu thập, phân tích và báo cáo dữ liệu từ đa nguồn</p>
+                        </div>
+                        <a href="requirement2.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                            Chi tiết →
+                        </a>
+                    </div>
+                    
+                    <!-- Use Cases của Requirement 2 -->
+                    <div class="space-y-4 mb-6">
+                        <div class="p-4 border rounded-lg hover:bg-blue-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Ghi nhận tương tác từ link</h4>
+                                <span class="usecase-badge usecase-req2">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Hệ thống tự động ghi nhận và lưu trữ dữ liệu khi khách hàng nhấp vào liên kết từ bài viết (Facebook Pixel).</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-link mr-2"></i>
+                                <span>Tracking: 245 clicks hôm nay</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-chart-line mr-2"></i>
+                                <span>CTR: 4.8%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border rounded-lg hover:bg-blue-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Ghi nhận thông tin liên hệ</h4>
+                                <span class="usecase-badge usecase-req2">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Tiếp nhận, kiểm tra và lưu trữ thông tin khách hàng (lead) từ form liên hệ trên landing page.</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                <span>24 leads mới tuần này</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span>Validation: 98% thành công</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border rounded-lg hover:bg-blue-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Thu thập dữ liệu tương tác</h4>
+                                <span class="usecase-badge usecase-req2">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Truy xuất, tổng hợp dữ liệu hành vi từ tracking và MXH theo lịch trình định kỳ 2 giờ/lần.</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-database mr-2"></i>
+                                <span>Data warehouse: 1.4M records</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-sync-alt mr-2"></i>
+                                <span>Cập nhật 2h/lần</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border rounded-lg hover:bg-blue-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Phân tích và báo cáo hiệu suất</h4>
+                                <span class="usecase-badge usecase-req2">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Tính toán chỉ số hiệu suất (Reach, CTR...), hiển thị dashboard và xuất báo cáo đa định dạng.</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-chart-pie mr-2"></i>
+                                <span>8 báo cáo tự động</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-file-export mr-2"></i>
+                                <span>PDF, Excel, CSV</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analytics Dashboard Preview -->
+                    <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg">
+                        <h4 class="font-semibold mb-3">Dashboard Phân tích</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">Tổng tương tác</p>
+                                <p class="text-xl font-bold">1.4K</p>
+                                <p class="text-xs text-green-600"><i class="fas fa-arrow-up mr-1"></i>+18.5%</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">Conversion Rate</p>
+                                <p class="text-xl font-bold">12.5%</p>
+                                <p class="text-xs text-green-600"><i class="fas fa-arrow-up mr-1"></i>+3.2%</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">Avg. Session Time</p>
+                                <p class="text-xl font-bold">2:34</p>
+                                <p class="text-xs text-red-600"><i class="fas fa-arrow-down mr-1"></i>-0:12</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">Bounce Rate</p>
+                                <p class="text-xl font-bold">32%</p>
+                                <p class="text-xs text-red-600"><i class="fas fa-arrow-up mr-1"></i>+2%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- REQUIREMENT 3: MKT-03: Tự động hóa Marketing và Remarketing -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2"> Tự động hóa Marketing</h2>
+                            <p class="text-gray-600">Tự động hóa quy trình marketing và remarketing đa kênh</p>
+                        </div>
+                        <a href="requirement3.html" class="text-purple-600 hover:text-purple-800 font-medium">
+                            Chi tiết →
+                        </a>
+                    </div>
+                    
+                    <!-- Use Cases của Requirement 3 -->
+                    <div class="space-y-4 mb-6">
+                        <div class="p-4 border rounded-lg hover:bg-purple-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Xử lý phản hồi remarketing</h4>
+                                <span class="usecase-badge usecase-req3">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Tự động xử lý phản hồi (mở mail, click link, reply), cập nhật điểm số và trạng thái khách hàng.</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-reply mr-2"></i>
+                                <span>Xử lý: 45 phản hồi/ngày</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-user-tag mr-2"></i>
+                                <span>Score update: real-time</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border rounded-lg hover:bg-purple-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Tự động hóa marketing</h4>
+                                <span class="usecase-badge usecase-req3">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Gửi email/tin nhắn cá nhân hóa theo kịch bản định sẵn dựa trên hành vi khách hàng.</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-envelope mr-2"></i>
+                                <span>Đã gửi: 1,245 emails</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-bullseye mr-2"></i>
+                                <span>Open rate: 42%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border rounded-lg hover:bg-purple-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Quản lý remarketing</h4>
+                                <span class="usecase-badge usecase-req3">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Phân tích hành vi, phân nhóm khách hàng và đồng bộ danh sách remarketing lên nền tảng quảng cáo.</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-users mr-2"></i>
+                                <span>3 nhóm khách hàng</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-sync-alt mr-2"></i>
+                                <span>Đồng bộ hàng ngày</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border rounded-lg hover:bg-purple-50">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-medium"> Theo dõi và cấu hình chiến dịch</h4>
+                                <span class="usecase-badge usecase-req3">Đang chạy</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Xem báo cáo hiệu quả (ROI, engagement) và cấu hình chiến dịch remarketing mới.</p>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-chart-bar mr-2"></i>
+                                <span>ROI tracking: 8 chiến dịch</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-sliders-h mr-2"></i>
+                                <span>A/B testing: 3 variants</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Campaign Automation Preview -->
+                    <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
+                        <h4 class="font-semibold mb-3">Chiến dịch Tự động hóa</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-play text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Welcome Campaign</p>
+                                        <p class="text-xs text-gray-600">Gửi ngay khi có lead mới</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">Active</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-sync-alt text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Abandoned Cart</p>
+                                        <p class="text-xs text-gray-600">Reminder sau 24h</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">Active</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-chart-line text-yellow-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Re-engagement</p>
+                                        <p class="text-xs text-gray-600">Khách hàng không hoạt động 30 ngày</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded">Paused</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Integration & Recent Activities -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- System Integration Status -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">🔗 Tích hợp Hệ thống</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fab fa-facebook text-blue-600 text-xl mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Facebook Graph API</p>
+                                    <p class="text-xs text-gray-600">Đăng bài, tracking, remarketing</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Connected</span>
+                                <p class="text-xs text-gray-600 mt-1">Updated 5 min ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-pixel text-blue-500 text-xl mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Facebook Pixel</p>
+                                    <p class="text-xs text-gray-600">Real-time tracking & conversion</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Active</span>
+                                <p class="text-xs text-gray-600 mt-1">1.4K events today</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fab fa-tiktok text-black text-xl mr-3"></i>
+                                <div>
+                                    <p class="font-medium">TikTok Marketing API</p>
+                                    <p class="text-xs text-gray-600">Mock integration for testing</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">Mock Mode</span>
+                                <p class="text-xs text-gray-600 mt-1">Demo only</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-database text-purple-600 text-xl mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Data Warehouse</p>
+                                    <p class="text-xs text-gray-600">Analytics & reporting</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">1.4M records</span>
+                                <p class="text-xs text-gray-600 mt-1">Sync every 2 hours</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-crm text-green-600 text-xl mr-3"></i>
+                                <div>
+                                    <p class="font-medium">CRM Integration</p>
+                                    <p class="text-xs text-gray-600">Customer data & segmentation</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">156 leads</span>
+                                <p class="text-xs text-gray-600 mt-1">Real-time sync</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent System Activities -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">📝 Hoạt động hệ thống gần đây</h3>
+                        <a href="activities.html" class="text-sm text-blue-500 hover:text-blue-700">Xem tất cả</a>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 brand-bg-light rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-file-upload brand-text-dark"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">Bài viết mới được tạo</p>
+                                <p class="text-sm text-gray-600">"Black Friday Sale" bởi Staff A</p>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded mr-2">MKT-01</span>
+                                    <span class="text-xs text-gray-500">10 phút trước</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-chart-line text-blue-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">Data sync completed</p>
+                                <p class="text-sm text-gray-600">2h batch job - 1,245 new records</p>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded mr-2">MKT-02</span>
+                                    <span class="text-xs text-gray-500">1 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-robot text-purple-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">Automated email sent</p>
+                                <p class="text-sm text-gray-600">Welcome campaign - 24 new leads</p>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded mr-2">MKT-03</span>
+                                    <span class="text-xs text-gray-500">2 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-check-circle text-green-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">Facebook API updated</p>
+                                <p class="text-sm text-gray-600">Graph API v18.0 - New features</p>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded mr-2">Integration</span>
+                                    <span class="text-xs text-gray-500">3 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">Approval required</p>
+                                <p class="text-sm text-gray-600">5 bài viết đang chờ phê duyệt</p>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded mr-2">MKT-01</span>
+                                    <span class="text-xs text-gray-500">5 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+
+          
+                  
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile sidebar toggle
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+        });
+
+        // Requirement tabs switching
+        document.querySelectorAll('.req-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if(!this.getAttribute('href').includes('index.html')) {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.req-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // Update notification count
+        function updateNotificationCount() {
+            const count = document.querySelector('.bg-red-500');
+            if(count) {
+                // Simulate new notifications
+                if(Math.random() > 0.7) {
+                    const current = parseInt(count.textContent);
+                    count.textContent = current + 1;
+                    count.classList.add('animate-pulse');
+                    setTimeout(() => count.classList.remove('animate-pulse'), 1000);
+                }
+            }
+        }
+        
+        // Real-time stats update
+        function updateStats() {
+            // Update interaction count
+            const interactionEl = document.querySelectorAll('.text-2xl.font-bold')[1];
+            if(interactionEl && interactionEl.textContent.includes('K')) {
+                const baseNum = 1400;
+                const randomIncrement = Math.floor(Math.random() * 10);
+                const newTotal = baseNum + randomIncrement;
+                interactionEl.textContent = (newTotal/1000).toFixed(1) + 'K';
+            }
+            
+            // Update leads count
+            const leadsEl = document.querySelectorAll('.text-2xl.font-bold')[2];
+            if(leadsEl && Math.random() > 0.5) {
+                const current = parseInt(leadsEl.textContent);
+                leadsEl.textContent = current + 1;
+                leadsEl.classList.add('text-green-600');
+                setTimeout(() => leadsEl.classList.remove('text-green-600'), 1000);
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start periodic updates
+            setInterval(updateNotificationCount, 45000); // Every 45 seconds
+            setInterval(updateStats, 30000); // Every 30 seconds
+            
+            // Dashboard card hover effects
+            document.querySelectorAll('.dashboard-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            });
+            
+            // Use case card hover effects
+            document.querySelectorAll('.hover\\:bg-blue-50, .hover\\:bg-purple-50').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    if(this.classList.contains('hover:bg-blue-50')) {
+                        this.style.backgroundColor = 'rgba(219, 234, 254, 0.5)';
+                    } else {
+                        this.style.backgroundColor = 'rgba(237, 233, 254, 0.5)';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+        });
+        
+        // Approve post function
+        function approvePost(postId) {
+            const row = document.querySelector(`tr[data-post="${postId}"]`);
+            if(row) {
+                row.style.opacity = '0.5';
+                setTimeout(() => {
+                    row.remove();
+                    
+                    // Update pending count
+                    const pendingBadge = document.querySelector('.bg-yellow-500');
+                    if(pendingBadge) {
+                        const currentText = pendingBadge.textContent;
+                        const currentCount = parseInt(currentText.match(/\d+/)[0]);
+                        if(currentCount > 1) {
+                            pendingBadge.textContent = (currentCount - 1) + ' bài đang chờ';
+                        } else {
+                            pendingBadge.textContent = '0 bài đang chờ';
+                            pendingBadge.classList.remove('bg-yellow-500');
+                            pendingBadge.classList.add('bg-green-500');
+                        }
+                    }
+                    
+                    // Show success message
+                    alert(`Bài viết ${postId} đã được duyệt thành công!`);
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>

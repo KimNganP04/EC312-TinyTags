@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Đăng nhập</title>
+    <link rel="stylesheet" href="auth.css">
+    <!-- Link icon (ví dụ: Font Awesome cho icon Google) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <!-- KHUNG BÊN TRÁI: Form đăng nhập -->
+        <div class="auth-form-wrapper">
+            <div class="auth-header">
+                <h1>Chào mừng bạn!</h1>
+                <p>Nhập email và mật khẩu để đăng nhập</p>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <!-- Ô nhập Email -->
+                <div class="input-group">
+                    <label class="input-label" for="email">Email</label>
+                    <input type="email" id="email" placeholder="phanhogiahan@gmail.com" required>
+                </div>
+
+                <!-- Ô nhập Mật khẩu -->
+                <div class="input-group">
+                    <div class="label-row">
+                        <label class="input-label" for="password">Mật khẩu</label>
+                        <a href="forgot_password.html" class="forgot-link">Quên mật khẩu?</a>
+                    </div>
+                    <input type="password" id="password" placeholder="tinytagsNhom7@@@" required>
+                </div>
+
+                <!-- Checkbox "Remember me" -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <!-- Nút Đăng nhập -->
+                <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+
+                <!-- Nút Đăng nhập bằng Google -->
+                <button type="button" class="btn btn-google btn-block">
+                    <div class="google-btn-content">
+                        <div class="google-icon">G</div>
+                        <span>Sign in with Google</span>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+        <!-- KHUNG BÊN PHẢI: Chỉ hiển thị Logo full -->
+        <div class="auth-logo-wrapper">
+            <div class="logo-full-container">
+                <img src="../assets/images/LOGO.png" alt="Tiny Tags Logo" class="logo-full-image">
+            </div>
+        </div>
+    </div>
+
+    <!-- VÙNG HIỂN THỊ THÔNG BÁO (sẽ ẩn, dùng JS để hiện) -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <span class="notification-icon">✅</span>
+            <span class="notification-text">Đăng nhập thành công</span>
+        </div>
+    </div>
+
+    <!-- File JavaScript riêng -->
+    <script src="auth.js"></script>
+</body>
+</html>

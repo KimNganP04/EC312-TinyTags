@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Dashboard</title>
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/slidebar.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <!-- SIDEBAR MỚI - ĐÚNG FIGMA -->
+    <div class="sidebar" id="sidebar">
+        <!-- LOGO ĐÚNG NHƯ FIGMA: ICON TRÊN, CHỮ DƯỚI -->
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <!-- MENU NAVIGATION -->
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link active">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="products.html" class="nav-link">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="customer.html" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="messages.html" class="nav-link">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="sale/index.html" class="nav-link">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- LOGOUT SECTION -->
+        <div class="sidebar-footer">
+            <a href="../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main-content">
+        <!-- ... phần còn lại của index.html GIỮ NGUYÊN ... -->
+        <!-- HEADER -->
+        <header class="dashboard-header">
+            <div class="welcome-section">
+                <h1>Hi, Welcome back Lanh!</h1>
+                <p id="currentDateTime">Hôm nay: Chủ Nhật, 21 tháng 12, 2025 - 11:11:02</p>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar">LA</div>
+                <div class="user-info">
+                    <h3>Nguyễn Trần Lan Anh</h3>
+                    <p>Admin Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- STATS CARDS - 4 CARD NẰM NGANG -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">
+                        <i class="fas fa-money-bill-wave" style="color: #F3376D;"></i>
+                        Doanh thu tháng
+                    </div>
+                    <div class="stat-value">50.000.000 VND</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> 12.5% so với tháng trước
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-title">
+                        <i class="fas fa-user-plus" style="color: #FF95A6;"></i>
+                        Khách hàng mới
+                    </div>
+                    <div class="stat-value">100</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> 8.2% so với tháng trước
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-title">
+                        <i class="fas fa-shopping-bag" style="color: #FADE98;"></i>
+                        Đơn đặt hàng
+                    </div>
+                    <div class="stat-value">5.000</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> 15.3% so với tháng trước
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-title">
+                        <i class="fas fa-user-friends" style="color: #90324D;"></i>
+                        Tín nhân mới
+                    </div>
+                    <div class="stat-value">50</div>
+                    <div class="stat-change negative">
+                        <i class="fas fa-arrow-down"></i> 2.1% so với tháng trước
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CỘT CHÍNH (LỚN) -->
+        <div class="main-column">
+            <!-- CHART SECTION -->
+            <section class="chart-section">
+                <h2 class="section-title">Doanh thu theo tháng</h2>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-bar"></i>
+                    <p>Biểu đồ doanh thu 12 tháng</p>
+                </div>
+            </section>
+
+            <!-- VISITORS CHART -->
+            <section class="visitors-section">
+                <h2 class="section-title">Lượt truy cập trang web</h2>
+                <div class="visitors-chart">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Biểu đồ lượt truy cập</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- CỘT GIỮA -->
+        <div class="right-sidebar">
+            <!-- PRODUCT CATEGORIES -->
+            <section class="products-section">
+                <h2 class="section-title">Doanh thu theo loại sản phẩm</h2>
+                <ul class="product-list">
+                    <li class="product-item">
+                        <span class="product-name">Charm móc khóa</span>
+                        <span class="product-value">25M</span>
+                    </li>
+                    <li class="product-item">
+                        <span class="product-name">Sét DIY</span>
+                        <span class="product-value">18M</span>
+                    </li>
+                    <li class="product-item">
+                        <span class="product-name">Charm dây đeo điện thoại</span>
+                        <span class="product-value">15M</span>
+                    </li>
+                    <li class="product-item">
+                        <span class="product-name">Móc khóa da</span>
+                        <span class="product-value">7M</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- MONTHLY REVENUE -->
+            <section class="monthly-revenue">
+                <h2 class="section-title">Doanh thu theo tháng</h2>
+                <div class="month-grid">
+                    <div class="month-item">
+                        <div class="month-label">Tháng 1</div>
+                        <div class="month-value">40M</div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-label">Tháng 2</div>
+                        <div class="month-value">45M</div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-label">Tháng 3</div>
+                        <div class="month-value">50M</div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-label">Tháng 4</div>
+                        <div class="month-value">48M</div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-label">Tháng 5</div>
+                        <div class="month-value">52M</div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-label">Tháng 6</div>
+                        <div class="month-value">50M</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- CỘT PHẢI -->
+        <div class="right-sidebar">
+            <!-- TOP CUSTOMERS -->
+            <section class="customers-section">
+                <h2 class="section-title">Khách hàng nổi bật</h2>
+                <table class="customers-table">
+                    <thead>
+                        <tr>
+                            <th>Khách hàng</th>
+                            <th>Chi tiêu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="customer-name">Phan Hồ Gia Hân</td>
+                            <td class="customer-spending">5.000.000đ</td>
+                        </tr>
+                        <tr>
+                            <td class="customer-name">Nguyễn Trần Lan Anh</td>
+                            <td class="customer-spending">4.780.000đ</td>
+                        </tr>
+                        <tr>
+                            <td class="customer-name">Phạm Kim Ngân Hmok</td>
+                            <td class="customer-spending">4.500.000đ</td>
+                        </tr>
+                        <tr>
+                            <td class="customer-name">Mai Ngân Phương Nghi</td>
+                            <td class="customer-spending">3.900.000đ</td>
+                        </tr>
+                        <tr>
+                            <td class="customer-name">Trần Bắc Hiếu</td>
+                            <td class="customer-spending">3.860.000đ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <!-- Load JavaScript chung -->
+    <script src="../js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+/* 1. CSS Variables - Dùng chung cho toàn module Sale */
+:root {
+    --sale-primary: #F3376D;
+    --sale-secondary: #90324D;
+    --sale-accent: #FF95A6;
+    --sale-success: #00b894;
+    --sale-warning: #fdcb6e;
+    --sale-danger: #d63031;
+    --sale-bg: #FFF5F7;
+    --sale-border: #FCE4E5;
+}
+
+/* 2. Layout chung - Dùng chung cho tất cả các trang Sale */
+.sale-main {
+    margin-left: 260px;
+    padding: 30px;
+    min-height: 100vh;
+    background: #f8f9fa;
+    transition: margin-left 0.3s;
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+    .sale-main {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sale-main {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+        padding-top: 80px;
+    }
+}
+
+/* 3. Header - Dùng chung cho tất cả các trang */
+.sale-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.sale-header-left h1 {
+    font-size: 28px;
+    color: var(--sale-secondary);
+    margin-bottom: 8px;
+}
+
+.sale-subtitle {
+    color: #666;
+    font-size: 15px;
+}
+
+/* 4. User Profile - Dùng chung */
+.sale-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    min-width: 280px;
+}
+
+.sale-user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sale-primary) 0%, var(--sale-accent) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.sale-user-info h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.sale-user-info p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 5. Sale Cards Grid - Dùng chung cho stats cards */
+.sale-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 1200px) {
+    .sale-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sale-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sale-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.sale-card:hover {
+    transform: translateY(-5px);
+}
+
+.sale-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.sale-card-title {
+    font-size: 16px;
+    color: #666;
+    font-weight: 600;
+}
+
+.sale-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--sale-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sale-primary);
+    font-size: 20px;
+}
+
+.sale-card-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.sale-card-change {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.sale-card-change.positive {
+    color: var(--sale-success);
+}
+
+.sale-card-change.negative {
+    color: var(--sale-danger);
+}
+
+/* 6. Buttons - Dùng chung */
+.btn-sale {
+    background: linear-gradient(135deg, var(--sale-primary) 0%, #FF6B9D 100%);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.btn-sale:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(243, 55, 109, 0.3);
+}
+
+.btn-sale-secondary {
+    background: white;
+    color: #666;
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: 1px solid var(--sale-border);
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.btn-sale-secondary:hover {
+    background: #f8f9fa;
+    color: #333;
+}
+
+/* 7. Search Box - Dùng chung */
+.customer-search-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.customer-search-box input {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+    font-size: 14px;
+    color: #333;
+}
+
+.customer-search-box i {
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .customer-search-box {
+        width: 100%;
+    }
+}
+
+/* 8. Form Elements - Dùng chung cho form */
+.order-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 20px;
+    color: var(--sale-secondary);
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--sale-border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--sale-primary);
+}
+
+/* 9. Tables - Dùng chung */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.product-table th {
+    padding: 15px;
+    text-align: left;
+    color: var(--sale-secondary);
+    font-weight: 600;
+    background-color: var(--sale-bg);
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.product-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--sale-border);
+}
+
+/* 10. Badges - Dùng chung */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: #e8f5e9;
+    color: #388e3c;
+}
+
+.badge-warning {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.badge-danger {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.badge-info {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+/* 11. Modal Styles - Dùng chung */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    color: var(--sale-secondary);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.modal-close:hover {
+    color: var(--sale-primary);
+}
+
+.modal-body {
+    margin-bottom: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn-modal {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-modal.cancel {
+    background: white;
+    color: #666;
+    border: 1px solid var(--sale-border);
+}
+
+.btn-modal.cancel:hover {
+    background: #f8f9fa;
+}
+
+.btn-modal.confirm {
+    background: var(--sale-primary);
+    color: white;
+}
+
+.btn-modal.confirm:hover {
+    background: #e03162;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 12. Toast Notification - Dùng chung */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1001;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 280px;
+    border-left: 3px solid #00b894;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast.success {
+    border-left-color: #00b894;
+    background: linear-gradient(90deg, #f8f9fa 0%, white 100%);
+}
+
+.toast.error {
+    border-left-color: #d63031;
+    background: linear-gradient(90deg, #fff5f5 0%, white 100%);
+}
+
+.toast-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.toast.success .toast-icon {
+    color: #00b894;
+    background: rgba(0, 184, 148, 0.1);
+}
+
+.toast.error .toast-icon {
+    color: #d63031;
+    background: rgba(214, 48, 49, 0.1);
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-content h4 {
+    margin: 0 0 2px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.toast-content p {
+    margin: 0;
+    font-size: 12px;
+    color: #636e72;
+    line-height: 1.3;
+}
+
+/* 13. Submenu Styles (Sidebar) - Dùng chung cho Sale module */
+.nav-item.has-submenu {
+    position: relative;
+}
+
+.nav-item.has-submenu .submenu-icon {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.nav-item.has-submenu.active .submenu-icon {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 40px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.nav-item.has-submenu.active .submenu {
+    max-height: 300px;
+}
+
+.submenu li {
+    margin: 5px 0;
+}
+
+.submenu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: var(--text-gray);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.submenu a:hover,
+.submenu a.active {
+    background: var(--primary-light);
+    color: var(--primary-color);
+}
+
+.submenu i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+@media (max-width: 1200px) {
+    .submenu {
+        display: none;
+    }
+    
+    .nav-item.has-submenu .submenu-icon {
+        display: none;
+    }
+}

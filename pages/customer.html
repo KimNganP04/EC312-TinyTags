@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Khách hàng</title>
+    <!-- LOAD CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/slidebar.css">
+    <link rel="stylesheet" href="../css/customer.css">
+    
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="products.html" class="nav-link active">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="customer.html" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="sale/index.html" class="nav-link">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="customers-page">
+        <!-- Header -->
+        <header class="page-header">
+             <div class="header-left">
+                <h1>Khách hàng</h1>
+                <p id="currentDateTime" class="page-date">Hôm nay: Chủ Nhật, 21 tháng 12, 2025 - 11:11:02</p>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar">LA</div>
+                <div class="user-info">
+                    <h3>Nguyễn Trần Lan Anh</h3>
+                    <p>Admin Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <button class="btn-add-customer">
+                <i class="fas fa-plus"></i> Thêm khách hàng mới
+            </button>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Tìm kiếm khách hàng...">
+            </div>
+        </div>
+
+        <!-- Customers Table -->
+        <div class="customers-table-container">
+            <div class="table-header">
+                <h3>Danh sách khách hàng</h3>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="customers-table">
+                    <thead>
+                        <tr>
+                            <th>Tên Khách hàng</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Tổng chi tiêu</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Customer 1 -->
+                        <tr>
+                            <td class="customer-name">Nguyễn Văn Nam</td>
+                            <td class="customer-email">nguyenvannam@gmail.com</td>
+                            <td class="customer-phone">0583034588</td>
+                            <td class="customer-address">Khu phố 34, Phường Linh Xuân, Thành phố Hồ Chí Minh</td>
+                            <td class="customer-total">3.500.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 2 -->
+                        <tr>
+                            <td class="customer-name">Nguyễn Ngọc An</td>
+                            <td class="customer-email">nguyenngocan@gmail.com</td>
+                            <td class="customer-phone">0583074588</td>
+                            <td class="customer-address">Khu phố 34, Phường Linh Trung, Thành phố Hồ Chí Minh</td>
+                            <td class="customer-total">2.300.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 3 -->
+                        <tr>
+                            <td class="customer-name">Phạm Thanh Hà</td>
+                            <td class="customer-email">phamthanhha@gmail.com</td>
+                            <td class="customer-phone">0693034588</td>
+                            <td class="customer-address">Trường Đại học Công nghệ Thông tin</td>
+                            <td class="customer-total">3.050.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 4 -->
+                        <tr>
+                            <td class="customer-name">Huỳnh Yến Nhi</td>
+                            <td class="customer-email">huynhyennhi@gmail.com</td>
+                            <td class="customer-phone">0583024589</td>
+                            <td class="customer-address">Đại học Quốc gia Hồ Chí Minh, Thành phố Thủ Đức</td>
+                            <td class="customer-total">4.000.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 5 -->
+                        <tr>
+                            <td class="customer-name">Đỗ Trần Hà</td>
+                            <td class="customer-email">dotranha@gmail.com</td>
+                            <td class="customer-phone">0583024590</td>
+                            <td class="customer-address">Trường Đại học Công nghệ Thông tin</td>
+                            <td class="customer-total">1.000.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 6 -->
+                        <tr>
+                            <td class="customer-name">Vũ Thanh Thúy</td>
+                            <td class="customer-email">vuthanhthuy@gmail.com</td>
+                            <td class="customer-phone">0583024591</td>
+                            <td class="customer-address">Lớp EC312.011, Trường Đại học Công nghệ Thông tin</td>
+                            <td class="customer-total">1.500.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 7 -->
+                        <tr>
+                            <td class="customer-name">Phạm Thành An</td>
+                            <td class="customer-email">phamthanhan@gmail.com</td>
+                            <td class="customer-phone">0583024592</td>
+                            <td class="customer-address">Số 133 Lê Lợi, Xã Hòa Phú, Quận 1, Nghệ An</td>
+                            <td class="customer-total">2.100.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 8 -->
+                        <tr>
+                            <td class="customer-name">Vũ Thị Trang</td>
+                            <td class="customer-email">vuthitrang@gmail.com</td>
+                            <td class="customer-phone">0583024593</td>
+                            <td class="customer-address">Số 133 Lê Lợi, Xã Hòa Phú, Quận 1, Nghệ An</td>
+                            <td class="customer-total">1.700.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Customer 9 -->
+                        <tr>
+                            <td class="customer-name">Ngô Thị Ngọc Lan</td>
+                            <td class="customer-email">ngothingoclan@gmail.com</td>
+                            <td class="customer-phone">0583024594</td>
+                            <td class="customer-address">Số 133 Lê Lợi, Xã Hòa Phú, Quận 1, Nghệ An</td>
+                            <td class="customer-total">3.400.000đ</td>
+                            <td class="customer-actions">
+                                <button class="btn-action" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action delete" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Table Footer -->
+            <div class="table-footer">
+                <div class="pagination">
+                    <button class="btn-pagination" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="btn-pagination active">1</button>
+                    <button class="btn-pagination">2</button>
+                    <button class="btn-pagination">3</button>
+                    <button class="btn-pagination">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="../js/common.js"></script>
+    <script>
+        // JavaScript đơn giản
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update current date and time
+            function updateDateTime() {
+                const now = new Date();
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                };
+                const dateStr = now.toLocaleDateString('vi-VN', options);
+                const timeStr = now.toLocaleTimeString('vi-VN');
+                
+                const dateTimeElement = document.getElementById('currentDateTime');
+                if (dateTimeElement) {
+                    dateTimeElement.textContent = `Hôm nay: ${dateStr} - ${timeStr}`;
+                }
+            }
+            
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Thêm khách hàng
+            const addCustomerBtn = document.querySelector('.btn-add-customer');
+            if (addCustomerBtn) {
+                addCustomerBtn.addEventListener('click', function() {
+                   window.location.href = 'add_customer.html';
+                });
+            }
+            
+            // Tìm kiếm
+            const searchInput = document.querySelector('.search-box input');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function(e) {
+                    const searchTerm = this.value.toLowerCase();
+                    const rows = document.querySelectorAll('.customers-table tbody tr');
+                    
+                    rows.forEach(row => {
+                        const customerName = row.querySelector('.customer-name').textContent.toLowerCase();
+                        const customerEmail = row.querySelector('.customer-email').textContent.toLowerCase();
+                        
+                        if (customerName.includes(searchTerm) || 
+                            customerEmail.includes(searchTerm) || 
+                            searchTerm === '') {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Nút sửa
+            // Nút sửa
+            const editButtons = document.querySelectorAll('.btn-action:not(.delete)');
+            editButtons.forEach((button, index) => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const name = row.querySelector('.customer-name').textContent;
+                    const email = row.querySelector('.customer-email').textContent;
+                    const phone = row.querySelector('.customer-phone').textContent;
+                    const address = row.querySelector('.customer-address').textContent;
+                    const total = row.querySelector('.customer-total').textContent;
+                    
+                    // Tạo object chứa thông tin khách hàng
+                    const customerData = {
+                        id: index + 1, // ID giả lập
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        address: address,
+                        total: total,
+                        notes: "Khách hàng thân thiết" // Ghi chú mặc định
+                    };
+                    
+                    // Lưu vào sessionStorage
+                    sessionStorage.setItem('editCustomer', JSON.stringify(customerData));
+                    
+                    // Chuyển đến trang chỉnh sửa
+                    window.location.href = 'edit_customer.html';
+                });
+            });
+            
+            // Nút xóa
+            const deleteButtons = document.querySelectorAll('.btn-action.delete');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const name = row.querySelector('.customer-name').textContent;
+                    
+                    if (confirm(`Xóa khách hàng ${name}?`)) {
+                        row.style.opacity = '0.5';
+                        setTimeout(() => {
+                            row.style.display = 'none';
+                            alert(`Đã xóa khách hàng: ${name}`);
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Pagination
+            const pageButtons = document.querySelectorAll('.btn-pagination:not([disabled])');
+            pageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        // Remove active class from all buttons
+                        document.querySelectorAll('.btn-pagination').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Simulate page change
+                        const pageNum = this.textContent.trim();
+                        if (pageNum) {
+                            alert(`Chuyển đến trang ${pageNum}`);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

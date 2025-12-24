@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Bài Viết - Tiny Tags Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="manager.css">
+    <style>
+        /* ===== SIDEBAR MANAGER CSS ===== */
+        :root {
+            --primary-red: #F3376D;
+            --primary-dark: #90324D;
+            --primary-pink: #FF95A6;
+            --primary-green: #10B981;
+            --primary-blue: #3B82F6;
+        }
+
+        .sidebar-container {
+            width: 280px;
+            background: linear-gradient(180deg, #ffffff 0%, #fef7f8 100%);
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 12px rgba(243, 55, 109, 0.08);
+            position: fixed;
+            left: 0;
+            top: 0;
+            border-right: 1px solid rgba(243, 55, 109, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(243, 55, 109, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-pink) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(243, 55, 109, 0.2);
+        }
+
+        .logo-icon i {
+            color: white;
+            font-size: 22px;
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--primary-pink);
+            margin: 2px 0 0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navigation Section */
+        .nav-section {
+            flex: 1;
+            margin-top: 8px;
+        }
+
+        .nav-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #999;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 24px 0 12px 16px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            color: var(--primary-dark);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-red);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .nav-link:hover {
+            background: linear-gradient(90deg, rgba(243, 55, 109, 0.05) 0%, rgba(243, 55, 109, 0.02) 100%);
+            color: var(--primary-red);
+            transform: translateX(4px);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleY(1);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(243, 55, 109, 0.1) 0%, rgba(243, 55, 109, 0.05) 100%);
+            color: var(--primary-red);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(243, 55, 109, 0.1);
+        }
+
+        .nav-link.active::before {
+            transform: scaleY(1);
+        }
+
+        .nav-link i {
+            width: 24px;
+            margin-right: 14px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .nav-link span {
+            font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .nav-badge {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-pink) 100%);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* User Section */
+        .user-section {
+            padding-top: 24px;
+            border-top: 1px solid rgba(243, 55, 109, 0.1);
+            margin-top: auto;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(252, 228, 229, 0.1) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-pink) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(243, 55, 109, 0.2);
+            border: 3px solid white;
+        }
+
+        .user-details h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+
+        .user-details p {
+            font-size: 12px;
+            color: var(--primary-pink);
+            margin: 4px 0 0;
+            font-weight: 500;
+        }
+
+        .user-role {
+            display: inline-block;
+            background: rgba(243, 55, 109, 0.1);
+            color: var(--primary-red);
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding-top: 16px;
+            border-top: 1px solid rgba(243, 55, 109, 0.1);
+            margin-top: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            color: var(--primary-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .footer-link:hover {
+            background-color: rgba(252, 228, 229, 0.3);
+            color: var(--primary-red);
+        }
+
+        .footer-link i {
+            width: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        /* Responsive cho sidebar */
+        @media (max-width: 992px) {
+            .sidebar-container {
+                position: fixed;
+                left: -280px;
+                z-index: 1000;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+            }
+            
+            .sidebar-container.mobile-open {
+                left: 0;
+            }
+        }
+
+        /* ===== MAIN CONTENT STYLES ===== */
+        .main-content {
+            margin-left: 280px;
+            padding: 24px;
+            min-height: 100vh;
+            background-color: #fafafa;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Responsive cho main content */
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .sidebar-container.mobile-open + .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* ===== POST DETAIL STYLES ===== */
+        .post-detail-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .post-header {
+            background: linear-gradient(135deg, #fef7f8 0%, #fff 100%);
+            padding: 24px;
+            border-bottom: 1px solid rgba(243, 55, 109, 0.1);
+        }
+
+        .post-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .meta-item i {
+            color: var(--primary-red);
+            width: 16px;
+        }
+
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #FFF3CD;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-rejected {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .status-published {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .post-content {
+            padding: 32px;
+            line-height: 1.6;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .post-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .post-image {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .post-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .hashtags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .hashtag {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .platforms-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .platform-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .platform-facebook {
+            background: #E8F4FD;
+            color: #1877F2;
+        }
+
+        .platform-tiktok {
+            background: #F0F0F0;
+            color: #000;
+        }
+
+        .platform-instagram {
+            background: linear-gradient(45deg, #F09433, #E6683C, #DC2743, #CC2366, #BC1888);
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            padding: 24px;
+            border-top: 1px solid rgba(243, 55, 109, 0.1);
+            background: #fafafa;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #ddd;
+        }
+
+        .feedback-section {
+            background: #f0f9ff;
+            border-left: 4px solid #0369a1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 24px;
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Manager -->
+    <div class="sidebar-container" id="sidebar">
+        <!-- Logo -->
+        <div class="logo-section">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Tiny Tags</h1>
+                    <p>Manager System</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="nav-section">
+            <div class="nav-title">Tổng quan</div>
+            
+            <a href="index-manager.html" class="nav-link">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+                <span class="nav-badge">3</span>
+            </a>
+            
+            <div class="nav-title">Quản lý nội dung</div>
+            
+            <a href="dsbaivietchoduyet.html" class="nav-link active">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Xem xét bài viết</span>
+                <span class="nav-badge" id="pending-count">8</span>
+            </a>
+            
+            <a href="thongke.html" class="nav-link">
+                <i class="fas fa-chart-line"></i>
+                <span>Thống kê hiệu suất</span>
+            </a>
+            
+            <a href="caidat.html" class="nav-link">
+                <i class="fas fa-cog"></i>
+                <span>Cài đặt hệ thống</span>
+            </a>
+            
+            <div class="nav-title">Quản lý nhân sự</div>
+            
+            <a href="quanlystaff.html" class="nav-link">
+                <i class="fas fa-users"></i>
+                <span>Quản lý staff</span>
+            </a>
+            
+            <a href="themstaff.html" class="nav-link">
+                <i class="fas fa-user-plus"></i>
+                <span>Thêm staff mới</span>
+            </a>
+        </nav>
+        
+        <!-- User Section -->
+        <div class="user-section">
+            <div class="user-info">
+                <div class="user-avatar">QL</div>
+                <div class="user-details">
+                    <h3>Quản Lý</h3>
+                    <p>ID: M0001</p>
+                    <span class="user-role">Marketing Manager</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+            <div class="footer-links">
+                <a href="profile-manager.html" class="footer-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Hồ sơ cá nhân</span>
+                </a>
+                <a href="logout.html" class="footer-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header" style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 class="page-title">Chi Tiết Bài Viết</h1>
+                    <p class="page-subtitle" id="post-subtitle">Xem nội dung chi tiết bài viết</p>
+                </div>
+                <div>
+                    <button onclick="goBack()" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Quay lại
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Post Detail Content -->
+        <div id="post-detail-content">
+            <!-- Nội dung sẽ được tải bởi JavaScript -->
+            <div class="empty-state">
+                <i class="fas fa-search"></i>
+                <h3>Đang tải thông tin bài viết...</h3>
+                <p>Vui lòng đợi trong giây lát</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div class="modal" id="reject-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+        <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 16px; color: var(--primary-dark);">Từ chối bài viết</h3>
+        <p style="margin-bottom: 20px; color: #666;">Bạn đang từ chối bài viết "<span id="post-title-to-reject"></span>"</p>
+        
+        <div style="margin-bottom: 24px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: var(--primary-dark);">Lý do từ chối:</label>
+            <textarea id="reject-reason" rows="4" placeholder="Nhập lý do từ chối bài viết..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; resize: vertical;"></textarea>
+        </div>
+        
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+            <button id="cancel-reject" style="padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; background: white; color: var(--primary-dark); border: 2px solid var(--primary-dark);">Hủy bỏ</button>
+            <button id="confirm-reject" style="padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; background: #EF4444; color: white; border: none;">Từ chối bài viết</button>
+        </div>
+    </div>
+</div>
+
+    <script>
+        // Cập nhật số lượng bài chờ duyệt
+        function updatePendingCount(count) {
+            const pendingBadge = document.getElementById('pending-count');
+            if (pendingBadge && count !== undefined) {
+                pendingBadge.textContent = count;
+            }
+        }
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+
+        // Đóng sidebar khi click bên ngoài (mobile)
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth <= 992 && 
+                !sidebar.contains(event.target) &&
+                sidebar.classList.contains('mobile-open')) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+
+        // Xử lý resize window
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 992) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+
+        // Khởi tạo khi DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Đặt active link dựa trên URL hiện tại
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.includes(currentPage)) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Thêm sự kiện hover cho mobile (nếu cần)
+            if (window.innerWidth <= 992) {
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+                }
+            }
+        });
+
+        // Hàm để các trang khác có thể gọi để cập nhật số lượng pending
+        window.updateSidebarPendingCount = updatePendingCount;
+
+        // Go back to manager posts list
+        function goBack() {
+            window.location.href = 'dsbaivietchoduyet.html';
+        }
+    </script>
+    
+    <!-- Thêm script cho chi tiết bài viết -->
+    <script>
+        // Lấy post ID từ URL
+        function getPostIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Map trạng thái
+        const statusMapDetail = {
+            'draft': { text: 'Bản nháp', class: 'status-badge status-draft' },
+            'pending': { text: 'Chờ duyệt', class: 'status-badge status-pending' },
+            'approved': { text: 'Đã duyệt', class: 'status-badge status-approved' },
+            'rejected': { text: 'Đã từ chối', class: 'status-badge status-rejected' },
+            'published': { text: 'Đã đăng', class: 'status-badge status-published' }
+        };
+
+        // Map danh mục
+        const categoryMapDetail = {
+            'moc-khoa': 'Móc khóa charm',
+            'day-deo': 'Dây đeo điện thoại charm',
+            'set-diy': 'Set DIY charm',
+            'vong-tay': 'Vòng tay charm'
+        };
+
+        // Map nền tảng
+        const platformMapDetail = {
+            'facebook_page': { name: 'Trang Facebook', icon: 'fab fa-facebook', class: 'platform-badge platform-facebook' },
+            'facebook_group': { name: 'Nhóm Facebook', icon: 'fas fa-users', class: 'platform-badge platform-facebook' },
+            'tiktok': { name: 'TikTok', icon: 'fab fa-tiktok', class: 'platform-badge platform-tiktok' },
+            'instagram': { name: 'Instagram', icon: 'fab fa-instagram', class: 'platform-badge platform-instagram' },
+            'facebook': { name: 'Facebook', icon: 'fab fa-facebook', class: 'platform-badge platform-facebook' }
+        };
+
+        // Load post detail
+        async function loadPostDetail() {
+            const postId = getPostIdFromURL();
+            if (!postId) {
+                showEmptyState('Không tìm thấy bài viết');
+                return;
+            }
+
+            try {
+                // Gọi hàm từ marketing.js
+                const post = await getPostByIdAsync(postId);
+                
+                if (!post) {
+                    showEmptyState('Bài viết không tồn tại');
+                    return;
+                }
+
+                renderPostDetail(post);
+            } catch (error) {
+                console.error('Lỗi khi tải bài viết:', error);
+                showEmptyState('Đã xảy ra lỗi khi tải bài viết');
+            }
+        }
+
+        // Async wrapper cho getPostById
+        function getPostByIdAsync(id) {
+            return new Promise((resolve) => {
+                const post = getPostById(id);
+                resolve(post);
+            });
+        }
+
+        // Render post detail
+        function renderPostDetail(post) {
+            const container = document.getElementById('post-detail-content');
+            const fromManager = new URLSearchParams(window.location.search).get('from') === 'manager';
+            
+            // Xác định trạng thái
+            const statusInfo = statusMapDetail[post.status] || statusMapDetail['pending'];
+            
+            // Xác định danh mục
+            const category = categoryMapDetail[post.category] || 'Không có danh mục';
+            
+            // Format date
+            const writeDate = formatDate(post.writeDate || post.createdAt);
+            const publishDate = post.publishDate ? formatDate(post.publishDate) : 'Chưa đăng';
+            
+            // Render platforms
+            let platformsHTML = '';
+            if (post.platforms && Array.isArray(post.platforms) && post.platforms.length > 0) {
+                const uniquePlatforms = [...new Set(post.platforms)];
+                platformsHTML = uniquePlatforms.map(platform => {
+                    const platformInfo = platformMapDetail[platform] || { 
+                        name: platform, 
+                        icon: 'fas fa-globe', 
+                        class: 'platform-badge' 
+                    };
+                    return `
+                        <div class="${platformInfo.class}">
+                            <i class="${platformInfo.icon}"></i>
+                            ${platformInfo.name}
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                platformsHTML = '<div class="platform-badge"><i class="fas fa-question-circle"></i> Chưa chọn nền tảng</div>';
+            }
+            
+            // Render images
+            let imagesHTML = '';
+            if (post.images && Array.isArray(post.images) && post.images.length > 0) {
+                imagesHTML = post.images.map((img, index) => `
+                    <div class="post-image">
+                        <img src="${img}" alt="Hình ${index + 1} của bài viết">
+                    </div>
+                `).join('');
+            } else {
+                imagesHTML = '<p style="color: #666; font-style: italic;">Không có hình ảnh</p>';
+            }
+            
+            // Render hashtags
+            let hashtagsHTML = '';
+            if (post.hashtags && Array.isArray(post.hashtags) && post.hashtags.length > 0) {
+                hashtagsHTML = post.hashtags.map(tag => `
+                    <span class="hashtag">${tag.startsWith('#') ? tag : '#' + tag}</span>
+                `).join('');
+            } else {
+                hashtagsHTML = '<span style="color: #666; font-style: italic;">Không có hashtag</span>';
+            }
+            
+            // Xác định action buttons dựa trên trạng thái và người xem
+            let actionButtonsHTML = '';
+            if (fromManager) {
+                // Manager view
+                if (post.status === 'pending') {
+                    actionButtonsHTML = `
+                        <button class="btn btn-success" onclick="approvePost(${post.id})">
+                            <i class="fas fa-check"></i>
+                            Phê duyệt
+                        </button>
+                        <button class="btn btn-danger" onclick="showRejectModal(${post.id}, '${post.title.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-times"></i>
+                            Từ chối
+                        </button>
+                    `;
+                } else if (post.status === 'approved') {
+                    actionButtonsHTML = `
+                        <span class="status-badge status-approved" style="padding: 12px 24px;">
+                            <i class="fas fa-check-circle"></i>
+                            Đã phê duyệt
+                        </span>
+                    `;
+                } else if (post.status === 'rejected') {
+                    actionButtonsHTML = `
+                        <span class="status-badge status-rejected" style="padding: 12px 24px;">
+                            <i class="fas fa-times-circle"></i>
+                            Đã từ chối
+                        </span>
+                    `;
+                }
+            } else {
+                // Staff view
+                if (post.status === 'pending' || post.status === 'rejected') {
+                    actionButtonsHTML = `
+                        <button class="btn btn-primary" onclick="editPost(${post.id})">
+                            <i class="fas fa-edit"></i>
+                            Chỉnh sửa
+                        </button>
+                    `;
+                }
+            }
+            
+            // Render feedback section nếu có
+            let feedbackHTML = '';
+            if (post.feedback && post.feedback.trim() !== '') {
+                feedbackHTML = `
+                    <div class="feedback-section">
+                        <div class="feedback-title">
+                            <i class="fas fa-comment-alt"></i>
+                            Phản hồi từ quản lý
+                        </div>
+                        <p style="color: #0369a1; line-height: 1.5;">${post.feedback}</p>
+                        ${post.feedbackDate ? `<div style="margin-top: 8px; font-size: 14px; color: #666;"><i class="fas fa-clock"></i> ${formatDate(post.feedbackDate)}</div>` : ''}
+                    </div>
+                `;
+            }
+            
+            // Update subtitle
+            document.getElementById('post-subtitle').textContent = `ID: ${post.id} • ${statusInfo.text}`;
+            
+            // Render toàn bộ post
+            container.innerHTML = `
+                <div class="post-detail-container">
+                    <div class="post-header">
+                        <h1 class="post-title">${post.title || 'Không có tiêu đề'}</h1>
+                        <div class="post-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-hashtag"></i>
+                                <span>${category}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Ngày viết: ${writeDate}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Ngày đăng: ${publishDate}</span>
+                            </div>
+                            <div class="${statusInfo.class}">
+                                <i class="fas fa-circle"></i>
+                                ${statusInfo.text}
+                            </div>
+                        </div>
+                        
+                        <div class="platforms-container">
+                            ${platformsHTML}
+                        </div>
+                    </div>
+                    
+                    <div class="post-content">
+                        <h3 style="margin-bottom: 16px; color: var(--primary-dark);">Nội dung bài viết:</h3>
+                        <div style="white-space: pre-wrap; line-height: 1.6;">
+                            ${post.content || post.description || 'Không có nội dung'}
+                        </div>
+                        
+                        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary-dark);">Hình ảnh:</h3>
+                        <div class="post-images">
+                            ${imagesHTML}
+                        </div>
+                        
+                        <h3 style="margin-top: 32px; margin-bottom: 16px; color: var(--primary-dark);">Hashtags:</h3>
+                        <div class="hashtags-container">
+                            ${hashtagsHTML}
+                        </div>
+                        
+                        ${feedbackHTML}
+                    </div>
+                    
+                    ${actionButtonsHTML ? `
+                    <div class="action-buttons">
+                        ${actionButtonsHTML}
+                        <button class="btn btn-secondary" onclick="goBack()">
+                            <i class="fas fa-arrow-left"></i>
+                            Quay lại danh sách
+                        </button>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            // Setup event listeners cho modal
+            setupModalListeners();
+        }
+
+        // Format date
+        function formatDate(dateInput) {
+            if (!dateInput) return 'Chưa có';
+            
+            try {
+                // Nếu là chuỗi dạng "dd/mm/yyyy"
+                if (typeof dateInput === 'string' && dateInput.includes('/')) {
+                    return dateInput;
+                }
+                
+                // Nếu là Date object hoặc ISO string
+                const date = new Date(dateInput);
+                if (isNaN(date.getTime())) {
+                    return dateInput;
+                }
+                
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            } catch (e) {
+                return dateInput;
+            }
+        }
+
+        // Show empty state
+        function showEmptyState(message) {
+            const container = document.getElementById('post-detail-content');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>${message}</h3>
+                    <button class="btn btn-primary" onclick="goBack()" style="margin-top: 16px;">
+                        <i class="fas fa-arrow-left"></i>
+                        Quay lại danh sách
+                    </button>
+                </div>
+            `;
+        }
+
+        // Edit post (for staff)
+        function editPost(postId) {
+            window.location.href = `chinhsuabaiviet.html?id=${postId}`;
+        }
+
+        // Approve post (for manager)
+        function approvePost(postId) {
+    if (confirm('Bạn có chắc muốn phê duyệt bài viết này?')) {
+        // Gọi hàm từ marketing.js
+        if (typeof window.approvePost === 'function') {
+            window.approvePost(postId);
+        } else if (typeof approvePostInStorage === 'function') {
+            approvePostInStorage(postId);
+        } else {
+            // Fallback: cập nhật trực tiếp
+            const post = getPostById(postId);
+            if (post) {
+                post.status = 'approved';
+                post.approvedAt = new Date().toISOString();
+                post.approvedBy = 'Manager';
+                
+                // Lưu vào storage
+                updatePostInStorage(post);
+                
+                // Hiển thị thông báo
+                alert('Bài viết đã được phê duyệt thành công!');
+                
+                // Chuyển hướng về trang danh sách
+                setTimeout(() => {
+                    goBack();
+                }, 1000);
+            }
+        }
+    }
+}
+
+     // Show reject modal
+     function showRejectModal(postId, title) {
+        console.log('🔄 Hiển thị modal từ chối cho bài viết:', postId, title);
+        document.getElementById('post-title-to-reject').textContent = title;
+        document.getElementById('reject-modal').style.display = 'flex';
+        window.currentRejectPostId = postId;
+    }
+
+    // Setup modal listeners
+    function setupModalListeners() {
+        console.log('🔄 Khởi tạo modal listeners');
+        
+        const rejectModal = document.getElementById('reject-modal');
+        const cancelRejectBtn = document.getElementById('cancel-reject');
+        const confirmRejectBtn = document.getElementById('confirm-reject');
+        
+        if (cancelRejectBtn) {
+            console.log('✅ Tìm thấy nút hủy');
+            cancelRejectBtn.onclick = function() {
+                console.log('❌ Hủy từ chối');
+                rejectModal.style.display = 'none';
+                document.getElementById('reject-reason').value = '';
+                window.currentRejectPostId = null;
+            };
+        }
+        
+        if (confirmRejectBtn) {
+            console.log('✅ Tìm thấy nút xác nhận');
+            confirmRejectBtn.onclick = function() {
+                const reason = document.getElementById('reject-reason').value.trim();
+                if (!reason) {
+                    alert('Vui lòng nhập lý do từ chối');
+                    return;
+                }
+                
+                console.log('🔄 Xác nhận từ chối bài viết:', window.currentRejectPostId, 'Lý do:', reason);
+                
+                // 1. Thử dùng hàm từ marketing.js
+                if (typeof window.rejectPostInStorage === 'function') {
+                    console.log('✅ Gọi hàm rejectPostInStorage từ marketing.js');
+                    const success = window.rejectPostInStorage(window.currentRejectPostId, reason);
+                    handleRejectResult(success, reason);
+                } 
+                // 2. Thử dùng hàm từ manager.js
+                else if (typeof window.rejectPost === 'function') {
+                    console.log('✅ Gọi hàm rejectPost từ manager.js');
+                    const success = window.rejectPost(window.currentRejectPostId, reason);
+                    handleRejectResult(success, reason);
+                }
+                // 3. Fallback
+                else {
+                    console.warn('❌ Không tìm thấy hàm từ chối, sử dụng fallback');
+                    const success = rejectPostFallback(window.currentRejectPostId, reason);
+                    handleRejectResult(success, reason);
+                }
+            };
+        }
+        
+        // Close modal when clicking outside
+        if (rejectModal) {
+            rejectModal.onclick = function(e) {
+                if (e.target === rejectModal) {
+                    rejectModal.style.display = 'none';
+                    document.getElementById('reject-reason').value = '';
+                    window.currentRejectPostId = null;
+                }
+            };
+        }
+    }
+
+    // Xử lý kết quả từ chối
+    function handleRejectResult(success, reason) {
+        if (success) {
+            // Đóng modal
+            document.getElementById('reject-modal').style.display = 'none';
+            document.getElementById('reject-reason').value = '';
+            
+            // Hiển thị thông báo
+            alert(`Bài viết đã bị từ chối với lý do: ${reason}`);
+            
+            // Cập nhật số lượng pending
+            if (typeof window.updateSidebarPendingCount === 'function') {
+                setTimeout(() => {
+                    window.updateSidebarPendingCount();
+                }, 300);
+            }
+            
+            // Chuyển hướng về trang danh sách
+            setTimeout(() => {
+                window.location.href = 'dsbaivietchoduyet.html?refreshed=true';
+            }, 800);
+        } else {
+            alert('Đã xảy ra lỗi khi từ chối bài viết!');
+        }
+    }
+
+    // Hàm fallback từ chối
+    function rejectPostFallback(postId, reason) {
+        try {
+            console.log('🔄 Sử dụng fallback từ chối cho bài viết:', postId);
+            
+            // Lấy bài viết từ localStorage
+            const posts = JSON.parse(localStorage.getItem('tiny_tags_posts') || '[]');
+            const postIndex = posts.findIndex(p => p.id == postId);
+            
+            if (postIndex === -1) {
+                alert('Không tìm thấy bài viết!');
+                return false;
+            }
+            
+            // Cập nhật trạng thái
+            posts[postIndex].status = 'rejected';
+            posts[postIndex].rejectedAt = new Date().toISOString();
+            posts[postIndex].rejectedBy = 'Manager';
+            posts[postIndex].rejectionReason = reason;
+            posts[postIndex].feedback = reason;
+            posts[postIndex].feedbackDate = new Date().toISOString();
+            
+            // Lưu lại vào localStorage
+            localStorage.setItem('tiny_tags_posts', JSON.stringify(posts));
+            console.log('✅ Đã từ chối bài viết:', postId);
+            
+            // Gửi storage event để các trang khác biết
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: 'tiny_tags_posts',
+                newValue: JSON.stringify(posts)
+            }));
+            
+            return true;
+        } catch (error) {
+            console.error('Lỗi khi từ chối bài viết:', error);
+            alert('Đã xảy ra lỗi khi từ chối bài viết');
+            return false;
+        }
+    }
+
+    // Load post detail và khởi tạo modal
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('📄 DOM đã sẵn sàng');
+        loadPostDetail();
+        setupModalListeners();
+    });
+    </script>
+    
+    <script src="marketing.js"></script>
+</body>
+</html>

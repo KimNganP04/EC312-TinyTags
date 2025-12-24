@@ -1,0 +1,722 @@
+/* Custom styles for comparison page */
+.comparison-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.comparison-title-section h1 {
+    color: var(--sale-secondary);
+    margin-bottom: 5px;
+}
+
+.comparison-subtitle {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Report Header - Giống code cũ */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.report-title-section h1 {
+    color: var(--sale-secondary);
+    margin-bottom: 5px;
+}
+
+.report-subtitle {
+    color: #666;
+    font-size: 14px;
+}
+
+.report-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-container {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    min-height: 400px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.chart-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sale-secondary);
+    margin-bottom: 5px;
+}
+
+.chart-wrapper {
+    height: 300px;
+    position: relative;
+    margin: 15px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--sale-primary);
+}
+
+.stat-card:nth-child(2) {
+    border-left-color: #00b894;
+}
+
+.stat-card:nth-child(3) {
+    border-left-color: #0984e3;
+}
+
+.stat-card:nth-child(4) {
+    border-left-color: #fdcb6e;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.stat-change {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-change.positive {
+    color: #00b894;
+}
+
+.stat-change.negative {
+    color: #d63031;
+}
+
+.table-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sale-secondary);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sale-border);
+}
+
+.product-rank {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: var(--sale-primary);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* Modal improvements - Giống code cũ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: modalSlideIn 0.3s ease-out;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--sale-border);
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    color: var(--sale-secondary);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: var(--sale-primary);
+}
+
+.modal-body {
+    margin-bottom: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding-top: 15px;
+    border-top: 1px solid var(--sale-border);
+    margin-top: 20px;
+}
+
+.btn-modal {
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.btn-modal.cancel {
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid var(--sale-border);
+}
+
+.btn-modal.cancel:hover {
+    background: #e9ecef;
+}
+
+.btn-modal.confirm {
+    background: var(--sale-primary);
+    color: white;
+}
+
+.btn-modal.confirm:hover {
+    background: #e03162;
+    transform: translateY(-1px);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Share modal improvements - Giống code cũ */
+.share-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.share-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid var(--sale-border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.share-option:hover {
+    border-color: var(--sale-primary);
+    background: rgba(243, 55, 109, 0.05);
+}
+
+.share-option.selected {
+    border-color: var(--sale-primary);
+    background: rgba(243, 55, 109, 0.1);
+}
+
+.share-option input[type="checkbox"] {
+    margin-right: 15px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--sale-primary);
+}
+
+.share-option label {
+    flex: 1;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+}
+
+.share-option .option-desc {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+/* Toast notification - Giống code cũ */
+.toast {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1001;
+    transform: translateX(150%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 350px;
+    border-left: 4px solid #00b894;
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast.success {
+    border-left-color: #00b894;
+}
+
+.toast.error {
+    border-left-color: #d63031;
+}
+
+.toast.warning {
+    border-left-color: #fdcb6e;
+}
+
+.toast-icon {
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.toast.success .toast-icon {
+    color: #00b894;
+    background: rgba(0, 184, 148, 0.1);
+}
+
+.toast.error .toast-icon {
+    color: #d63031;
+    background: rgba(214, 48, 49, 0.1);
+}
+
+.toast.warning .toast-icon {
+    color: #fdcb6e;
+    background: rgba(253, 203, 110, 0.1);
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-content h4 {
+    margin: 0 0 3px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.toast-content p {
+    margin: 0;
+    font-size: 13px;
+    color: #636e72;
+    line-height: 1.4;
+}
+
+/* Charts layout - Giống code cũ */
+.charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+/* Chart text improvements */
+.chart-text {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* KPI Grid */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Phân tích chi tiết */
+.detailed-analysis {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.analysis-section {
+    margin-bottom: 30px;
+}
+
+.analysis-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sale-secondary);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+.comparison-table th {
+    background: #f8f9fa;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid var(--sale-border);
+}
+
+.comparison-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.comparison-table tr:hover {
+    background: #f8f9fa;
+}
+
+.comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+.insight-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.insight-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid;
+}
+
+.insight-card.strength {
+    border-top-color: #00b894;
+}
+
+.insight-card.improvement {
+    border-top-color: #fdcb6e;
+}
+
+.insight-card.recommendation {
+    border-top-color: #0984e3;
+}
+
+.insight-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.insight-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.insight-card.strength .insight-icon {
+    background: rgba(0, 184, 148, 0.1);
+    color: #00b894;
+}
+
+.insight-card.improvement .insight-icon {
+    background: rgba(253, 203, 110, 0.1);
+    color: #fdcb6e;
+}
+
+.insight-card.recommendation .insight-icon {
+    background: rgba(9, 132, 227, 0.1);
+    color: #0984e3;
+}
+
+.insight-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+
+.insight-content {
+    color: #666;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.insight-content ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.insight-content li {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+/* Product comparison */
+.product-comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.product-comparison-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border: 1px solid #eee;
+    transition: all 0.3s;
+}
+
+.product-comparison-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-name {
+    font-weight: 600;
+    margin: 10px 0 5px;
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.product-sales {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sale-secondary);
+    margin-bottom: 5px;
+}
+
+.product-change {
+    font-size: 12px;
+}
+
+.product-change.positive {
+    color: #00b894;
+}
+
+.product-change.negative {
+    color: #d63031;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+/* Chart text wrapper */
+.chart-text-wrapper {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Improve chart legend */
+.chart-legend {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* Print styles */
+@media print {
+    .sidebar, .mobile-toggle, .sale-nav, .report-actions, .modal-overlay {
+        display: none !important;
+    }
+    
+    .sale-main {
+        margin-left: 0 !important;
+        padding: 20px !important;
+    }
+    
+    .chart-container, .table-section, .stat-card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+    }
+    
+    canvas {
+        max-width: 100% !important;
+    }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .insight-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .comparison-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .insight-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-sale, .btn-sale-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        max-height: 90vh;
+    }
+}

@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Bài Viết - Tiny Tags</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="marketing.css">
+    
+    <!-- Additional CSS specific for edit post page -->
+    <style>
+        /* Custom styles */
+        :root {
+            --primary-red: #F3376D;
+            --primary-dark: #90324D;
+            --primary-beige: #FAEED6;
+            --primary-yellow: #FADE98;
+            --primary-pink-light: #FCE4E5;
+            --primary-pink: #FF95A6;
+        }
+        
+        .editor-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .editor-toolbar {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .editor-content {
+            min-height: 300px;
+            padding: 20px;
+            outline: none;
+        }
+        
+        .file-upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--primary-red);
+            background: var(--primary-pink-light);
+        }
+        
+        .hashtag-input-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            padding: 12px;
+        }
+        
+        .hashtag-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 40px;
+        }
+        
+        .hashtag {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .hashtag-remove {
+            margin-left: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary-custom {
+            background-color: white;
+            color: var(--primary-dark);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 2px solid var(--primary-dark);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn-secondary-custom:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+        
+        .platform-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f3f4f6;
+            border-radius: 20px;
+            margin: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .platform-tag:hover {
+            background: #e5e7eb;
+        }
+        
+        .platform-tag.active {
+            background: var(--primary-red) !important;
+            color: white !important;
+            border-color: var(--primary-red);
+        }
+        
+        .image-preview {
+            max-width: 200px;
+            border-radius: 8px;
+            margin: 8px;
+        }
+        
+        .feedback-section {
+            background: #f0f9ff;
+            border-left: 4px solid #0369a1;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+        
+        .feedback-content {
+            color: #0369a1;
+            font-style: italic;
+        }
+        
+        .toolbar-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+        }
+        
+        .toolbar-btn:hover {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Main Container -->
+    <div class="min-h-screen flex" style="width: 100%;">
+        
+        <!-- Sidebar Container (will be loaded by JS) -->
+        <div id="sidebar-container">
+            <!-- Sidebar will be loaded here -->
+        </div>
+        
+        <div class="main-content">
+            <!-- MAIN CONTENT -->
+            <div class="flex-1">
+                <!-- Header -->
+                <header class="bg-white border-b px-8 py-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-dark" id="page-title">Chỉnh Sửa Bài Viết</h2>
+                            <p class="text-gray-600" id="page-subtitle">ID: <span id="post-id-display">Đang tải...</span></p>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <!-- User info -->
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
+                                    MS
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Marketing Staff</p>
+                                    <p class="text-xs text-gray-500">Nhân viên nội dung</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                
+                <!-- Main Content -->
+                <main class="p-8">
+                    <!-- Action Buttons -->
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="flex space-x-3">
+                            <button onclick="saveChanges()" class="btn-primary-custom">
+                                <i class="fas fa-save mr-2"></i>Lưu thay đổi
+                            </button>
+                            <button onclick="goBack()" class="btn-secondary-custom">
+                                <i class="fas fa-arrow-left mr-2"></i>Quay lại danh sách
+                            </button>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Đang chỉnh sửa bài viết
+                        </div>
+                    </div>
+                    
+                    <!-- Feedback Section (from manager) -->
+                    <div id="feedback-section" class="feedback-section hidden">
+                        <h3 class="font-medium text-blue-700 mb-2">
+                            <i class="fas fa-comment-alt mr-2"></i>Phản hồi từ quản lý
+                        </h3>
+                        <div id="feedback-content" class="feedback-content">
+                            <!-- Feedback sẽ được load từ dữ liệu -->
+                        </div>
+                        <div class="mt-2 text-sm text-blue-600">
+                            <i class="fas fa-clock mr-1"></i>
+                            <span id="feedback-date"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Area -->
+                    <div class="space-y-6">
+                        <!-- Title Input -->
+                        <div class="editor-container">
+                            <div class="p-6">
+                                <label class="block text-sm font-medium text-dark mb-2">
+                                    <i class="fas fa-heading mr-2"></i>Tiêu đề bài viết <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="postTitle" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                       placeholder="Nhập tiêu đề hấp dẫn...">
+                            </div>
+                        </div>
+                        
+                        <!-- Content Editor -->
+                        <div class="editor-container">
+                            <div class="editor-toolbar">
+                                <div class="toolbar-btn" title="In đậm" onclick="formatText('bold')">
+                                    <i class="fas fa-bold"></i>
+                                </div>
+                                <div class="toolbar-btn" title="In nghiêng" onclick="formatText('italic')">
+                                    <i class="fas fa-italic"></i>
+                                </div>
+                                <div class="toolbar-btn" title="Gạch chân" onclick="formatText('underline')">
+                                    <i class="fas fa-underline"></i>
+                                </div>
+                                <div class="toolbar-btn" title="Danh sách không thứ tự" onclick="formatText('insertUnorderedList')">
+                                    <i class="fas fa-list-ul"></i>
+                                </div>
+                                <div class="toolbar-btn" title="Danh sách có thứ tự" onclick="formatText('insertOrderedList')">
+                                    <i class="fas fa-list-ol"></i>
+                                </div>
+                                <div class="toolbar-btn" title="Liên kết" onclick="insertLink()">
+                                    <i class="fas fa-link"></i>
+                                </div>
+                                <div class="toolbar-btn" title="Thêm ảnh" onclick="insertImage()">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="toolbar-btn" title="Emoji" onclick="insertEmoji()">
+                                    <i class="fas fa-smile"></i>
+                                </div>
+                                <div class="flex-1"></div>
+                                <div class="toolbar-btn" title="Xóa định dạng" onclick="formatText('removeFormat')">
+                                    <i class="fas fa-eraser"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <label class="block text-sm font-medium text-dark mb-2">
+                                    <i class="fas fa-align-left mr-2"></i>Nội dung bài viết <span class="text-red-500">*</span>
+                                </label>
+                                <div class="editor-content border border-gray-300 rounded-lg" 
+                                     contenteditable="true" 
+                                     id="postContent"
+                                     placeholder="Nhập nội dung bài viết của bạn ở đây..."></div>
+                                <div class="mt-2 text-xs text-gray-500 flex justify-between">
+                                    <span id="charCount">0 ký tự</span>
+                                    <span><i class="fas fa-lightbulb mr-1"></i>Gợi ý: Sử dụng emoji để tăng tương tác</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category Selection -->
+                        <div class="editor-container">
+                            <div class="p-6">
+                                <label class="block text-sm font-medium text-dark mb-2">
+                                    <i class="fas fa-tag mr-2"></i>Danh mục
+                                </label>
+                                <select id="postCategory" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                    <option value="moc-khoa">Móc khóa charm</option>
+                                    <option value="day-deo">Dây đeo điện thoại charm</option>
+                                    <option value="set-diy">Set DIY charm</option>
+                                    <option value="vong-tay">Vòng tay charm</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Hashtags -->
+                        <div class="editor-container">
+                            <div class="p-6">
+                                <label class="block text-sm font-medium text-dark mb-2">
+                                    <i class="fas fa-hashtag mr-2"></i>Hashtags
+                                </label>
+                                <div class="hashtag-input-container">
+                                    <div id="hashtagsContainer" class="hashtag-input mb-3">
+                                        <!-- Hashtags sẽ được thêm vào đây -->
+                                    </div>
+                                    <div class="flex">
+                                        <input type="text" 
+                                               id="hashtagInput" 
+                                               class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                               placeholder="Thêm hashtag (nhấn Enter hoặc dấu phẩy)">
+                                        <button onclick="addHashtag()" class="bg-gray-100 px-4 py-2 rounded-r-lg border border-l-0 border-gray-300 hover:bg-gray-200">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="mt-2 text-xs text-gray-500">
+                                        <i class="fas fa-info-circle mr-1"></i>Gợi ý: #tinytags #phukiencharm #charmdethuong
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Upload -->
+                        <div class="editor-container">
+                            <div class="p-6">
+                                <label class="block text-sm font-medium text-dark mb-2">
+                                    <i class="fas fa-images mr-2"></i>Hình ảnh bài viết
+                                </label>
+                                <div class="file-upload-area" onclick="document.getElementById('imageUpload').click()">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                    <p class="text-gray-600 mb-2">Kéo thả ảnh vào đây hoặc click để chọn</p>
+                                    <p class="text-sm text-gray-500">Hỗ trợ: JPG, PNG, GIF (tối đa 5MB)</p>
+                                </div>
+                                <input type="file" 
+                                       id="imageUpload" 
+                                       class="hidden" 
+                                       accept="image/*" 
+                                       multiple
+                                       onchange="handleImageUpload(event)">
+                                
+                                <!-- Image Preview -->
+                                <div id="imagePreview" class="mt-4 flex flex-wrap">
+                                    <!-- Hình ảnh sẽ được hiển thị ở đây -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Platform Selection -->
+                        <div class="editor-container">
+                            <div class="p-6">
+                                <label class="block text-sm font-medium text-dark mb-2">
+                                    <i class="fas fa-share-alt mr-2"></i>Nền tảng đăng bài
+                                </label>
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="platform-tag cursor-pointer" data-platform="facebook_page" onclick="togglePlatform(this)">
+                                        <i class="fab fa-facebook mr-2"></i>Trang Facebook
+                                    </div>
+                                    
+                                    <div class="platform-tag cursor-pointer" data-platform="facebook_group" onclick="togglePlatform(this)">
+                                        <i class="fab fa-facebook mr-2"></i>Nhóm Facebook
+                                    </div>
+                                    
+                                    <div class="platform-tag cursor-pointer" data-platform="tiktok" onclick="togglePlatform(this)">
+                                        <i class="fab fa-tiktok mr-2"></i>TikTok
+                                    </div>
+                                </div>
+                                <input type="hidden" id="selectedPlatforms" value="">
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Có thể chọn nhiều nền tảng để đăng bài
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Status Selection -->
+                        <div class="editor-container">
+                            <div class="p-6">
+                                <label class="block text-sm font-medium text-dark mb-2">
+                                    <i class="fas fa-flag mr-2"></i>Trạng thái bài viết
+                                </label>
+                                <select id="postStatus" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                    <option value="draft">Bản nháp</option>
+                                    <option value="pending">Chờ duyệt</option>
+                                    <option value="approved">Đã duyệt</option>
+                                    <option value="published">Đã đăng</option>
+                                </select>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Chọn "Chờ duyệt" để gửi bài viết cho quản lý phê duyệt
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Save Buttons -->
+                        <div class="flex justify-end space-x-4">
+                            <button onclick="saveAsDraft()" class="btn-secondary-custom">
+                                <i class="fas fa-file-alt mr-2"></i>Lưu nháp
+                            </button>
+                            <button onclick="submitForReview()" class="btn-primary-custom bg-blue-600 hover:bg-blue-700">
+                                <i class="fas fa-paper-plane mr-2"></i>Gửi duyệt
+                            </button>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="marketing.js"></script>
+    
+    <!-- JavaScript for Edit Post Page -->
+    <script>
+        // Global variables
+        let currentPostId = null;
+        let originalPost = null;
+        let hashtags = [];
+        let images = [];
+        let selectedPlatforms = [];
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get post ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            currentPostId = urlParams.get('id');
+            
+            if (!currentPostId) {
+                alert('Không tìm thấy bài viết!');
+                window.location.href = 'danhsachbaiviet.html';
+                return;
+            }
+            
+            // Load post data
+            loadPostData(currentPostId);
+            
+            // Setup editor and event listeners
+            setupEditor();
+            setupEventListeners();
+        });
+        
+        // Load post data
+        function loadPostData(postId) {
+            const post = getPostById(postId);
+            
+            if (!post) {
+                alert('Bài viết không tồn tại!');
+                window.location.href = 'danhsachbaiviet.html';
+                return;
+            }
+            
+            originalPost = post;
+            
+            // Update UI with post data
+            updateUIWithPostData(post);
+            
+            // Load feedback if exists
+            if (post.feedback) {
+                document.getElementById('feedback-section').classList.remove('hidden');
+                document.getElementById('feedback-content').textContent = post.feedback;
+                if (post.feedbackDate) {
+                    document.getElementById('feedback-date').textContent = `Ngày: ${formatDate(post.feedbackDate)}`;
+                }
+            }
+            
+            console.log('✅ Đã load bài viết thành công:', post);
+        }
+        
+        // Update UI with post data - HOÀN CHỈNH
+        function updateUIWithPostData(post) {
+            console.log('🔄 Đang load dữ liệu bài viết:', {
+                id: post.id,
+                title: post.title,
+                hashtags: post.hashtags,
+                images: post.images,
+                platforms: post.platforms,
+                rawPost: post
+            });
+            
+            // Basic info
+            document.getElementById('post-id-display').textContent = post.id;
+            document.getElementById('page-title').textContent = `Chỉnh Sửa: ${post.title || 'Bài viết không có tiêu đề'}`;
+            document.getElementById('postTitle').value = post.title || '';
+            
+            // Content
+            const contentElement = document.getElementById('postContent');
+            if (post.content && post.content.trim() !== '') {
+                contentElement.innerHTML = post.content;
+            } else if (post.description) {
+                contentElement.innerHTML = `<p>${post.description}</p>`;
+            } else {
+                contentElement.innerHTML = '<p>Nhập nội dung bài viết ở đây...</p>';
+            }
+            
+            // Category
+            if (post.category) {
+                document.getElementById('postCategory').value = post.category;
+            }
+            
+            // Status
+            if (post.status) {
+                document.getElementById('postStatus').value = post.status;
+            }
+            
+            // Hashtags - XỬ LÝ HOÀN CHỈNH
+            hashtags = [];
+            if (post.hashtags && Array.isArray(post.hashtags)) {
+                hashtags = [...post.hashtags];
+            } else if (post.tags && Array.isArray(post.tags)) {
+                hashtags = [...post.tags];
+            }
+            updateHashtagsDisplay();
+            
+            // Images - XỬ LÝ HOÀN CHỈNH
+            images = [];
+            if (post.images && Array.isArray(post.images)) {
+                post.images.forEach((img, index) => {
+                    if (typeof img === 'string' && img.trim() !== '') {
+                        images.push({
+                            name: `Hình ${index + 1}`,
+                            url: img,
+                            file: null
+                        });
+                    } else if (typeof img === 'object' && img.url) {
+                        images.push({
+                            name: img.name || `Hình ${index + 1}`,
+                            url: img.url,
+                            file: null
+                        });
+                    }
+                });
+            } else if (post.imageUrl && typeof post.imageUrl === 'string' && post.imageUrl.trim() !== '') {
+                images.push({
+                    name: 'Hình chính',
+                    url: post.imageUrl,
+                    file: null
+                });
+            } else if (post.photo && typeof post.photo === 'string' && post.photo.trim() !== '') {
+                images.push({
+                    name: 'Hình ảnh',
+                    url: post.photo,
+                    file: null
+                });
+            }
+            updateImagesDisplay();
+            
+            // Platforms - XỬ LÝ HOÀN CHỈNH
+            selectedPlatforms = [];
+            if (post.platforms && Array.isArray(post.platforms)) {
+                selectedPlatforms = [...post.platforms];
+                
+                // Xử lý đặc biệt: Nếu có 'facebook' generic, chuyển thành cả 2 loại
+                if (selectedPlatforms.includes('facebook')) {
+                    if (!selectedPlatforms.includes('facebook_page')) {
+                        selectedPlatforms.push('facebook_page');
+                    }
+                    if (!selectedPlatforms.includes('facebook_group')) {
+                        selectedPlatforms.push('facebook_group');
+                    }
+                    // Loại bỏ 'facebook' generic
+                    selectedPlatforms = selectedPlatforms.filter(p => p !== 'facebook');
+                }
+                
+                // Đảm bảo không trùng
+                selectedPlatforms = [...new Set(selectedPlatforms)];
+            } else if (post.platform && typeof post.platform === 'string') {
+                // Xử lý đơn lẻ
+                if (post.platform === 'facebook') {
+                    selectedPlatforms = ['facebook_page', 'facebook_group'];
+                } else {
+                    selectedPlatforms = [post.platform];
+                }
+            } else {
+                // Mặc định chọn cả 2 Facebook
+                selectedPlatforms = ['facebook_page', 'facebook_group'];
+            }
+            updatePlatformsDisplay();
+            
+            // Feedback section (nếu có)
+            if (post.feedback && post.feedback.trim() !== '') {
+                document.getElementById('feedback-section').classList.remove('hidden');
+                document.getElementById('feedback-content').textContent = post.feedback;
+                if (post.feedbackDate) {
+                    document.getElementById('feedback-date').textContent = `Ngày: ${formatDate(post.feedbackDate)}`;
+                }
+            }
+            
+            // Update character count
+            updateCharCount();
+            
+            console.log('✅ Đã load xong:', { 
+                hashtags, 
+                images, 
+                selectedPlatforms 
+            });
+        }
+        
+        // Setup editor
+        function setupEditor() {
+            const editor = document.getElementById('postContent');
+            
+            editor.addEventListener('input', function() {
+                updateCharCount();
+            });
+            
+            // Hashtag input
+            const hashtagInput = document.getElementById('hashtagInput');
+            hashtagInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' || e.key === ',') {
+                    e.preventDefault();
+                    addHashtag();
+                }
+            });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Enter to add hashtag
+            document.getElementById('hashtagInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addHashtag();
+                }
+            });
+            
+            // Load existing images and platforms when page loads
+            window.addEventListener('load', function() {
+                if (originalPost) {
+                    console.log('Initial load with post:', originalPost);
+                }
+            });
+        }
+        
+        // Editor functions
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+        
+        function insertLink() {
+            const url = prompt('Nhập URL liên kết:', 'https://');
+            if (url) {
+                document.execCommand('createLink', false, url);
+            }
+        }
+        
+        function insertImage() {
+            const url = prompt('Nhập URL hình ảnh:', 'https://images.unsplash.com/photo-');
+            if (url) {
+                // Thêm vào images array
+                images.push({
+                    name: 'Hình từ URL',
+                    url: url,
+                    file: null
+                });
+                updateImagesDisplay();
+                
+                // Thêm vào editor
+                const img = document.createElement('img');
+                img.src = url;
+                img.style.maxWidth = '100%';
+                img.style.height = 'auto';
+                img.style.margin = '10px 0';
+                document.execCommand('insertHTML', false, img.outerHTML);
+            }
+        }
+        
+        function insertEmoji() {
+            const emojis = ['😀', '😍', '🎉', '🔥', '❤️', '✨', '👍', '👏', '💯', '🌟', '🛍️', '💎', '🎀', '🦄', '🌸'];
+            const emojiList = emojis.join(' ');
+            const emoji = prompt(`Nhập emoji hoặc chọn từ danh sách:\n${emojiList}\n\nGợi ý cho charm: 🎀 🦄 💎 🛍️`);
+            if (emoji) {
+                document.execCommand('insertText', false, emoji);
+            }
+        }
+        
+        // Update character count
+        function updateCharCount() {
+            const editor = document.getElementById('postContent');
+            const charLength = editor.textContent.length;
+            document.getElementById('charCount').textContent = `${charLength} ký tự`;
+        }
+        
+        // Hashtag functions
+        function addHashtag() {
+            const input = document.getElementById('hashtagInput');
+            let tag = input.value.trim();
+            
+            if (!tag) return;
+            
+            // Remove # if user typed it
+            if (tag.startsWith('#')) {
+                tag = tag.substring(1);
+            }
+            
+            // Remove spaces and special characters
+            tag = tag.replace(/\s+/g, '').toLowerCase();
+            
+            if (tag && !hashtags.includes(tag) && tag.length > 0) {
+                hashtags.push(tag);
+                updateHashtagsDisplay();
+                input.value = '';
+            }
+        }
+        
+        function removeHashtag(tag) {
+            hashtags = hashtags.filter(t => t !== tag);
+            updateHashtagsDisplay();
+        }
+        
+        function updateHashtagsDisplay() {
+            const container = document.getElementById('hashtagsContainer');
+            container.innerHTML = '';
+            
+            if (hashtags.length === 0) {
+                container.innerHTML = '<div class="text-gray-400 italic text-sm">Chưa có hashtag nào</div>';
+                return;
+            }
+            
+            hashtags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'hashtag';
+                tagElement.innerHTML = `
+                    #${tag}
+                    <span class="hashtag-remove" onclick="removeHashtag('${tag}')">
+                        <i class="fas fa-times"></i>
+                    </span>
+                `;
+                container.appendChild(tagElement);
+            });
+        }
+        
+        // Image functions
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`File ${file.name} vượt quá 5MB`);
+                    continue;
+                }
+                
+                // Check file type
+                if (!file.type.startsWith('image/')) {
+                    alert(`File ${file.name} không phải là hình ảnh`);
+                    continue;
+                }
+                
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    images.push({
+                        name: file.name,
+                        url: e.target.result,
+                        file: file
+                    });
+                    updateImagesDisplay();
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // Reset input
+            event.target.value = '';
+        }
+        
+        function removeImage(index) {
+            if (confirm('Bạn có chắc muốn xóa hình ảnh này?')) {
+                images.splice(index, 1);
+                updateImagesDisplay();
+            }
+        }
+        
+        function updateImagesDisplay() {
+            const container = document.getElementById('imagePreview');
+            container.innerHTML = '';
+            
+            if (images.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 italic">Chưa có hình ảnh nào</p>';
+                return;
+            }
+            
+            images.forEach((image, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'relative inline-block m-2';
+                
+                // Hiển thị hình ảnh
+                const imgElement = document.createElement('img');
+                imgElement.src = image.url;
+                imgElement.alt = image.name;
+                imgElement.className = 'image-preview';
+                
+                // Nút xóa
+                const deleteButton = document.createElement('div');
+                deleteButton.className = 'absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center cursor-pointer transform translate-x-1 -translate-y-1';
+                deleteButton.innerHTML = '<i class="fas fa-times text-xs"></i>';
+                deleteButton.onclick = () => removeImage(index);
+                
+                // Tên file
+                const fileName = document.createElement('p');
+                fileName.className = 'text-xs text-gray-600 text-center mt-1';
+                fileName.textContent = image.name.length > 15 ? image.name.substring(0, 15) + '...' : image.name;
+                
+                imgContainer.appendChild(imgElement);
+                imgContainer.appendChild(deleteButton);
+                imgContainer.appendChild(fileName);
+                
+                container.appendChild(imgContainer);
+            });
+        }
+        
+        // Platform functions
+        function togglePlatform(element) {
+            const platform = element.getAttribute('data-platform');
+            
+            if (selectedPlatforms.includes(platform)) {
+                selectedPlatforms = selectedPlatforms.filter(p => p !== platform);
+                element.classList.remove('active');
+                element.style.backgroundColor = '#f3f4f6';
+                element.style.color = '#374151';
+            } else {
+                selectedPlatforms.push(platform);
+                element.classList.add('active');
+                element.style.backgroundColor = '#F3376D';
+                element.style.color = 'white';
+            }
+            
+            document.getElementById('selectedPlatforms').value = selectedPlatforms.join(',');
+            console.log('Selected platforms:', selectedPlatforms);
+        }
+        
+        function updatePlatformsDisplay() {
+            // Reset all platforms
+            document.querySelectorAll('.platform-tag').forEach(tag => {
+                tag.classList.remove('active');
+                tag.style.backgroundColor = '#f3f4f6';
+                tag.style.color = '#374151';
+            });
+            
+            // Activate selected platforms
+            selectedPlatforms.forEach(platform => {
+                const tag = document.querySelector(`.platform-tag[data-platform="${platform}"]`);
+                if (tag) {
+                    tag.classList.add('active');
+                    tag.style.backgroundColor = '#F3376D';
+                    tag.style.color = 'white';
+                }
+            });
+            
+            document.getElementById('selectedPlatforms').value = selectedPlatforms.join(',');
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    return dateString;
+                }
+                return date.toLocaleDateString('vi-VN', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+            } catch (e) {
+                return dateString;
+            }
+        }
+        
+        // Save functions
+        function saveChanges(status = 'draft') {
+            const postData = collectFormData();
+            
+            if (!validateForm(postData)) {
+                return;
+            }
+            
+            postData.status = status;
+            postData.updatedAt = new Date().toISOString();
+            
+            // Thêm ngày publish nếu là published
+            if (status === 'published' && !postData.publishDate) {
+                postData.publishDate = new Date().toLocaleDateString('vi-VN');
+            }
+            
+            console.log('💾 Saving post data:', postData);
+            
+            // Update post in storage
+            updatePostInStorage(postData);
+            
+            // Show success message
+            let message = '';
+            if (status === 'draft') {
+                message = 'Bài viết đã được lưu nháp thành công!';
+            } else if (status === 'pending') {
+                message = 'Bài viết đã được gửi duyệt thành công!';
+            } else {
+                message = 'Bài viết đã được cập nhật thành công!';
+            }
+            
+            alert(message);
+            
+            // Redirect back to posts list
+            setTimeout(() => {
+                window.location.href = 'danhsachbaiviet.html?fromCreate=true&status=' + status;
+            }, 500);
+        }
+        
+        function saveAsDraft() {
+            if (confirm('Lưu bài viết dưới dạng bản nháp?')) {
+                saveChanges('draft');
+            }
+        }
+        
+        function submitForReview() {
+            if (confirm('Gửi bài viết để quản lý phê duyệt?\n\nBài viết sẽ được chuyển sang trạng thái "Chờ duyệt" và gửi đến quản lý.')) {
+                saveChanges('pending');
+            }
+        }
+        
+        // Collect form data
+        function collectFormData() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').innerHTML;
+            const category = document.getElementById('postCategory').value;
+            const status = document.getElementById('postStatus').value;
+            
+            // Tạo mô tả ngắn từ nội dung
+            const plainText = content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            const shortDescription = plainText.length > 150 ? plainText.substring(0, 147) + '...' : plainText;
+            
+            // Chỉ lấy URL từ images
+            const imageUrls = images.map(img => img.url);
+            
+            // Xử lý platforms để lưu
+            let platformsToSave = [...selectedPlatforms];
+            
+            // Nếu có cả 2 loại Facebook, thêm 'facebook' generic
+            const hasFacebookPage = platformsToSave.includes('facebook_page');
+            const hasFacebookGroup = platformsToSave.includes('facebook_group');
+            
+            if (hasFacebookPage || hasFacebookGroup) {
+                platformsToSave.push('facebook');
+            }
+            
+            // Đảm bảo không trùng
+            platformsToSave = [...new Set(platformsToSave)];
+            
+            return {
+                id: parseInt(currentPostId),
+                title: title,
+                content: content,
+                description: shortDescription || 'Bài viết về phụ kiện charm',
+                category: category,
+                status: status,
+                hashtags: hashtags,
+                images: imageUrls,
+                platforms: platformsToSave,
+                writeDate: originalPost.writeDate || new Date().toLocaleDateString('vi-VN'),
+                publishDate: status === 'published' ? (originalPost.publishDate || new Date().toLocaleDateString('vi-VN')) : '',
+                feedback: originalPost.feedback || '',
+                feedbackDate: originalPost.feedbackDate || '',
+                createdAt: originalPost.createdAt || new Date().toISOString()
+            };
+        }
+        
+        // Validate form
+        function validateForm(postData) {
+            if (!postData.title.trim()) {
+                alert('Vui lòng nhập tiêu đề bài viết');
+                document.getElementById('postTitle').focus();
+                return false;
+            }
+            
+            const plainContent = postData.content.replace(/<[^>]*>/g, '').trim();
+            if (!plainContent || plainContent === '') {
+                alert('Vui lòng nhập nội dung bài viết');
+                document.getElementById('postContent').focus();
+                return false;
+            }
+            
+            // Kiểm tra hashtags (có thể không có)
+            if (hashtags.length === 0) {
+                if (!confirm('Bài viết chưa có hashtag nào. Bạn có muốn tiếp tục không?')) {
+                    document.getElementById('hashtagInput').focus();
+                    return false;
+                }
+            }
+            
+            // Kiểm tra platforms (tối thiểu 1 nền tảng)
+            if (selectedPlatforms.length === 0) {
+                alert('Vui lòng chọn ít nhất một nền tảng đăng bài');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Go back
+        function goBack() {
+            if (confirm('Bạn có chắc muốn quay lại? Các thay đổi chưa lưu sẽ bị mất.')) {
+                window.location.href = 'danhsachbaiviet.html';
+            }
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+                event.preventDefault();
+                saveAsDraft();
+            }
+        });
+    </script>
+</body>
+</html>

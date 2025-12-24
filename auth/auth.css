@@ -1,0 +1,333 @@
+/* ===== RESET & CƠ BẢN ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.auth-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+}
+
+/* ===== KHUNG CHÍNH (2 CỘT) ===== */
+.auth-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    max-height: 755px;
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(144, 50, 77, 0.15);
+}
+
+/* CỘT TRÁI: FORM */
+.auth-form-wrapper {
+    flex: 1;
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 500px;
+}
+
+.auth-header {
+    margin-bottom: 40px;
+}
+
+.auth-header h1 {
+    font-size: 2.5rem;
+    color: #90324D;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: #636e72;
+    font-size: 1.1rem;
+}
+
+/* CỘT PHẢI: LOGO FULL MÀN HÌNH */
+.auth-logo-wrapper {
+    flex: 1;
+    background-color: #FAEED6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* KHÔNG CÓ PADDING */
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+/* XÓA decor line nếu không cần */
+.auth-logo-wrapper::before {
+    display: none;
+}
+
+.logo-full-container {
+    width: 100%; /* CHIẾM 100% CHIỀU RỘNG */
+    height: 100%; /* CHIẾM 100% CHIỀU CAO */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* KHÔNG CÓ PADDING */
+    margin: 0;
+}
+
+.logo-full-image {
+    width: 100%; /* CHIẾM TOÀN BỘ CHIỀU RỘNG */
+    height: 100%; /* CHIẾM TOÀN BỘ CHIỀU CAO */
+    object-fit: cover; /* GIỮ TỶ LỆ ẢNH */
+    object-position: center;
+    display: block;
+}
+
+/* ===== STYLE FORM ===== */
+.auth-form {
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-label {
+    display: block;
+    font-weight: 600;
+    color: #90324D;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forgot-link {
+    color: #F3376D;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.forgot-link:hover {
+    color: #90324D;
+    text-decoration: underline;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #FCE4E5;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #F3376D;
+    box-shadow: 0 0 0 3px rgba(243, 55, 109, 0.2);
+}
+
+/* ===== CHECKBOX ===== */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.checkbox-group input {
+    margin-right: 10px;
+    transform: scale(1.3);
+    cursor: pointer;
+    accent-color: #F3376D;
+}
+
+.checkbox-group label {
+    color: #636e72;
+    font-weight: normal;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ===== NÚT BẤM CHÍNH ===== */
+.btn {
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-block {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #F3376D;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #d62e5f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 55, 109, 0.3);
+}
+
+/* ===== NÚT GOOGLE ===== */
+.btn-google {
+    background-color: white;
+    color: #2d3436;
+    border: 2px solid #FF95A6;
+    padding: 16px 24px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.google-btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.google-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #F3376D;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-google:hover {
+    background-color: #FFF5F7;
+    border-color: #F3376D;
+    transform: translateY(-2px);
+}
+
+/* ===== THÔNG BÁO ===== */
+.notification {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #F3376D 0%, #FF95A6 100%);
+    color: white;
+    padding: 18px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    animation: slideInRight 0.5s ease;
+}
+
+.notification.hidden {
+    display: none;
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+}
+
+.notification-text {
+    font-weight: 600;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* ===== STYLE CHO TRANG QUÊN MẬT KHẨU ===== */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #F3376D;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.back-link:hover {
+    color: #90324D;
+    text-decoration: underline;
+}
+
+.auth-footer {
+    margin-top: 25px;
+    text-align: center;
+    color: #636e72;
+    font-size: 0.95rem;
+}
+
+.auth-footer a {
+    color: #F3376D;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    color: #90324D;
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .auth-container {
+        flex-direction: column;
+        height: auto;
+        max-height: none;
+    }
+
+    .auth-form-wrapper {
+        padding: 40px 30px;
+        min-width: auto;
+    }
+
+    .auth-logo-wrapper {
+        order: -1;
+        height: 300px;
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-logo-wrapper {
+        height: 250px;
+        min-height: 250px;
+    }
+    
+    .auth-header h1 {
+        font-size: 2rem;
+    }
+    
+    .auth-header p {
+        font-size: 1rem;
+    }
+    
+    .btn {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+}

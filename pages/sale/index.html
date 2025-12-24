@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tags Admin - Sale Module</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/sale/styles.css">
+    <link rel="stylesheet" href="../../css/sale/sale.css">
+    <link rel="stylesheet" href="../../css/slidebar.css">
+    <style>
+        /* Thêm CSS cho submenu */
+        .nav-item.has-submenu {
+            position: relative;
+        }
+        
+        .submenu-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+        
+        .nav-item.has-submenu.active .submenu-icon {
+            transform: rotate(180deg);
+        }
+        
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(255, 245, 247, 0.5);
+            margin-left: 20px;
+            border-radius: 8px;
+        }
+        
+        .nav-item.has-submenu.active .submenu {
+            max-height: 500px;
+            padding: 10px 0;
+        }
+        
+        .submenu li {
+            margin: 5px 0;
+        }
+        
+        .submenu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+        }
+        
+        .submenu a:hover {
+            color: var(--primary-color);
+            background-color: rgba(243, 55, 109, 0.05);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .submenu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .submenu {
+                display: none;
+            }
+            
+            .nav-item.has-submenu.active .submenu {
+                display: none;
+            }
+        }
+        
+        /* Main content margin adjustment */
+        .sale-main {
+            margin-left: 260px;
+            padding: 20px;
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @media (max-width: 1200px) {
+            .sale-main {
+                margin-left: 80px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sale-main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="../../assets/images/image1.png" alt="Tiny Tags Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">Tiny Tags</div>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a href="../index.html" class="nav-link" data-tooltip="Dashboard">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Sản phẩm -->
+            <li class="nav-item">
+                <a href="../products.html" class="nav-link" data-tooltip="Sản phẩm">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Sản phẩm</span>
+                </a>
+            </li>
+
+            <!-- Khách hàng -->
+            <li class="nav-item">
+                <a href="../customer.html" class="nav-link" data-tooltip="Khách hàng">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Khách hàng</span>
+                </a>
+            </li>
+
+            <!-- Tin nhắn -->
+            <li class="nav-item">
+                <a href="../messages.html" class="nav-link" data-tooltip="Tin nhắn">
+                    <i class="fas fa-comment-dots nav-icon"></i>
+                    <span class="nav-text">Tin nhắn</span>
+                    <span class="nav-badge">50</span>
+                </a>
+            </li>
+
+            <!-- Đơn đặt hàng -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Đơn hàng">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Đơn đặt hàng</span>
+                    <span class="nav-badge">100</span>
+                </a>
+            </li>
+
+            <!-- Hóa đơn -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Hóa đơn">
+                    <i class="fas fa-receipt nav-icon"></i>
+                    <span class="nav-text">Hóa đơn</span>
+                </a>
+            </li>
+
+            <!-- Khuyến mãi -->
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tooltip="Khuyến mãi">
+                    <i class="fas fa-gift nav-icon"></i>
+                    <span class="nav-text">Khuyến mãi</span>
+                </a>
+            </li>
+
+            <!-- Marketing -->
+            <li class="nav-item">
+                <a href="../../index.html" class="nav-link" data-tooltip="Marketing">
+                    <i class="fas fa-bullhorn nav-icon"></i>
+                    <span class="nav-text">Marketing</span>
+                </a>
+            </li>
+
+            <!-- Sale Module - Main Menu with Submenus (CUỐI CÙNG NHƯ INDEX) -->
+            <li class="nav-item has-submenu active">
+                <a href="index.html" class="nav-link active" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Sale</span>
+                    <i class="fas fa-chevron-down submenu-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="dashboard.html"><i class="fas fa-th-large"></i> Tổng quan</a></li>
+                    <li><a href="orders.html"><i class="fas fa-plus-circle"></i> Thêm đơn hàng</a></li>
+                    <li><a href="report.html"><i class="fas fa-file-invoice-dollar"></i> Báo cáo doanh thu</a></li>
+                    <li><a href="compare.html"><i class="fas fa-balance-scale"></i> So sánh doanh thu</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="../../auth/login.html" class="logout-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-text">Đăng xuất</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="sale-main">
+        <!-- Header -->
+        <header class="sale-header">
+            <div class="sale-header-left">
+                <h1>Quản lý bán hàng</h1>
+                <p class="sale-subtitle" id="currentDateTime">Hôm nay: Thứ Ba, 23 tháng 12, 2025 - 14:30:15</p>
+            </div>
+            
+            <div class="sale-user-profile">
+                <div class="sale-user-avatar">KN</div>
+                <div class="sale-user-info">
+                    <h3>Phạm Kim Ngân Hmok</h3>
+                    <p>Sale Manager</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Welcome Section -->
+        <div class="sale-landing">
+            <div class="sale-welcome">
+                <h1>Module Quản lý Bán hàng</h1>
+                <p>Quản lý toàn bộ hoạt động bán hàng, theo dõi doanh thu và phân tích hiệu suất kinh doanh</p>
+                
+                <!-- Quick Stats -->
+                <div class="sale-cards-grid">
+                    <div class="sale-card">
+                        <div class="sale-card-header">
+                            <div class="sale-card-title">Hôm nay</div>
+                            <div class="sale-card-icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                        </div>
+                        <div class="sale-card-value">15.2M</div>
+                        <div class="sale-card-change positive">
+                            <i class="fas fa-arrow-up"></i> 12.5%
+                        </div>
+                    </div>
+                    
+                    <div class="sale-card">
+                        <div class="sale-card-header">
+                            <div class="sale-card-title">Tháng này</div>
+                            <div class="sale-card-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                        <div class="sale-card-value">125.4M</div>
+                        <div class="sale-card-change positive">
+                            <i class="fas fa-arrow-up"></i> 18.2%
+                        </div>
+                    </div>
+                    
+                    <div class="sale-card">
+                        <div class="sale-card-header">
+                            <div class="sale-card-title">Đơn hàng</div>
+                            <div class="sale-card-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                        </div>
+                        <div class="sale-card-value">856</div>
+                        <div class="sale-card-change positive">
+                            <i class="fas fa-arrow-up"></i> 8.7%
+                        </div>
+                    </div>
+                    
+                    <div class="sale-card">
+                        <div class="sale-card-header">
+                            <div class="sale-card-title">KH mới</div>
+                            <div class="sale-card-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                        <div class="sale-card-value">125</div>
+                        <div class="sale-card-change positive">
+                            <i class="fas fa-arrow-up"></i> 15.3%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module Cards -->
+            <h2>Các chức năng chính</h2>
+            
+            <div class="sale-modules-grid">
+                <!-- Tổng quan Module -->
+                <a href="dashboard.html" class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                    <div class="module-title">Tổng quan</div>
+                    <div class="module-description">
+                        Xem tổng quan doanh thu, biểu đồ phân tích và các chỉ số hiệu suất kinh doanh
+                    </div>
+                    <div class="module-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">15+</div>
+                            <div class="stat-label">Chỉ số KPI</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">7</div>
+                            <div class="stat-label">Biểu đồ</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Thêm đơn hàng Module -->
+                <a href="orders.html" class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="module-title">Thêm đơn hàng</div>
+                    <div class="module-description">
+                        Tạo đơn hàng mới, quản lý giỏ hàng, tính toán chiết khấu và xử lý thanh toán
+                    </div>
+                    <div class="module-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">45+</div>
+                            <div class="stat-label">Sản phẩm</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">50+</div>
+                            <div class="stat-label">KH có sẵn</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Báo cáo doanh thu Module -->
+                <a href="report.html" class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div class="module-title">Báo cáo doanh thu</div>
+                    <div class="module-description">
+                        Tạo báo cáo doanh thu chi tiết, xuất file PDF/Excel và chia sẻ với quản lý
+                    </div>
+                    <div class="module-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">Loại báo cáo</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2</div>
+                            <div class="stat-label">Định dạng</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- So sánh doanh thu Module -->
+                <a href="compare.html" class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="module-title">So sánh doanh thu</div>
+                    <div class="module-description">
+                        So sánh doanh thu giữa các kỳ, phân tích xu hướng và đánh giá hiệu suất
+                    </div>
+                    <div class="module-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">6</div>
+                            <div class="stat-label">Chỉ số SS</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Loại kỳ</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="sale-quick-actions">
+                <button class="btn-sale" onclick="window.location.href='orders.html'">
+                    <i class="fas fa-plus"></i> Tạo đơn hàng nhanh
+                </button>
+                <button class="btn-sale-secondary" onclick="window.location.href='report.html'">
+                    <i class="fas fa-file-export"></i> Xuất báo cáo
+                </button>
+                <button class="btn-sale-secondary" onclick="openCustomerManagement()">
+                    <i class="fas fa-users"></i> Quản lý KH
+                </button>
+            </div>
+
+            <!-- Features Section -->
+            <div class="sale-features">
+                <h2>Tính năng nổi bật</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="feature-title">Xử lý nhanh</div>
+                        <div class="feature-desc">Tạo đơn hàng chỉ trong 3 phút với giao diện tối ưu</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="feature-title">Phân tích sâu</div>
+                        <div class="feature-desc">Hơn 15 chỉ số KPI và biểu đồ trực quan</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="feature-title">Real-time</div>
+                        <div class="feature-desc">Dữ liệu cập nhật theo thời gian thực</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="feature-title">Mobile-friendly</div>
+                        <div class="feature-desc">Tương thích với mọi thiết bị di động</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-title">Bảo mật cao</div>
+                        <div class="feature-desc">Mã hóa dữ liệu và phân quyền chi tiết</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="feature-title">Hỗ trợ 24/7</div>
+                        <div class="feature-desc">Đội ngũ hỗ trợ kỹ thuật luôn sẵn sàng</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="order-section">
+                <h2 class="section-title">HOẠT ĐỘNG GẦN ĐÂY</h2>
+                
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Hoạt động</th>
+                                <th>Chi tiết</th>
+                                <th>Người thực hiện</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10:30, 23/12</td>
+                                <td>Tạo đơn hàng</td>
+                                <td>Đơn hàng TT-2025-0012 - 2.450.000đ</td>
+                                <td>Nguyễn Văn A</td>
+                            </tr>
+                            <tr>
+                                <td>09:15, 23/12</td>
+                                <td>Xuất báo cáo</td>
+                                <td>Báo cáo doanh thu tháng 12/2025</td>
+                                <td>Trần Thị B</td>
+                            </tr>
+                            <tr>
+                                <td>16:45, 22/12</td>
+                                <td>Thêm KH mới</td>
+                                <td>Lê Văn C - 0987654321</td>
+                                <td>Nguyễn Văn A</td>
+                            </tr>
+                            <tr>
+                                <td>14:20, 22/12</td>
+                                <td>Tạo đơn hàng</td>
+                                <td>Đơn hàng TT-2025-0011 - 1.850.000đ</td>
+                                <td>Phạm Thị D</td>
+                            </tr>
+                            <tr>
+                                <td>11:10, 22/12</td>
+                                <td>So sánh doanh thu</td>
+                                <td>So sánh tháng 11 vs tháng 12/2025</td>
+                                <td>Trần Thị B</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn-sale-secondary" onclick="showAllActivities()">
+                        <i class="fas fa-history"></i> Xem tất cả hoạt động
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== MODALS ===== -->
+    
+    <!-- All Activities Modal -->
+    <div class="modal-overlay" id="allActivitiesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tất cả hoạt động</h3>
+                <button class="modal-close" onclick="closeModal('allActivitiesModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Hoạt động</th>
+                                <th>Chi tiết</th>
+                                <th>Người thực hiện</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10:30, 23/12</td>
+                                <td>Tạo đơn hàng</td>
+                                <td>Đơn hàng TT-2025-0012 - 2.450.000đ</td>
+                                <td>Nguyễn Văn A</td>
+                            </tr>
+                            <tr>
+                                <td>09:15, 23/12</td>
+                                <td>Xuất báo cáo</td>
+                                <td>Báo cáo doanh thu tháng 12/2025</td>
+                                <td>Trần Thị B</td>
+                            </tr>
+                            <tr>
+                                <td>16:45, 22/12</td>
+                                <td>Thêm KH mới</td>
+                                <td>Lê Văn C - 0987654321</td>
+                                <td>Nguyễn Văn A</td>
+                            </tr>
+                            <tr>
+                                <td>14:20, 22/12</td>
+                                <td>Tạo đơn hàng</td>
+                                <td>Đơn hàng TT-2025-0011 - 1.850.000đ</td>
+                                <td>Phạm Thị D</td>
+                            </tr>
+                            <tr>
+                                <td>11:10, 22/12</td>
+                                <td>So sánh doanh thu</td>
+                                <td>So sánh tháng 11 vs tháng 12/2025</td>
+                                <td>Trần Thị B</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal cancel" onclick="closeModal('allActivitiesModal')">Đóng</button>
+                <button class="btn-modal confirm" onclick="exportActivities()">
+                    <i class="fas fa-download"></i> Xuất danh sách
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Management Modal -->
+    <div class="modal-overlay" id="customerManagementModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Quản lý Khách hàng</h3>
+                <button class="modal-close" onclick="closeModal('customerManagementModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Tìm kiếm khách hàng</label>
+                    <div class="customer-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="customerSearch" placeholder="Nhập tên, số điện thoại hoặc email...">
+                    </div>
+                </div>
+                
+                <div style="max-height: 300px; overflow-y: auto; margin-top: 20px;">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Tên KH</th>
+                                <th>SĐT</th>
+                                <th>Email</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerList">
+                            <!-- Customer data sẽ được load bằng JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-modal cancel" onclick="closeModal('customerManagementModal')">Đóng</button>
+                <button class="btn-modal confirm" onclick="addNewCustomer()">
+                    <i class="fas fa-plus"></i> Thêm KH mới
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/sale.js"></script>
+    <script>
+        // JS riêng cho trang index.html
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ripple effect to module cards
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Add ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(243, 55, 109, 0.3);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        width: ${size}px;
+                        height: ${size}px;
+                        top: ${y}px;
+                        left: ${x}px;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // Load sample customer data
+            loadCustomerData();
+            
+            // Thêm CSS cho ripple effect
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Kiểm tra và mở submenu nếu cần
+            checkActiveSubmenu();
+        });
+
+        // Toggle submenu function
+        function toggleSubmenu(link) {
+            const navItem = link.closest('.nav-item.has-submenu');
+            const isActive = navItem.classList.contains('active');
+            
+            // Đóng tất cả submenu khác
+            document.querySelectorAll('.nav-item.has-submenu').forEach(item => {
+                if (item !== navItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle submenu hiện tại
+            navItem.classList.toggle('active');
+            
+            // Chỉ ngăn chặn chuyển hướng nếu không phải là trang chính của Sale
+            // Cho phép chuyển đến trang index.html khi click vào "Sale"
+            return false;
+        }
+        
+        // Kiểm tra và mở submenu nếu trang hiện tại thuộc submenu
+        function checkActiveSubmenu() {
+            // Luôn mở submenu Sale vì đang ở trang index của Sale
+            const saleItem = document.querySelector('.nav-item.has-submenu');
+            if (saleItem) {
+                saleItem.classList.add('active');
+            }
+        }
+        
+        // Load sample customer data - Function riêng cho trang index
+        function loadCustomerData() {
+            const customers = [
+                { id: 1, name: 'Nguyễn Văn A', phone: '0901234567', email: 'a.nguyen@email.com' },
+                { id: 2, name: 'Trần Thị B', phone: '0912345678', email: 'b.tran@email.com' },
+                { id: 3, name: 'Lê Văn C', phone: '0923456789', email: 'c.le@email.com' },
+                { id: 4, name: 'Phạm Thị D', phone: '0934567890', email: 'd.pham@email.com' },
+                { id: 5, name: 'Hoàng Văn E', phone: '0945678901', email: 'e.hoang@email.com' },
+                { id: 6, name: 'Vũ Thị F', phone: '0956789012', email: 'f.vu@email.com' }
+            ];
+            
+            const customerList = document.getElementById('customerList');
+            if (customerList) {
+                customerList.innerHTML = customers.map(customer => `
+                    <tr>
+                        <td>${customer.name}</td>
+                        <td>${customer.phone}</td>
+                        <td>${customer.email}</td>
+                        <td>
+                            <button class="btn-sale" style="padding: 5px 10px; font-size: 12px;" 
+                                    onclick="selectCustomer(${customer.id})">
+                                <i class="fas fa-check"></i> Chọn
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            // Add search functionality
+            const searchInput = document.getElementById('customerSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const rows = document.querySelectorAll('#customerList tr');
+                    
+                    rows.forEach(row => {
+                        const name = row.cells[0].textContent.toLowerCase();
+                        const phone = row.cells[1].textContent.toLowerCase();
+                        const email = row.cells[2].textContent.toLowerCase();
+                        
+                        if (name.includes(searchTerm) || phone.includes(searchTerm) || email.includes(searchTerm)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        }
+        
+        // Function riêng cho trang index
+        function selectCustomer(customerId) {
+            saleModule.showToast(`Đã chọn khách hàng ID: ${customerId}`);
+            saleModule.closeModal('customerManagementModal');
+        }
+        
+        function addNewCustomer() {
+            saleModule.showToast('Mở trang thêm khách hàng mới...');
+            setTimeout(() => {
+                saleModule.showToast('Chức năng thêm KH mới sẽ mở trong tab mới');
+                saleModule.closeModal('customerManagementModal');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
